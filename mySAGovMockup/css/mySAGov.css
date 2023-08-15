@@ -1,0 +1,37 @@
+header{
+    background-image: url(../Search.png);
+    background-size: 230px;
+    background-repeat: no-repeat;
+    background-position: right;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+body{
+    background-color:#fafafa;
+    max-width:1440px;
+    margin:0 auto;
+    height:auto;
+    position:relative;
+}
+
+.box{
+    box-shadow: 0 0 9px 0 rgba(92, 92, 92, 0.31);
+}
+.main{
+    border-style:solid;
+    border-width: 3px 0px;
+    border-image:   linear-gradient(to right, #004b88 33.33%, #fbae1d 33.33%, #fbae1d 66.66%,#ec164b 66.66%) 3; 
+    padding:60px;
+}
+.send_homepage{
+    color:#363636;
+    font-size: 30px;
+    padding-left: 20px;
+    font-family: "arial";
+    text-decoration: none;
+}
+.send_homepage:visited{
+    text-decoration: none;
+}
