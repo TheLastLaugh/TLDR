@@ -14,11 +14,26 @@ body{
     margin:0 auto;
     height:auto;
     position:relative;
+    font-family: "Lato";
+}
+
+h1{
+    margin: 0;
+    margin-bottom: 5px;
 }
 
 .box{
     box-shadow: 0 0 9px 0 rgba(92, 92, 92, 0.31);
 }
+
+.login-section{
+    margin:0;
+    position:absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
 .main{
     border-style:solid;
     border-width: 3px 0px;
