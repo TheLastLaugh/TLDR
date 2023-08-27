@@ -1,6 +1,6 @@
---------------------------------------------------------------------------------------------------*
+-- -----------------------------------------------------------------------------------------------*
 -- ** READ ME FOR SET-UP INSTRUCTIONS **----------------------------------------------------------*
---------------------------------------------------------------------------------------------------*
+-- -----------------------------------------------------------------------------------------------*
 -- 1. Opem XAMPP Manager                                                                          *
 -- 2. Start All Servers in the "Manage Servers" tab                                               *
 -- 3. Click to the "Welcome tab" and click "Go to Application"                                    *
@@ -11,11 +11,11 @@
 -- 7. Click "Go" at the bottom of the page                                                        *
 -- 8. You should now have a database called "TLDR" with all the tables and data                   *
 -- 9. You can now run the application and test queries.                                           *
---------------------------------------------------------------------------------------------------*
+-- -----------------------------------------------------------------------------------------------*
 -- ** If you mess something up and need to start again, just repeat the above steps.              *
 -- ** The first couple lines of the database will drop the existing database and create a new one *
 -- ** If you need to add more data, just add it to the bottom of the file and repeat steps 6-8    *
---------------------------------------------------------------------------------------------------*
+-- -----------------------------------------------------------------------------------------------*
 
 
 SET @@AUTOCOMMIT = 1;
@@ -53,9 +53,11 @@ CREATE TABLE lessons (
     unit_name varchar(255) NOT NULL
 );
 
+-- REMIND ME TO TAKE THE USERNAME OUT OF THIS LATER I'M AN IDIOT 
 -- This table stores the instructors, the lessons they offer, and the price of each lesson (They can be different for final drives etc)
 CREATE TABLE instructors (
     user_id int NOT NULL,
+    username varchar(100) NOT NULL,
     lesson_id int NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
@@ -92,13 +94,13 @@ CREATE TABLE completed_lessons (
     FOREIGN KEY (lesson_id) REFERENCES lessons(id)
 );
 
---------------------------------------------------------------------------------------------------*
+-- ------------------------------------------------------------------------------------------------*
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
---------------------------------------------------------------------------------------------------*
+-- ------------------------------------------------------------------------------------------------*
 
 INSERT INTO users (username, password, address, license, dob, user_type) VALUES
-('learner', 'password', '123 Fake Street', '123456789', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
-('instructor', 'password', '123 Fake Street', '123456789', '1999-01-01', 'instructor'), -- same here but with the instructor portal
+('Joe Rogan', 'password', '123 Fake Street', '123456789', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
+('Brett Wilkinson', 'password', '123 Fake Street', '123456789', '1999-01-01', 'instructor'), -- same here but with the instructor portal
 ('government', 'password', '123 Fake Street', '123456789', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
 
 -- Each lesson is the unit, I haven't included the modules since they're part of the unit, but we can add them if we want
@@ -111,13 +113,13 @@ INSERT INTO lessons (unit_number, unit_name) VALUES
 (0, 'Units 3 and 4 - Review');
 
 -- I just set the default price of each lesson (for the only default instructor) to be $50, but we can allow them to set their own prices when we make the page
-INSERT INTO instructors (user_id, lesson_id, price) VALUES
-(2, 1, 50.00),
-(2, 2, 50.00),
-(2, 3, 50.00),
-(2, 4, 50.00),
-(2, 5, 50.00),
-(2, 6, 50.00);
+INSERT INTO instructors (user_id, username, lesson_id, price) VALUES
+(2, 'Brett Wilkinson', 1, 50.00),
+(2, 'Brett Wilkinson', 2, 50.00),
+(2, 'Brett Wilkinson', 3, 50.00),
+(2, 'Brett Wilkinson', 4, 50.00),
+(2, 'Brett Wilkinson', 5, 50.00),
+(2, 'Brett Wilkinson', 6, 50.00);
 
 -- These are all of the modulees, split up by units. I've tried to keep them with the same number they have in the real logbook but there are some differences (outlined next to them)
 INSERT INTO cbta_modules (unit_number, unit_name, module_number, module_name) VALUES
