@@ -80,6 +80,7 @@ CREATE TABLE bookings (
     learner_id int NOT NULL,
     availability_id int NOT NULL,
     booking_date DATE NOT NULL,
+    paid BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (learner_id) REFERENCES users(id),
     FOREIGN KEY (availability_id) REFERENCES availability(id)
 );
