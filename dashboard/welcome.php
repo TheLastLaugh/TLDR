@@ -5,18 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TLDR</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
     <div id="banner">Welcome to TLDR</div>
-    <div id="sidebar">
-        <ul>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Logbook Submissions</a></li>
-            <li><a href="#">Lessons</a></li>
-            <li><a href="#">Help</a></li>
-        </ul>
-    </div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     <div id="dashboard">
         <div class="stats-container">
             <div class="stat-card">

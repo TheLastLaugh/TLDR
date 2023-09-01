@@ -57,6 +57,8 @@ if (isset($_POST['confirm'])) {
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     <?php
         echo '<h1>
                 Lesson booked successfully! <br>

@@ -24,6 +24,8 @@ $learnerName = $row['username'];
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     <?php
         echo '<h1>
                 Hello, ' . $learnerName . '. Select which lesson you would like to book.' .

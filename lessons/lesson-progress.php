@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../styles/style.css"/>
 </head>
 <body>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     
 </body>
 </html>

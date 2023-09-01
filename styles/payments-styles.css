@@ -13,7 +13,7 @@ h1 {
     font-size: 24px;
 }
 
-form, .content {
+form {
     width: 80%;
     max-width: 500px;
     margin: 0 auto;
@@ -22,11 +22,15 @@ form, .content {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-a {
-    color: #007bff;
-    text-decoration: none;
-    display: block;
-    align-items: center;
+
+.confirm {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 label {

@@ -29,6 +29,8 @@ $unitName = $row['unit_name'];
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     <!-- Step 2: Select lesson -->
     <form action="lesson-step-three.php" method="POST">
         <?php echo  '<input type="hidden" name="unit" value="' . $selectedUnit . '">' .
@@ -40,15 +42,14 @@ $unitName = $row['unit_name'];
         <label for="instructor">Select Instructor:</label>
         <select name="instructor" id="instructor">
             <?php
-                // Get all the instructors that teach the selected lesson (unit) from the database and display them in a drop-down menu
+                // Get all the instructors from the database and display them in a drop-down menu
                 // I might have to expand on this to not show instructors that don't have available bookings, but this works for now.
-                $sql = "SELECT user_id, username, price FROM instructors WHERE lesson_id = ?";
+                $sql = "SELECT user_id, username, price FROM instructors";
                 $statement = mysqli_stmt_init($conn);
                 mysqli_stmt_prepare($statement, $sql);
-                mysqli_stmt_bind_param($statement, "i", $selectedUnit);
                 mysqli_stmt_execute($statement);
                 $result = mysqli_stmt_get_result($statement);
-
+                
                 while ($row = mysqli_fetch_assoc($result)) {
                     // Display the option in the drop-down menu
                     // FORMAT= Instructor #<id> - Price: $<price>
@@ -58,6 +59,7 @@ $unitName = $row['unit_name'];
                 }
             ?>
         </select>
+
         <input type="submit" id="instructorButton" value="Choose a Time -->"></input>
     </form>
 </body>

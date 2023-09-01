@@ -34,6 +34,8 @@ $instructorName = $row['username'];
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
     <!-- Step 2: Select lesson -->
     <form action="booking-confirmation.php" method="POST">
         <?php echo 
