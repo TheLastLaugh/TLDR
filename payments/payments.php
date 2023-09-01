@@ -4,14 +4,16 @@ session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
-    exit;
+    exit();
+} else if ($_SESSION['user_type'] !== 'learner') {
+    header("Location: ../dashboard/welcome.php");
+    exit();
 }
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
 
-// Dummy value for now, Can set this to be the id of the learner using the system later, I just have this as I only made 1 learner account
-$learnerId = isset($_POST['learner_id']) ? $_POST['learner_id'] : 1;
+$learnerId = $_SESSION['userid'];
 $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
 $row = mysqli_fetch_assoc($result);
 $learnerName = $row['username'];
