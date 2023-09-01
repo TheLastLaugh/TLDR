@@ -31,7 +31,7 @@ $dob = $row['dob'];
 $user_type = $row['user_type'];
 
 if ($user_type == 'instructor') {
-    $result = mysqli_query($conn, "SELECT company, company_address, phone, price FROM instructors WHERE id = $user_id");
+    $result = mysqli_query($conn, "SELECT company, company_address, phone, price FROM instructors WHERE user_id = $user_id");
     $row = mysqli_fetch_assoc($result);
 
     $company = $row['company'];

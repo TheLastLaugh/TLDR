@@ -1,0 +1,30 @@
+body {
+    background-color: #f7f9fc;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    color: #4a4a4a;
+    font-size: 24px;
+}
+
+.content {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    display: block;
+    align-items: center;
+}

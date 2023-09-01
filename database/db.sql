@@ -32,9 +32,9 @@ CREATE TABLE users(
     email varchar(100) NOT NULL UNIQUE,
     password char(255) NOT NULL,
     address varchar(100) NOT NULL,
-    license varchar(100) NOT NULL,
+    license varchar(100) NOT NULL UNIQUE,
     dob DATE NOT NULL,
-    user_type ENUM('learner', 'instructor', 'government') NOT NULL,
+    user_type ENUM('learner', 'instructor', 'government', 'qsd') NOT NULL,
     updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) AUTO_INCREMENT = 1;
 
@@ -57,12 +57,36 @@ CREATE TABLE lessons (
 -- REMIND ME TO TAKE THE USERNAME OUT OF THIS LATER I'M AN IDIOT 
 -- This table stores the instructors, the lessons they offer, and the price of each lesson (They can be different for final drives etc)
 CREATE TABLE instructors (
-    user_id int NOT NULL,
+    user_id int NOT NULL PRIMARY KEY,
     username varchar(100) NOT NULL,
     company varchar(100) NOT NULL,
     company_address varchar(100) NOT NULL,
     phone int NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- This table stores the learners associated with an instructor (Can't use arrays in mysql rip)
+CREATE TABLE instructor_learners (
+    instructor_id int NOT NULL,
+    learner_id int NOT NULL,
+    FOREIGN KEY (instructor_id) REFERENCES users(id),
+    FOREIGN KEY (learner_id) REFERENCES users(id)
+);
+
+-- This table stores the learners associated with a qsd (Can't use arrays in mysql rip)
+CREATE TABLE qsd_learners (
+    qsd_id int NOT NULL,
+    learner_id int NOT NULL,
+    FOREIGN KEY (qsd_id) REFERENCES users(id),
+    FOREIGN KEY (learner_id) REFERENCES users(id)
+);
+
+CREATE TABLE qsd (
+    user_id int NOT NULL PRIMARY KEY,
+    username varchar(100) NOT NULL,
+    company_address varchar(100) NOT NULL,
+    phone int NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -112,14 +136,34 @@ CREATE TABLE payment_methods (
     FOREIGN KEY (learner_id) REFERENCES users(id)
 );
 
+-- This table holds all of the logbook entries that the learner has made
+CREATE TABLE logbooks (
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    learner_id int NOT NULL,
+    qsd_id int NOT NULL,
+    date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    duration int NOT NULL,
+    start_location varchar(255) NOT NULL,
+    end_location varchar(255) NOT NULL,
+    road_type enum('Sealed', 'Unsealed', 'Quiet Street', 'Busy Road', 'Multi-laned Road') NOT NULL,
+    weather enum('Dry', 'Wet'),
+    traffic enum('Light', 'Medium', 'Heavy'),
+    qsd_name varchar(255) NOT NULL,
+    qsd_license varchar(255) NOT NULL,
+    confirmed BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (learner_id) REFERENCES users(id)
+);
+
 -- ------------------------------------------------------------------------------------------------*
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
 
 INSERT INTO users (username, email, password, address, license, dob, user_type) VALUES
-('Joe Rogan', 'learner@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
-('Brett Wilkinson', 'instructor@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'instructor'), -- same here but with the instructor portal
-('government', 'admin@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
+('Joe Rogan', 'learner@fake.com', '$2y$10$6hc4fXDItmTVPevgprLm9OypZ7cIKmpeiXuL9NDSWgmUWizJ9cGQe', '123 Fake Street', '1', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
+('Brett Wilkinson', 'instructor@fake.com', '$2y$10$6hc4fXDItmTVPevgprLm9OypZ7cIKmpeiXuL9NDSWgmUWizJ9cGQe', '123 Fake Street', '2', '1999-01-01', 'instructor'), -- same here but with the instructor portal
+('government', 'admin@fake.com', '$2y$10$6hc4fXDItmTVPevgprLm9OypZ7cIKmpeiXuL9NDSWgmUWizJ9cGQe', '123 Fake Street', '3', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
 
 -- Each lesson is the unit, I haven't included the modules since they're part of the unit, but we can add them if we want
 INSERT INTO lessons (unit_number, unit_name) VALUES
@@ -185,6 +229,15 @@ INSERT INTO availability (instructor_id, start_time, end_time) VALUES
 (2, '2023-08-24 14:00:00', '2023-08-24 15:00:00'),
 (2, '2023-08-24 15:00:00', '2023-08-24 16:00:00'),
 (2, '2023-08-24 16:00:00', '2023-08-24 17:00:00');
+
+
+-- Just some test bookings so that I can test the instructor logbook entries
+INSERT INTO bookings (learner_id, availability_id, booking_date) VALUES
+(1, 1, '2023-08-24'),
+(1, 2, '2023-08-24');
+
+INSERT INTO instructor_learners (instructor_id, learner_id) VALUES
+(2, 1);
 
 -- This part is important for testing since you'll need all mod rights. I'm not sure if we have to change this later for the submission
 CREATE user IF NOT EXISTS dbadmin@localhost;
