@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <meta name="author" content="Alistair Macvicar">
     <link type="text/css" rel="stylesheet" href="/styles/styles.css">
     <link rel="stylesheet" href="/styles/login-styles.css">

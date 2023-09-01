@@ -1,0 +1,14 @@
+<head>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<div id="sidebar">
+        <ul>
+            <li><a href="../dashboard/welcome.php">Home</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Logbook Submissions</a></li>
+            <li><a href="../payments/payments.php">Payments</a></li>
+            <li><a href="../lessons/lessons.php">Lessons</a></li>
+            <li><a href="#">Help</a></li>
+        </ul>
+</div>

@@ -6,10 +6,14 @@
     <meta name="author" content="Alistair Macvicar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lessons</title>
-    <link rel="stylesheet" href="../styles/style.css"/>
+    <link rel="stylesheet" href="../styles/lesson-bookings-styles.css"/>
 </head>
 <body>
-    <a href="lesson-progress.php">Lesson Progress</a>
-    <a href="lesson-bookings.php">Book a lesson</a>
+    <div id="banner">Lessons</div>
+    <?php include_once "../inc/sidebar.inc.php"; ?>
+    <div class="content">
+        <a href="lesson-progress.php">Lesson Progress</a>
+        <a href="lesson-bookings.php">Book a lesson</a>
+    </div>
 </body>
 </html>

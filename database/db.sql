@@ -29,6 +29,7 @@ USE TLDR;
 CREATE TABLE users(
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     username varchar(100) NOT NULL UNIQUE,
+    email varchar(100) NOT NULL UNIQUE,
     password char(255) NOT NULL,
     address varchar(100) NOT NULL,
     license varchar(100) NOT NULL,
@@ -58,10 +59,8 @@ CREATE TABLE lessons (
 CREATE TABLE instructors (
     user_id int NOT NULL,
     username varchar(100) NOT NULL,
-    lesson_id int NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (lesson_id) REFERENCES lessons(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- This table has the times and dates that are available to be booked (unique to each instructor)
@@ -79,7 +78,7 @@ CREATE TABLE bookings (
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     learner_id int NOT NULL,
     availability_id int NOT NULL,
-    booking_date DATE NOT NULL,
+    booking_date DATE NOT NULL, 
     paid BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (learner_id) REFERENCES users(id),
     FOREIGN KEY (availability_id) REFERENCES availability(id)
@@ -93,6 +92,21 @@ CREATE TABLE completed_lessons (
     completion_date DATE NOT NULL,
     FOREIGN KEY (learner_id) REFERENCES users(id),
     FOREIGN KEY (lesson_id) REFERENCES lessons(id)
+);
+
+-- This stores the payment methods that the learner has added to their account
+CREATE TABLE payment_methods (
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    learner_id int NOT NULL,
+    method_name varchar(50) NOT NULL,
+    address varchar(255) NOT NULL,
+    card_type enum('visa', 'mastercard') NOT NULL,
+    card_number char(16) NOT NULL,
+    cvv char(3) NOT NULL,
+    last_four_digits char(4) NOT NULL,
+    expiry_month int NOT NULL,
+    expiry_year int NOT NULL,
+    FOREIGN KEY (learner_id) REFERENCES users(id)
 );
 
 -- ------------------------------------------------------------------------------------------------*
@@ -114,13 +128,8 @@ INSERT INTO lessons (unit_number, unit_name) VALUES
 (0, 'Units 3 and 4 - Review');
 
 -- I just set the default price of each lesson (for the only default instructor) to be $50, but we can allow them to set their own prices when we make the page
-INSERT INTO instructors (user_id, username, lesson_id, price) VALUES
-(2, 'Brett Wilkinson', 1, 50.00),
-(2, 'Brett Wilkinson', 2, 50.00),
-(2, 'Brett Wilkinson', 3, 50.00),
-(2, 'Brett Wilkinson', 4, 50.00),
-(2, 'Brett Wilkinson', 5, 50.00),
-(2, 'Brett Wilkinson', 6, 50.00);
+INSERT INTO instructors (user_id, username, price) VALUES
+(2, 'Brett Wilkinson', 50.00);
 
 -- These are all of the modulees, split up by units. I've tried to keep them with the same number they have in the real logbook but there are some differences (outlined next to them)
 INSERT INTO cbta_modules (unit_number, unit_name, module_number, module_name) VALUES
