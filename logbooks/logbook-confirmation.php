@@ -19,19 +19,11 @@ $row = mysqli_fetch_assoc($result);
 $learnerName = $row['username'];
 
 // Get all the lessons from the booking table and display them in a drop-down menu
-$result = mysqli_query($conn, "SELECT 
-    b.id AS booking_id, 
-    b.booking_date,
-    i.username AS instructor_name,
-    i.price AS lesson_price
-FROM 
-    bookings AS b
-JOIN 
-    availability AS a ON b.availability_id = a.id
-JOIN 
-    instructors AS i ON a.instructor_id = i.user_id
-WHERE 
-    b.paid = 0 AND b.learner_id = $learnerId;");
+$sql = "SELECT id, date, qsd_name FROM logbooks WHERE learner_id = ? AND confirmed = 0;";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "i", $learnerId);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 ?>
 
 <!-------------------------------------------------------------------------------------------------------------------
@@ -44,39 +36,38 @@ WHERE
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Alistair Macvicar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pay for Lessons</title>
-    <link rel="stylesheet" href="../styles/payments-styles.css"/>
+    <title>Confirm Logbook</title>
+    <link rel="stylesheet" href="../styles/logbook-styles.css"/>
 </head>
 <body>
-    <div id="banner">Payments</div>
+    <div id="banner">Confirm Logbook</div>
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <?php
         if (mysqli_num_rows($result) == 0) {
             echo '<h1>
-                    Hello, ' . $learnerName . '. You have no lessons to pay for.' .
+                    Hello, ' . $learnerName . '. You have no logbooks to confirm.' .
                  '</h1>';
         } else {
             echo '<h1>
-                    Hello, ' . $learnerName . '. Select which lesson you would like to pay for.' .
+                    Hello, ' . $learnerName . '. Select which logbook you would like to confirm.' .
                  '</h1>';
 
-            // <!-- Step 1: Select lesson to pay for -->
-            echo '<form action="payments-step-two.php" method="POST">
+            // <!-- Step 1: Select logbook to confirm -->
+            echo '<form action="logbook-confirm-details.php" method="POST">
                     <input type="hidden" name="learner_id" value="' . $learnerId . '">'; ?>
-                <label for="unit">Select Lesson You Wish To Pay For:</label>
-                <select name="unit" id="lesson">
+                <label for="unit">Select Logbook You Wish To Confirm:</label>
+                <select name="logbook">
                     <?php
-                    // paid = 0 means it hasn't been paid for yet
                         while ($row = mysqli_fetch_assoc($result)) {
                             // Display the option in the drop-down menu
-                            // FORMAT= <instructor_name> on <booking_date> $<lesson_price>
-                            echo '<option value="' . $row['booking_id']  . '">' . 
-                                    $row['instructor_name'] . ' on ' . $row['booking_date'] . ' $' . $row['lesson_price'] .
+                            // FORMAT= <qsd_name> on <date>
+                            echo '<option value="' . $row['id']  . '">' . 
+                                    $row['qsd_name'] . ' on ' . $row['date'] .
                                  '</option>';
                         } 
                     ?>
                 </select>
-                <input type="submit" id="lessonButton" value="Continue to payment -->"></input>
+                <input type="submit" value="View Details -->"></input>
             </form>
         <?php
         }
