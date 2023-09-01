@@ -1,7 +1,9 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../login/index.php");
+    exit;
+}
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
@@ -25,7 +27,6 @@ $selectedAvailability = isset($_POST['availability']) ? $_POST['availability'] :
 $result = mysqli_query($conn, "SELECT start_time FROM availability WHERE id = $selectedAvailability");
 $row = mysqli_fetch_assoc($result);
 $bookingTime = $row['start_time'];
-
 
 //This happens after the user clicks the confirm button after selecting all values. Relevant code for this is at the bottom of the page
 if (isset($_POST['confirm'])) {

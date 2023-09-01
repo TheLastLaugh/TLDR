@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../login/index.php");
+    exit;
+}
+
 require_once "../inc/dbconn.inc.php"; 
 
 // Grab necessary data from the POST request

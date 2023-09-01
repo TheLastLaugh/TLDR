@@ -8,13 +8,10 @@
     <title>Login</title>
     <link rel="stylesheet" href="../styles/login-styles.css">
     <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../scripts/registrationScript.js" defer></script>
 </head>
 <body>
     <div>
-        <h1>Login with mySAGOV</h1>
-        <a href="../mySAGovMockup/mySAGovMockup.html">
-            <img src="../images/mySAGOV_logo.png" alt="mySAGOV logo" id="mySAGOV_link">
-        </a>
         <h1>Register</h1>
         <form action="register.php" method="POST">
             <ul>
@@ -28,11 +25,11 @@
                 </li>
                 <li>
                     <label for="password">Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password" id="password" required>
                 </li>
                 <li>
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" name="confirm_password" required>
+                    <input type="password" name="confirm_password" id="confirm_password" required>
                 </li>
                 <li>
                     <label for="address">Address</label>
@@ -49,6 +46,8 @@
                 <li>
                     <input type="submit" value="Submit" class="submit-button">
                 </li>
+
+                <input type="hidden" name="user_type" value="learner">
             </ul>
         </form>
     </div>

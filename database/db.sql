@@ -28,7 +28,7 @@ USE TLDR;
 -- Each type of user is stored within this table, and identified by their user_type
 CREATE TABLE users(
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username varchar(100) NOT NULL UNIQUE,
+    username varchar(100) NOT NULL,
     email varchar(100) NOT NULL UNIQUE,
     password char(255) NOT NULL,
     address varchar(100) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE users(
 
 -- This table stores the modules and their corresponding unit number and unit name
 CREATE TABLE cbta_modules(
-    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     unit_number int NOT NULL,
     unit_name varchar(255) NOT NULL,
     module_number int NOT NULL,
@@ -59,6 +59,9 @@ CREATE TABLE lessons (
 CREATE TABLE instructors (
     user_id int NOT NULL,
     username varchar(100) NOT NULL,
+    company varchar(100) NOT NULL,
+    company_address varchar(100) NOT NULL,
+    phone int NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -113,10 +116,10 @@ CREATE TABLE payment_methods (
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
 
-INSERT INTO users (username, password, address, license, dob, user_type) VALUES
-('Joe Rogan', 'password', '123 Fake Street', '123456789', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
-('Brett Wilkinson', 'password', '123 Fake Street', '123456789', '1999-01-01', 'instructor'), -- same here but with the instructor portal
-('government', 'password', '123 Fake Street', '123456789', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
+INSERT INTO users (username, email, password, address, license, dob, user_type) VALUES
+('Joe Rogan', 'learner@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
+('Brett Wilkinson', 'instructor@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'instructor'), -- same here but with the instructor portal
+('government', 'admin@fake.com', 'password', '123 Fake Street', '123456789', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
 
 -- Each lesson is the unit, I haven't included the modules since they're part of the unit, but we can add them if we want
 INSERT INTO lessons (unit_number, unit_name) VALUES
@@ -128,8 +131,8 @@ INSERT INTO lessons (unit_number, unit_name) VALUES
 (0, 'Units 3 and 4 - Review');
 
 -- I just set the default price of each lesson (for the only default instructor) to be $50, but we can allow them to set their own prices when we make the page
-INSERT INTO instructors (user_id, username, price) VALUES
-(2, 'Brett Wilkinson', 50.00);
+INSERT INTO instructors (user_id, username, company, company_address, phone, price) VALUES
+(2, 'Brett Wilkinson', 'Flinders', 'Tonsley', 0404040404, 50.00);
 
 -- These are all of the modulees, split up by units. I've tried to keep them with the same number they have in the real logbook but there are some differences (outlined next to them)
 INSERT INTO cbta_modules (unit_number, unit_name, module_number, module_name) VALUES
