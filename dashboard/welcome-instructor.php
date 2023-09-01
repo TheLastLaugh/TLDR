@@ -3,11 +3,10 @@ session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
-} else if ($_SESSION['user_type'] == 'instructor') {
-    header("Location: ../dashboard/welcome-instructor.php");
+} else if ($_SESSION['user_type'] == 'learner') {
+    header("Location: ../dashboard/welcome.php");
     exit;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -25,20 +24,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <div id="dashboard">
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Total Hours Driven</h3>
-                <p>125 hours</p> 
-            </div>
-            <div class="stat-card">
-                <h3>Total Lessons Completed</h3>
-                <p>15 lessons</p> 
-            </div>
-            <div class="stat-card">
-                <h3>Day Time Driving</h3>
-                <p>80% completion</p> 
-            </div>
-            <div class="stat-card">
-                <h3>Night Time Driving</h3>
-                <p>50% completion</p> 
+                <h3>Some stuff relating to instructors</h3>
+                <p>bookings or something</p> 
             </div>
         </div>
     </div>

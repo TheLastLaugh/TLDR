@@ -9,6 +9,7 @@
             <li><a href="#">Logbook Submissions</a></li>
             <li><a href="../payments/payments.php">Payments</a></li>
             <li><a href="../lessons/lessons.php">Lessons</a></li>
+            <li><a href="../login/logout.php">Logout</a></li>
             <li><a href="#">Help</a></li>
         </ul>
 </div>
