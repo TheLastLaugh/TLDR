@@ -8,7 +8,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
 // Get the id of the learner
-$learnerId = isset($_POST['learner_id']) ? $_POST['learner_id'] : null;
+$learnerId = $_SESSION['userid'];
 $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
 $row = mysqli_fetch_assoc($result);
 $learnerName = $row['username'];
