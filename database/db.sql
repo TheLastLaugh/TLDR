@@ -34,8 +34,7 @@ CREATE TABLE users(
     address varchar(100) NOT NULL,
     license varchar(100) NOT NULL UNIQUE,
     dob DATE NOT NULL,
-    user_type ENUM('learner', 'instructor', 'government', 'qsd') NOT NULL,
-    updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+    user_type ENUM('learner', 'instructor', 'government', 'qsd') NOT NULL
 ) AUTO_INCREMENT = 1;
 
 -- This table stores the modules and their corresponding unit number and unit name
