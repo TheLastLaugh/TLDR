@@ -1,9 +1,25 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const goBackButton = document.getElementById('go_back');
+    const password = document.getElementsByName('password')[0];
 
-    function goBack() {
-        history.back(); // This will take the user back to the previous page (registration page)
+    // Checks if the password is valid
+    const isValidPassword = function(password) {
+        // Regular expression for a strong password
+        // I stole this from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/; 
+        // cmon like i'm ever gonna figure that regex out 
+        
+        return regex.test(password);
     }
 
-    goBackButton.addEventListener('click', goBack);
+    // Gives the user an error if the password isn't strong enough
+    const checkPasswordValidity = function() {
+        if (!isValidPassword(password.value)) {
+            password.setCustomValidity('Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+        } else {
+            confirmPassword.setCustomValidity('');
+            password.setCustomValidity('');
+        }
+    }    
+
+    password.addEventListener('change', checkPasswordValidity);
 });

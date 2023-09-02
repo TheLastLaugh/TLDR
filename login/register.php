@@ -21,7 +21,22 @@ if (isset($_POST['email'])) {
 
     if (mysqli_num_rows($result) > 0) {
         // Email already exists, redirect to login page
-        header("Location: ./login-redirect.php");
+        header("Location: ./login-redirect.php?error=incorrect_email");
+        exit();
+    }
+    
+    // Check if the license already exists
+    $license = $_POST['license'];
+
+    $sql = "SELECT id FROM users WHERE license = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $license);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if (mysqli_num_rows($result) > 0) {
+        // license already exists, redirect to login page
+        header("Location: ./login-redirect.php?error=incorrect_license");
         exit();
     }
 
