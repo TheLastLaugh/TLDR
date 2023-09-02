@@ -74,12 +74,13 @@ if (isset($_POST['email'])) {
         $row = mysqli_fetch_assoc($result);
         $user_id = $row['id'];
 
-        $sql = "INSERT INTO instructors (username, user_id, company, company_address, phone, price) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO instructors (username, user_id, company, company_address, phone, price) VALUES (?, ?, ?, ?, ?, ?);";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "sisssi", $username, $user_id, $company, $company_address, $company_phone, $price);
         
         mysqli_stmt_execute($stmt);
+        header("Location: ./add-instructor-availability.php");
     }
 
     header("Location: ../dashboard/welcome.php");
