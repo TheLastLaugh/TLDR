@@ -1,18 +1,24 @@
 <?php
+// Initialize the session
 session_start();
+
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
+    exit;
+}
+// If the user isn't a learner, don't give them access to this page
+else if ($_SESSION['user_type'] != 'learner') {
+    header("Location: ../dashboard/welcome.php");
     exit;
 }
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
 
-// Dummy value for now, Can set this to be the id of the learner using the system later, I just have this as I only made 1 learner account
-$learnerId = isset($_POST['learner_id']) ? $_POST['learner_id'] : 1;
-$result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
-$row = mysqli_fetch_assoc($result);
-$learnerName = $row['username'];
+// Gets the user's id and name from the session
+$learnerId = $_SESSION['userid'];
+$learnerName = $_SESSION['username'];
 ?>
 
 <!-------------------------------------------------------------------------------------------------------------------
@@ -31,6 +37,7 @@ $learnerName = $row['username'];
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <?php
         echo '<h1>
@@ -39,7 +46,6 @@ $learnerName = $row['username'];
     ?>
     <!-- Step 1: Select lesson -->
     <form action="lesson-step-two.php" method="POST">
-        <?php echo '<input type="hidden" name="learner_id" value="' . $learnerId . '">'; ?>
         <label for="unit">Select Lesson (Unit):</label>
         <select name="unit" id="lesson">
             <?php

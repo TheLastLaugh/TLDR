@@ -1,11 +1,14 @@
 <?php
-
+// Initialize the session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit();
-} else if ($_SESSION['user_type'] !== 'learner') {
+} 
+// If the user isn't a learner, don't give them access to this page
+else if ($_SESSION['user_type'] !== 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit();
 }
@@ -13,12 +16,12 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
 
+// Set the learner name and ID as variables so they're easier to use later
 $learnerId = $_SESSION['userid'];
-$result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
-$row = mysqli_fetch_assoc($result);
-$learnerName = $row['username'];
+$learnerName = $_SESSION['username'];
 
 // Get all the lessons from the booking table and display them in a drop-down menu
+// Will only show lessons that haven't previously been confirmed
 $sql = "SELECT id, date, qsd_name FROM logbooks WHERE learner_id = ? AND confirmed = 0;";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $learnerId);
@@ -41,13 +44,18 @@ $result = mysqli_stmt_get_result($stmt);
 </head>
 <body>
     <div id="banner">Confirm Logbook</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <?php
+    // If there are no logbooks to confirm, display a message saying so
         if (mysqli_num_rows($result) == 0) {
             echo '<h1>
                     Hello, ' . $learnerName . '. You have no logbooks to confirm.' .
                  '</h1>';
-        } else {
+        } 
+        // Otherwise display the logbooks in a drop-down menu
+        else {
             echo '<h1>
                     Hello, ' . $learnerName . '. Select which logbook you would like to confirm.' .
                  '</h1>';

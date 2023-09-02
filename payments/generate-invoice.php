@@ -1,16 +1,22 @@
 <?php
+// initialise session
 session_start();
 
+// check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
 }
 
+// add the database connection
 require_once "../inc/dbconn.inc.php";
 
+// Get the booking id from the URL
 $bookingId = $_GET['booking_id'];
 
 // Fetch booking details for the invoice
+// I think we should expand this to only show the invoice if the user's id is on the booking
+// Also I made this before I made big changes to the instructors table, so we can include more info in the invoice when we get around to it.
 $sql = "SELECT 
     b.id AS booking_id, 
     b.booking_date,
@@ -33,6 +39,7 @@ $bookingDetails = mysqli_fetch_assoc($result);
 
 ?>
 
+<!-- Invoice page for a lesson -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,11 +52,14 @@ $bookingDetails = mysqli_fetch_assoc($result);
 </head>
 <body>
     <div id="banner">Invoice</div>
+    <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <div class="invoice" id="invoice">
         <h1>Invoice</h1>
         <h2>Booking #<?php echo $bookingId; ?></h2>
         
+        <!-- FORMAT: <attribute>: <value> -->
         <section class="invoice-details">
             <p><strong>Instructor:</strong> <?php echo $bookingDetails['instructor_name']; ?></p>
             <p><strong>Date:</strong> <?php echo $bookingDetails['booking_date']; ?></p>
@@ -58,6 +68,7 @@ $bookingDetails = mysqli_fetch_assoc($result);
             <p><strong>Total Amount:</strong> $<?php echo $bookingDetails['lesson_price']; ?></p> 
         </section>
 
+        <!-- button to allow a user to print the invoice easily -->
         <a href="javascript:window.print()">Print Invoice</a>
     </div>
 </body>

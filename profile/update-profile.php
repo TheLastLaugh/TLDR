@@ -1,7 +1,11 @@
 <?php
+// initialise session
 session_start();
+
+// add the database connection
 require_once "../inc/dbconn.inc.php";
 
+// If the form was submitted, update the user info
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_email = $_POST['email'];
     $new_address = $_POST['address'];
@@ -12,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)) {
+    // If the email is already in use, redirect to the profile page with an error message. If the email is being used by the same user, do nothing
+    if ($row = mysqli_fetch_assoc($result) && $row['id'] != $_SESSION['userid']) {
         session_start();
         $_SESSION['login_error'] = "This email is already in use. Please try again.";
         header("Location: ./profile.php?error=incorrect_email");
@@ -24,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_bind_param($stmt, "ssi", $new_email, $new_address, $_SESSION['userid']);
     mysqli_stmt_execute($stmt);
 
+    // Update the instructor info if the user is an instructor
     if ($_SESSION['user_type'] == 'instructor') {
         $new_company = $_POST['company'];
         $new_company_address = $_POST['company_address'];
@@ -35,7 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         mysqli_stmt_execute($stmt);
     }
 
+    // Redirect to the profile page
     header("Location: ./profile.php");
+
+    // Close the connection and terminate the script
     mysqli_close($conn);
     exit();
 }

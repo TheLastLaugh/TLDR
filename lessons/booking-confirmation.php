@@ -1,5 +1,8 @@
 <?php
+// Initialize the session
 session_start();
+
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
@@ -7,21 +10,25 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
+
 // Get the id of the learner
 $learnerId = $_SESSION['userid'];
 $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
 $row = mysqli_fetch_assoc($result);
 $learnerName = $row['username'];
+
 // Get the unit id from the form submission
 $selectedUnit = isset($_POST['unit'])  ? $_POST['unit'] : null;
 $result = mysqli_query($conn, "SELECT unit_name FROM lessons WHERE id = $selectedUnit");
 $row = mysqli_fetch_assoc($result);
 $unitName = $row['unit_name'];
+
 // Get the instructor id from the form submission
 $selectedInstructor = isset($_POST['instructor']) ? $_POST['instructor'] : null;
 $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $selectedInstructor");
 $row = mysqli_fetch_assoc($result);
 $instructorName = $row['username'];
+
 // Get the availability id from the form submission
 $selectedAvailability = isset($_POST['availability']) ? $_POST['availability'] : null;
 $result = mysqli_query($conn, "SELECT start_time FROM availability WHERE id = $selectedAvailability");
@@ -53,6 +60,7 @@ if (isset($_POST['confirm'])) {
 }
 ?>
 
+<!-- Simple confirmation page to let the user know that the booking bas gone through -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +74,9 @@ if (isset($_POST['confirm'])) {
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    
     <?php
         echo '<h1>
                 Lesson booked successfully! <br>

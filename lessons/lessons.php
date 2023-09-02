@@ -1,13 +1,16 @@
 <?php
+// Intialise session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
 }
-
+// I haven't decided to kick anyone off this page based on user type yet, but this page will be different for each user
 ?>
 
+<!-- A simple screen to choose between looking at previous lessons or booking a new one -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +23,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    
     <div class="content">
         <a href="lesson-progress.php">Lesson Progress</a>
         <a href="lesson-bookings.php">Book a lesson</a>

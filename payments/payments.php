@@ -1,11 +1,14 @@
 <?php
-
+// initialise session
 session_start();
 
+// check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit();
-} else if ($_SESSION['user_type'] !== 'learner') {
+} 
+// if the user isn't a learner, kick them out
+else if ($_SESSION['user_type'] !== 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit();
 }
@@ -13,10 +16,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
 
+// Get the user's id and name from the session
 $learnerId = $_SESSION['userid'];
-$result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId");
-$row = mysqli_fetch_assoc($result);
-$learnerName = $row['username'];
+$learnerName = $_SESSION['username'];
 
 // Get all the lessons from the booking table and display them in a drop-down menu
 $result = mysqli_query($conn, "SELECT 
@@ -49,27 +51,31 @@ WHERE
 </head>
 <body>
     <div id="banner">Payments</div>
+    <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <?php
+    // If the user has no lessons to pay for, display a message
         if (mysqli_num_rows($result) == 0) {
             echo '<h1>
                     Hello, ' . $learnerName . '. You have no lessons to pay for.' .
                  '</h1>';
-        } else {
+        } 
+        // Otherwise, display the lessons in a drop-down menu
+        else {
             echo '<h1>
                     Hello, ' . $learnerName . '. Select which lesson you would like to pay for.' .
                  '</h1>';
 
             // <!-- Step 1: Select lesson to pay for -->
-            echo '<form action="payments-step-two.php" method="POST">
-                    <input type="hidden" name="learner_id" value="' . $learnerId . '">'; ?>
+            echo '<form action="payments-step-two.php" method="POST">'; ?>
                 <label for="unit">Select Lesson You Wish To Pay For:</label>
                 <select name="unit" id="lesson">
                     <?php
                     // paid = 0 means it hasn't been paid for yet
                         while ($row = mysqli_fetch_assoc($result)) {
                             // Display the option in the drop-down menu
-                            // FORMAT= <instructor_name> on <booking_date> $<lesson_price>
+                            // FORMAT: <instructor_name> on <booking_date> $<lesson_price>
                             echo '<option value="' . $row['booking_id']  . '">' . 
                                     $row['instructor_name'] . ' on ' . $row['booking_date'] . ' $' . $row['lesson_price'] .
                                  '</option>';

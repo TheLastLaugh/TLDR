@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const details = document.querySelectorAll(".detail");
     const editFields = document.querySelectorAll(".edit-field");
 
+    // if the user wants to edit their profile, switch the display of the details and edit fields
     editButton.addEventListener("click", function() {
         details.forEach(detail => {
             detail.style.display = detail.style.display === "none" ? "block" : "none";

@@ -1,15 +1,24 @@
 <?php
+// Initialize the session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
+    exit;
+}
+// If the user isn't a learner, don't give them access to this page
+else if ($_SESSION['user_type'] != 'learner') {
+    header("Location: ../dashboard/welcome.php");
     exit;
 }
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
+
 // Get the id of the learner
-$learnerId = isset($_POST['learner_id']) ? $_POST['learner_id'] : null;
+$learnerId = $_SESSION['userid'];
+
 // Get the unit id from the form submission
 $selectedUnit = isset($_POST['unit'])  ? $_POST['unit'] : null;
 $result = mysqli_query($conn, "SELECT unit_name FROM lessons WHERE id = $selectedUnit");
@@ -33,11 +42,12 @@ $unitName = $row['unit_name'];
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    
     <!-- Step 2: Select lesson -->
     <form action="lesson-step-three.php" method="POST">
         <?php echo  '<input type="hidden" name="unit" value="' . $selectedUnit . '">' .
-                    '<input type="hidden" name="learner_id" value="' . $learnerId . '">' .
                     '<h1>
                         Select Instructor for your ' . $unitName . ' lesson' .
                     '</h1>';  // This is just to show the user what they selected, can be styled later 
@@ -46,8 +56,15 @@ $unitName = $row['unit_name'];
         <select name="instructor" id="instructor">
             <?php
                 // Get all the instructors from the database and display them in a drop-down menu
-                // I might have to expand on this to not show instructors that don't have available bookings, but this works for now.
-                $sql = "SELECT user_id, username, price FROM instructors";
+                // doesn't show instructors that don't have available bookings
+                $sql = "SELECT i.user_id, i.username, i.price
+                FROM instructors i
+                WHERE EXISTS (
+                    SELECT 1
+                    FROM availability a
+                    WHERE a.instructor_id = i.user_id AND a.is_booked = 0
+                )
+                ";
                 $statement = mysqli_stmt_init($conn);
                 mysqli_stmt_prepare($statement, $sql);
                 mysqli_stmt_execute($statement);

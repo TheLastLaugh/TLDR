@@ -1,3 +1,5 @@
+<!-- Page that will let a new user choose the appropriate account type -->
+<!-- I'm going to expand this to include qsd as well -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

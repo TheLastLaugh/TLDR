@@ -1,3 +1,4 @@
+<!-- Error page if the user tries to sign up with an email that's already in use -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,8 @@
     <div class="container">
         <h1>Duplicate Email Detected!</h1>
         <p>The email you've provided is already registered. Please use a different email or <a href="./index.php">login here</a>.</p>
+
+        <!-- Button that sends the user back to the previous page (from experimenting, this keeps the data they've put into the form so that they don't have to redo it) -->
         <button id="go_back">Go Back to Registration</button>
     </div>
 </body>

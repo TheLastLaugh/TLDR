@@ -1,12 +1,11 @@
 <?php
+// Intialise session
 session_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+// Add the database connection
 require_once "../inc/dbconn.inc.php";
 
+// if the form has been submitted, set the logbook entry to confirmed
 if (isset($_POST['logbook_id'])) {
     echo 'form submitted';
     $logbookId = $_POST['logbook_id'];
@@ -17,7 +16,10 @@ if (isset($_POST['logbook_id'])) {
     mysqli_stmt_execute($stmt);
 }
 
+// Redirect back to the previous page
 header("Location: logbook-confirmation.php");
+
+// Close the connection and terminate the script
 mysqli_close($conn);
 exit();
 ?>

@@ -1,11 +1,14 @@
 <?php
+// Initialise session
 session_start();
 
+// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
 }
 
+// add the database connection
 require_once "../inc/dbconn.inc.php"; 
 
 // Grab necessary data from the POST request
@@ -46,4 +49,8 @@ mysqli_stmt_execute($stmt);
 
 // Redirect to confirmation screen
 header("Location: confirm-payment.php?booking_id=$bookingId");
+
+// Close the connection and terminate the script
+mysqli_close($conn);
+exit();
 ?>

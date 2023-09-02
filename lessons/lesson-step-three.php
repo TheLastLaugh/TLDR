@@ -1,20 +1,30 @@
 <?php
+// Initialise the session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
+    exit;
+}
+// If the user isn't a learner, don't give them access to this page
+else if ($_SESSION['user_type'] != 'learner') {
+    header("Location: ../dashboard/welcome.php");
     exit;
 }
 
 // Uses the database connection file
 require_once "../inc/dbconn.inc.php"; 
+
 // Get the id of the learner
-$learnerId = isset($_POST['learner_id']) ? $_POST['learner_id'] : null;
+$learnerId = $_SESSION['userid'];
+
 // Get the unit id from the form submission
 $selectedUnit = isset($_POST['unit'])  ? $_POST['unit'] : null;
 $result = mysqli_query($conn, "SELECT unit_name FROM lessons WHERE id = $selectedUnit");
 $row = mysqli_fetch_assoc($result);
 $unitName = $row['unit_name'];
+
 // Get the instructor id from the form submission
 $selectedInstructor = isset($_POST['instructor']) ? $_POST['instructor'] : null;
 $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $selectedInstructor");
@@ -38,13 +48,14 @@ $instructorName = $row['username'];
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <!-- Step 2: Select lesson -->
     <form action="booking-confirmation.php" method="POST">
         <?php echo 
                 '<input type="hidden" name="unit" value="' . $selectedUnit . '">' .
                 '<input type="hidden" name="instructor" value="' . $selectedInstructor . '">' .
-                '<input type="hidden" name="learner_id" value="' . $learnerId . '">' .
                 '<h1>
                     Select Time and Date for your ' . $unitName . ' lesson with ' . $instructorName .
                 '</h1>';  // This is just to show the user what they selected, can be styled later 

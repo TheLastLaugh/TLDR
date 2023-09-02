@@ -156,7 +156,6 @@ CREATE TABLE logbooks (
     FOREIGN KEY (learner_id) REFERENCES users(id)
 );
 
-
 -- ------------------------------------------------------------------------------------------------*
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
@@ -237,6 +236,7 @@ INSERT INTO bookings (learner_id, availability_id, booking_date) VALUES
 (1, 1, '2023-08-24'),
 (1, 2, '2023-08-24');
 
+-- Default link between instructor and learner
 INSERT INTO instructor_learners (instructor_id, learner_id) VALUES
 (2, 1);
 
