@@ -103,6 +103,7 @@ if (isset($_POST['email'])) {
 
         // Redirecto to the page that will add the default availability blocks
         header("Location: ./add-instructor-availability.php");
+        exit();
     }
 
     // Add learner-qsd relations to the database if the new user is a qsd
