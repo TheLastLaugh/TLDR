@@ -1,17 +1,20 @@
 <?php
-
+// initialise session
 session_start();
 
+// check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
 }
 
+// add the database connection
 require_once "../inc/dbconn.inc.php";
 
+// Get the booking id from the URL
 $bookingId = $_GET['booking_id'];
 
-// Fetch booking details for the invoice
+// Fetch booking details to display on the confirmation page
 $sql = "SELECT 
     b.id AS booking_id, 
     b.booking_date,
@@ -34,6 +37,8 @@ $bookingDetails = mysqli_fetch_assoc($result);
 
 ?>
 
+<!-- Page to let the user know that their payment was successful and they can view the invoice or go home. -->
+<!-- We should probably have an option somewhere to view all previous invoices -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,17 +51,22 @@ $bookingDetails = mysqli_fetch_assoc($result);
 </head>
 <body>
     <div id="banner">Payments</div>
+    <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <div class="confirm" id="confirm">
         <h1>Payment Confirmation</h1>
         <p>Thank you for your payment!</p>
 
         <h2>Booking Details:</h2>
+        <!-- FORMAT: <attribute>: <value> -->
         <p>Instructor: <?php echo $bookingDetails['instructor_name']; ?></p>
         <p>Date: <?php echo $bookingDetails['booking_date']; ?></p>
         <p>Lesson Price: $<?php echo $bookingDetails['lesson_price']; ?></p>
 
+        <!-- Send the user to the invoice link with the bookingid in the url -->
         <a href="generate-invoice.php?booking_id=<?php echo $bookingId; ?>">View Invoice</a>
+        <!-- Go to the dashboard -->
         <a href="../dashboard/welcome.php">Go to Home</a>
     </div>
 </body>

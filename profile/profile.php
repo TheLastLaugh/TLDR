@@ -1,11 +1,14 @@
 <?php
+// Initialise session
 session_start();
 
+// Check if user is logged in
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit();
 }
 
+// If there is an error, display it
 if (isset($_GET['error'])) {
     $error = $_GET['error'];
     if ($error == "incorrect_email") {
@@ -18,18 +21,23 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// add the database connection
 require_once "../inc/dbconn.inc.php";
 
+// get some of the user's details from the session
 $user_id = $_SESSION['userid'];
-$result = mysqli_query($conn, "SELECT username, email, address, license, dob, user_type FROM users WHERE id = $user_id");
+$name = $_SESSION['username'];
+$user_type = $_SESSION['user_type'];
+
+// Grab the rest of the user's details from the database
+$result = mysqli_query($conn, "SELECT email, address, license, dob FROM users WHERE id = $user_id");
 $row = mysqli_fetch_assoc($result);
-$name = $row['username'];
 $email = $row['email'];
 $address = $row['address'];
 $license = $row['license'];
 $dob = $row['dob'];
-$user_type = $row['user_type'];
 
+// Show the company infor the is the user is an instructor
 if ($user_type == 'instructor') {
     $result = mysqli_query($conn, "SELECT company, company_address, phone, price FROM instructors WHERE user_id = $user_id");
     $row = mysqli_fetch_assoc($result);
@@ -41,6 +49,7 @@ if ($user_type == 'instructor') {
 }
 ?>
 
+<!-- Profile page that shows all of the user's information, and allows them to change some of it -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +63,10 @@ if ($user_type == 'instructor') {
 </head>
 <body>
     <div id="banner">Your profile</div>
+    
+    <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <form id="editForm" action="update-profile.php" method="post">
         <!-- Name (can't edit) -->
         <p><strong>Name:</strong> <?php echo htmlspecialchars($name); ?></p>

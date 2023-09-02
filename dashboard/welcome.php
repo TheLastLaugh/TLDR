@@ -1,15 +1,20 @@
 <?php
+// Initialize session data
 session_start();
+
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
-} else if ($_SESSION['user_type'] == 'instructor') {
+} 
+// If the user is an instructor, don't give them access to this page
+else if ($_SESSION['user_type'] == 'instructor') {
     header("Location: ../dashboard/welcome-instructor.php");
     exit;
 }
-
 ?>
 
+<!-- Super simple dashboard page for now, we can update this with anything we want -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +27,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div id="banner">Welcome to TLDR</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
+    <!-- These are all just hard-coded placeholder values. We can change these dynamically when we decide on the information to show -->
     <div id="dashboard">
         <div class="stats-container">
             <div class="stat-card">

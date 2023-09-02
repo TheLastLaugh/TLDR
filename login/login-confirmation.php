@@ -1,10 +1,19 @@
 <?php
+// Initialise session
 session_start();
+
+// add the database connection
 require_once "../inc/dbconn.inc.php";
+
+// debugging late at night
 echo 'we out here';
+
 // Check if form is submitted
 if (isset($_POST['email']) && isset($_POST['password'])) {
+    // lol
     echo 'we in here';
+
+    // Get the user's email and password from submitted form
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -42,5 +51,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     }
 }
 
+// Close the connection and terminate the script
 mysqli_close($conn);
+exit();
 ?>

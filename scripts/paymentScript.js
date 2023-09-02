@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const paymentForm = document.getElementById('paymentForm');
+
+    // change the display of the payment form
     document.getElementById('togglePaymentForm').addEventListener('click', function() {
         paymentForm.style.display = 'block';
         document.getElementById('togglePaymentForm').style.display = 'none';

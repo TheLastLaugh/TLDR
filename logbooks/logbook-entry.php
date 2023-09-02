@@ -1,31 +1,35 @@
 <?php
+// Intialise session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit();
-} else if ($_SESSION['user_type'] == 'learner') {
+} 
+// If the user is a learner, kick them out
+else if ($_SESSION['user_type'] == 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit();
 }
 
+// Include the database connection
 require_once "../inc/dbconn.inc.php";
 
+// Get the user id into a variable to make it easier to use later
 $user_id = $_SESSION['userid'];
 
+// query the correct user table to get the learner ids
 if ($_SESSION['user_type'] == 'qsd') {
     // look up the qsd_learners table
     $result = mysqli_query($conn, "SELECT learner_id FROM qsd_learners WHERE qsd_id = $user_id");
-    $row = mysqli_fetch_assoc($result);
-    $learner_ids = $row['learner_id'];
 } else if ($_SESSION['user_type'] == 'instructor') {
     // look up the qsd_learners table
     $result = mysqli_query($conn, "SELECT learner_id FROM instructor_learners WHERE instructor_id = $user_id");
-    $row = mysqli_fetch_assoc($result);
-    $learner_ids = $row['learner_id'];
 }
 ?>
 
+<!-- This page is only accessible to QSDs and instructors to enter a logbook for a learner -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,28 +42,35 @@ if ($_SESSION['user_type'] == 'qsd') {
 </head>
 <body>
     <div id="banner">Logbook Entry</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <div class="content">
         <h1>Enter a drive for the learner</h1>
         <form action="process-logbook.php" method="POST">
             <ul>
-                </li>
                 <li>
                     <label for="license">Learner's License</label>
                     <select name="license" required>
                         <?php
-                            $sql = "SELECT license, username FROM users WHERE id = ?";
-                            $stmt = mysqli_prepare($conn, $sql);
-                            mysqli_stmt_bind_param($stmt, "i", $learner_ids);
-                            mysqli_stmt_execute($stmt);
-                            $result = mysqli_stmt_get_result($stmt);
-
                             while ($row = mysqli_fetch_assoc($result)) {
+                                // Get all the learners from the database associated with the qsd/instructor and display them in a drop-down menu
+                                $learner_id = $row['learner_id'];
+
+                                $sql = "SELECT license, username FROM users WHERE id = ?";
+                                $stmt = mysqli_prepare($conn, $sql);
+                                mysqli_stmt_bind_param($stmt, "i", $learner_id);
+                                mysqli_stmt_execute($stmt);
+                                $result = mysqli_stmt_get_result($stmt);
+                                
+                                // FORMT: <license> - <username>
                                 echo '<option value="' . $row['license'] . '">' . $row['license'] . '-' .$row['username'] . '</option>';
                             }
                         ?>
                     </select>
                 </li>
+                
+                <!-- Other static fields to fill in the drive details -->
                 <li>
                     <label for="date">Date</label>
                     <input type="date" name="date" required>

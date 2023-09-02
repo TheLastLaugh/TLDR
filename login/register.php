@@ -1,10 +1,12 @@
 <?php
+// initialise session
 session_start();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// add the database connection
 require_once "../inc/dbconn.inc.php";
 
 // Check if email already exists
@@ -53,39 +55,46 @@ if (isset($_POST['email'])) {
 
     $row = mysqli_fetch_assoc($result);
 
+    // Set session variables
     $_SESSION['loggedin'] = true;
     $_SESSION['userid'] = $row['id'];
     $_SESSION['username'] = $row['username'];
     $_SESSION['user_type'] = $row['user_type'];
 
+    // Add a new entry to the instructor table if the new user is an instructor
     if ($user_type == 'instructor') {
-        echo 'instructor';
+        // Get the instructor's details from the form
         $company = $_POST['company'];
         $company_address = $_POST['company_address'];
         $company_phone = $_POST['company_phone'];
         $price = $_POST['price'];
 
+        // Get the user's new id from the database
         $sql = "SELECT id FROM users WHERE email = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "s", $email);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
-
         $row = mysqli_fetch_assoc($result);
         $user_id = $row['id'];
 
+        // Insert the instructor's details into the database
         $sql = "INSERT INTO instructors (username, user_id, company, company_address, phone, price) VALUES (?, ?, ?, ?, ?, ?);";
 
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "sisssi", $username, $user_id, $company, $company_address, $company_phone, $price);
         
         mysqli_stmt_execute($stmt);
+
+        // Redirecto to the page that will add the default availability blocks
         header("Location: ./add-instructor-availability.php");
     }
 
+    // Redirect to the dashboard
     header("Location: ../dashboard/welcome.php");
-    exit();
 }
 
+// Close the connection and terminate the script
 mysqli_close($conn);
+exit();
 ?>

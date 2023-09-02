@@ -11,7 +11,7 @@ require_once "../inc/dbconn.inc.php";
 
 // Grab the booking ID and learner ID
 $bookingId = $_POST['unit'];
-$learnerId = $_POST['learner_id'];
+$learnerId = $_SESSION['userid'];
 
 // Get details of the selected lesson
 $sql = "SELECT 
@@ -59,14 +59,18 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
             if (mysqli_num_rows($paymentMethods) > 0) {
                 echo '<select id="paymentMethodsDropdown">';
                 echo '<option value="0">Select a payment method</option>';
+                // FORMAT: <method_name> (<last_four_digits>)
                 while ($method = mysqli_fetch_assoc($paymentMethods)) {
                     echo '<option name="payment_method" value="' . $method['id'] . '" data-method_name="' . $method['method_name'] . '" data-address="' . $method['address'] . '" data-card_type="' . $method['card_type'] . '" data-card_number="' . $method['card_number'] . '">' . $method['method_name'] . ' (' . $method['last_four_digits'] . ')</option>';
                 }
                 echo '</select>';
-            } else {
+            } 
+            // If the user doesn't have any saved payment methods they're forced to add one
+            else {
                 echo '<p>No payment methods found. Please add one.</p>';
             }
         ?>
+        <!-- If they press this button the below form gets shown -->
         <input type="button" value="Add a new payment method" id="togglePaymentForm">
         
         <!-- Add a new payment method (Hidden if there are saved payment methods)-->
@@ -87,8 +91,8 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
 
             <label for="card_number">Card Number:</label>
             <input type="text" name="card_number" minlength="16" maxlength="16" pattern="\d{16}" required>
-
-            <!-- More fields for expiry, CVV, etc. -->
+            
+            <!-- Makes a drop down menu for 1-12 -->
             <label for="expiry_month">Expiry Month:</label>
             <select name="expiry_month">
                 <?php
@@ -97,7 +101,8 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
                 }
                 ?>
             </select>
-
+            
+            <!-- Makes a drop-down menu until 2030 -->
             <label for="expiry_year">Expiry Year:</label>
             <select name="expiry_year">
                 <?php
@@ -111,7 +116,6 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
             <input type="text" name="cvv" minlength="3" maxlength="3" pattern="\d{3}" required> 
             
             <!-- Hidden fields for data -->
-            <input type="hidden" name="learner_id" value="<?php echo $learnerId; ?>">
             <input type="hidden" name="booking_id" value="<?php echo $bookingId; ?>">
         </div>
         

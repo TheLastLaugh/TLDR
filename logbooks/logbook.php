@@ -1,20 +1,15 @@
 <?php
+// Intialise session
 session_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit();
-} else if ($_SESSION['user_type'] == 'qsd' || $_SESSION['user_type'] == 'instructor') {
-    header("Location: ../logbooks/logbook-entry.php");
-    exit();
 } 
-
 ?>
 
+<!-- A simple page to choose between viewing previous logbook entries, or adding/confirming a new one -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,12 +22,18 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div id="banner">Lessons</div>
+    <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+
     <div class="content">
         <h1>Would you like to...</h1>
         <a href="logbook-submissions.php">View previous entries</a>
+
+        <!-- If the user is a learner, they can confirm the entries -->
         <?php if($_SESSION['user_type'] == 'learner'): ?>
         <a href="logbook-confirmation.php">Confirm logbook entries</a>
+        
+        <!-- Otherwise, the user can create a new entry -->
         <?php else: ?>
         <a href="logbook-entry.php">Add a new entry</a>
         <?php endif; ?>

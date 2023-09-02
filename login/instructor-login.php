@@ -1,3 +1,4 @@
+<!-- Login page for new instructor accounts -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +14,8 @@
 <body>
     <div>
         <h1>Register</h1>
+        <!-- Directs to the same registration page as all new accounts -->
+        <!-- Fields to enter user information -->
         <form action="register.php" method="POST">
             <ul>
                 <li>
@@ -63,6 +66,7 @@
                     <input type="submit" value="Submit" class="submit-button">
                 </li>
 
+                <!-- A hidden field that will decide how the user is created when it is redirected -->
                 <input type="hidden" name="user_type" value="instructor">
             </ul>
         </form>

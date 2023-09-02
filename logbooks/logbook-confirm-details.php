@@ -1,19 +1,25 @@
 <?php
-
+// Initialize the session
 session_start();
 
+// Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
     exit;
-} else if ($_SESSION['user_type'] != 'learner') {
+} 
+// If the user isn't a learner, kick them out
+else if ($_SESSION['user_type'] != 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit;
 }
 
+// Include the database connection
 require_once "../inc/dbconn.inc.php"; 
 
+// Get the id of the chosen logbook
 $logbook_id = $_POST['logbook'];
 
+// Get all attributes from the logbook table for the selected id
 $sql = "SELECT * FROM logbooks WHERE id = ?;";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "i", $logbook_id);
@@ -21,6 +27,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
 
+// Set variables from the sqll query to make displaying them easier later
 $date = $row['date'];
 $start_time = $row['start_time'];
 $end_time = $row['end_time'];
@@ -34,6 +41,8 @@ $qsd_name = $row['qsd_name'];
 $qsd_license = $row['qsd_license'];
 ?>
 
+<!-- This page displays all of the information from a proposed logbook entry, the user just gets to review it and confirm -->
+<!-- I haven't added any way to disput this information yet but we can add something like that in if we want to -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,11 +55,14 @@ $qsd_license = $row['qsd_license'];
 </head>
 <body>
     <div id="banner">Logbook confirmation</div>
+    <!-- includ the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    <!-- FORMAT: Drive with <qsd_name> on <date> -->
     <h1>Drive with <?php echo $row['qsd_name'] . ' on ' . $row['date']; ?></h1>
     
     <form action="process-logbook-confirmation.php" method="POST">
         <h2>Logbook Details:</h2>
+        <!-- FORMAT FOR ALL ENTRIES: <attribute>: <value> -->
         <p><strong>QSD:</strong> <?php echo htmlspecialchars($name); ?></p>
         <p><strong>QSD License:</strong> <?php echo htmlspecialchars($qsd_license); ?></p>
         <p><strong>Date:</strong> <?php echo htmlspecialchars($date); ?></p>
@@ -62,8 +74,10 @@ $qsd_license = $row['qsd_license'];
         <p><strong>Road Type:</strong> <?php echo htmlspecialchars($road_type); ?></p>
         <p><strong>Weather:</strong> <?php echo htmlspecialchars($weather); ?></p>
         <p><strong>Traffic:</strong> <?php echo htmlspecialchars($traffic); ?></p>
+
         <!-- Hidden field for data -->
         <input type="hidden" name="logbook_id" value="<?php echo $logbook_id ?>">
+        
         <input type="submit" value="Confirm Logbook Entry">
     </form>
 </body>
