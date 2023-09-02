@@ -52,9 +52,9 @@ if (isset($_POST['confirm'])) {
     mysqli_stmt_execute($statementUpdate);
 
     // Adds the learner as a student of the instructor so that they can enter the logbook easier later
-    $sql = "INSERT INTO instructor_learners (id, learner_id) VALUES (?, ?)";
+    $sql = "INSERT INTO instructor_learners (instructor_id, learner_id) VALUES (?, ?)";
     $statementUpdate = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($statementUpdate, $sqlUpdate);
+    mysqli_stmt_prepare($statementUpdate, $sql);
     mysqli_stmt_bind_param($statementUpdate, "ii", $selectedInstructor, $learnerId); // 2 integers
     mysqli_stmt_execute($statementUpdate);
 }
