@@ -124,6 +124,20 @@ if ($user_type == 'instructor') {
         </div>
         
         <?php endif; ?>
+
+        <!-- QSD Details -->
+        <?php if ($user_type == 'instructor'): ?>
+        <h2>Instructor Details</h2>
+        
+        <!-- Learners -->
+        <p class="detail"><strong>Learners:</strong> <?php echo htmlspecialchars($company); ?></p>
+        <!-- ill fix this later -->
+        <div class="edit-field" style="display: none;">
+            <label for="company">Company:</label>
+            <input type="text" name="company" id="company" value="<?php echo htmlspecialchars($company); ?>" required>
+        </div>
+        
+        <?php endif; ?>
         
         <input type="submit" value="Update">
         </form>
