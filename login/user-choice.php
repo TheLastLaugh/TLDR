@@ -24,6 +24,12 @@
             <li>
                 <a href="./instructor-login.php" class="button-link">Instructor</a>
             </li>
+            <h3>
+                or:
+            </h3>
+            <li>
+                <a href="./qsd-login.php" class="button-link">QSD</a>
+            </li>
         </ol>
     </div>
 </body>

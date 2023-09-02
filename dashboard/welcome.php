@@ -2,6 +2,9 @@
 // Initialize session data
 session_start();
 
+// add the database connection
+require_once "../inc/dbconn.inc.php";
+
 // Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../login/index.php");
@@ -12,6 +15,12 @@ else if ($_SESSION['user_type'] == 'instructor') {
     header("Location: ../dashboard/welcome-instructor.php");
     exit;
 }
+// If the user is a qsd, don't give them access to this page
+else if ($_SESSION['user_type'] == 'qsd') {
+    header("Location: ../dashboard/welcome-qsd.php");
+    exit;
+}
+
 ?>
 
 <!-- Super simple dashboard page for now, we can update this with anything we want -->

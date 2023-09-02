@@ -90,6 +90,51 @@ if (isset($_POST['email'])) {
         header("Location: ./add-instructor-availability.php");
     }
 
+    // Add learner-qsd relations to the database if the new user is a qsd
+    if ($user_type == 'qsd') {
+        // Get the learner licenses from the form
+        $learners = $_POST['learners'];
+
+        // Check if the licenses are valid
+        $invalid_licenses = [];
+        $valid_ids = [];
+
+        foreach($learners as $license) {
+            $sql = "SELECT id FROM users WHERE license = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "s", $license);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+        
+            if (mysqli_num_rows($result) == 0) {
+                $invalid_licenses[] = $license;
+            } else {
+                $row = mysqli_fetch_assoc($result);
+                $valid_ids[] = $row['id'];
+            }
+        }
+
+        if (!empty($invalid_licenses)) {
+            $sql = "DELETE FROM users WHERE id = ?";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "s", $_SESSION['userid']);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+
+            header("Location: ./login-redirect.php?error=invalid_licenses&licenses=" . implode(",", $invalid_licenses));
+            exit();
+        }
+
+        foreach($valid_ids as $license) {            
+            // Add the relationship to the table
+            $sql = "INSERT INTO qsd_learners (qsd_id, learner_id) VALUES (?, ?)";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $_SESSION['userid'], $license);
+            mysqli_stmt_execute($stmt);
+        }
+
+    }
+
     // Redirect to the dashboard
     header("Location: ../dashboard/welcome.php");
 }

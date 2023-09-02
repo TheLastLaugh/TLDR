@@ -12,8 +12,8 @@ else if ($_SESSION['user_type'] == 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit;
 }
-// If the user is a qsd, don't give them access to this page
-else if ($_SESSION['user_type'] == 'qsd') {
+// If the user is an instructor, don't give them access to this page
+else if ($_SESSION['user_type'] == 'instructor') {
     header("Location: ../dashboard/welcome-qsd.php");
     exit;
 }
@@ -37,8 +37,8 @@ else if ($_SESSION['user_type'] == 'qsd') {
     <div id="dashboard">
         <div class="stats-container">
             <div class="stat-card">
-                <h3>Some stuff relating to instructors</h3>
-                <p>bookings or something</p> 
+                <h3>Some stuff relating to qsds</h3>
+                <p>stats on their learner maybe</p> 
             </div>
         </div>
     </div>

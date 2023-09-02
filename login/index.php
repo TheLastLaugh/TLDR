@@ -73,7 +73,7 @@ if (isset($_GET['error'])) {
             <br />
 
             <a
-              href="./learner-or-instructor.php"
+              href="./user-choice.php"
               >Sign up now</a
             >
           </div>
