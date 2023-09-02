@@ -12,6 +12,14 @@ body {
     font-size: 24px;
 }
 
+#dashboard {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+
+
+/* SIDEBAR STYLING */
 #sidebar {
     float: left;
     width: 200px;
@@ -19,11 +27,6 @@ body {
     background-color: #f7f7f7;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-#dashboard {
-    margin-left: 220px;
-    padding: 20px;
 }
 
 #sidebar ul {
@@ -43,6 +46,8 @@ body {
 #sidebar ul li a:hover {
     text-decoration: underline;
 }
+/* SIDEBAR STYLING */
+
 
 .stats-container {
     display: grid;
