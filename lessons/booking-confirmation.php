@@ -1,4 +1,8 @@
 <?php
+// error check
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Initialize the session
 session_start();
 
@@ -38,10 +42,10 @@ $bookingTime = $row['start_time'];
 //This happens after the user clicks the confirm button after selecting all values. Relevant code for this is at the bottom of the page
 if (isset($_POST['confirm'])) {
     // Insert the booking into the database
-    $sql = "INSERT INTO bookings (learner_id, availability_id, booking_date) VALUES (?, ?, NOW())";
+    $sql = "INSERT INTO bookings (learner_id, availability_id, booking_date, lesson_id) VALUES (?, ?, NOW(), ?)";
     $statement = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($statement, $sql);
-    mysqli_stmt_bind_param($statement, "ii", $learnerId, $selectedAvailability); // 2 integers
+    mysqli_stmt_bind_param($statement, "iii", $learnerId, $selectedAvailability, $selectedUnit); // 2 integers
     mysqli_stmt_execute($statement);
     
     // Sets the availability of the instructor to booked so it doesn't show up in the list of available times. This is unique for each Instructor.
@@ -52,9 +56,9 @@ if (isset($_POST['confirm'])) {
     mysqli_stmt_execute($statementUpdate);
 
     // Adds the learner as a student of the instructor so that they can enter the logbook easier later
-    $sql = "INSERT INTO instructor_learners (id, learner_id) VALUES (?, ?)";
+    $sql = "INSERT INTO instructor_learners (instructor_id, learner_id) VALUES (?, ?)";
     $statementUpdate = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($statementUpdate, $sqlUpdate);
+    mysqli_stmt_prepare($statementUpdate, $sql);
     mysqli_stmt_bind_param($statementUpdate, "ii", $selectedInstructor, $learnerId); // 2 integers
     mysqli_stmt_execute($statementUpdate);
 }

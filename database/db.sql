@@ -106,6 +106,7 @@ CREATE TABLE bookings (
     availability_id int NOT NULL,
     booking_date DATE NOT NULL, 
     paid BOOLEAN NOT NULL DEFAULT FALSE,
+    lesson_id int NOT NULL,
     FOREIGN KEY (learner_id) REFERENCES users(id),
     FOREIGN KEY (availability_id) REFERENCES availability(id)
 );
@@ -231,9 +232,9 @@ INSERT INTO availability (instructor_id, start_time, end_time) VALUES
 
 
 -- Just some test bookings so that I can test the instructor logbook entries
-INSERT INTO bookings (learner_id, availability_id, booking_date) VALUES
-(1, 1, '2023-08-24'),
-(1, 2, '2023-08-24');
+INSERT INTO bookings (learner_id, availability_id, booking_date, lesson_id) VALUES
+(1, 1, '2023-08-24', 1),
+(1, 2, '2023-08-24', 2);
 
 -- Default link between instructor and learner
 INSERT INTO instructor_learners (instructor_id, learner_id) VALUES
