@@ -1,41 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirm_password');
-    const addLearnerButton = document.getElementById('addLearnerButton');
-    const removeLearnerButton = document.getElementById('removeLearnerButton');
-    let countLearners = 1;
 
-    // Gives the user an error if the passwords don't match when registering
+    // Checks if the password is valid
+    const isValidPassword = function(password) {
+        // Regular expression for a strong password
+        // I stole this from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/; 
+        // cmon like i'm ever gonna figure that regex out 
+        
+        return regex.test(password);
+    }
+
+    // Gives the user an error if the passwords don't match when registering, or if the password is not strong enough
     const checkPasswordValidity = function() {
         if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity('Passwords do not match');
+        } else if (!isValidPassword(password.value)) {
+            password.setCustomValidity('Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
         } else {
             confirmPassword.setCustomValidity('');
+            password.setCustomValidity('');
         }
-    }
-    
-    function addLearner() {
-        const learnerContainer = document.getElementById("learnerContainer");
-        const newInput = document.createElement("input");
-        countLearners++;
-        countLearners > 1 ? removeLearnerButton.style.display = "inline-block" : removeLearnerButton.style.display = "none";
-
-        newInput.type = "text";
-        newInput.name = "learners[]";
-        learnerContainer.appendChild(newInput);
     }    
-
-    function removeLearner() {
-        const learnerContainer = document.getElementById("learnerContainer");
-        const lastInput = learnerContainer.lastChild;
-        countLearners--;
-        countLearners > 1 ? removeLearnerButton.style.display = "inline-block" : removeLearnerButton.style.display = "none";
-        learnerContainer.removeChild(lastInput);
-    }
 
     password.addEventListener('change', checkPasswordValidity);
     confirmPassword.addEventListener('keyup', checkPasswordValidity);
-    addLearnerButton.addEventListener('click', addLearner);
-    removeLearnerButton.addEventListener('click', removeLearner);
 
 });

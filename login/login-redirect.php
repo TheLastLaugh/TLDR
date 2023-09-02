@@ -20,6 +20,10 @@ if (isset($_GET['error'])) {
                 $error_message = "License: $license is not in our database";
             }
             break;
+        case 'incorrect_license':
+            $error_message = "License is already registered. Please try again.";
+            break;
+        
     }
 }
 
@@ -35,7 +39,7 @@ if (isset($_GET['error'])) {
     <meta name="author" content="Alistair Macvicar">
     <title>Duplicate Email</title>
     <link rel="stylesheet" href="../styles/styles.css">
-    <script src="../scripts/loginScript.js" defer></script>
+    <script src="../scripts/loginRedirectScript.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -45,6 +49,9 @@ if (isset($_GET['error'])) {
         <?php elseif ($error == 'invalid_licenses') : ?>
         <h1>Learner Not Found!</h1>
         <p>The license(s): <?php echo $license ?> you've provided is not in our database. Please try again.</p>
+        <?php elseif ($error == 'incorrect_license'): ?>
+        <h1>Duplicate License Detected!</h1>
+        <p>The license you've provided is already registered. Please use a different license or <a href="./index.php">login here</a>.</p>
         <?php endif; ?>
 
         <!-- Button that sends the user back to the previous page (from experimenting, this keeps the data they've put into the form so that they don't have to redo it) -->

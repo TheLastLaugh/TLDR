@@ -27,6 +27,7 @@ if (isset($_GET['error'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/welcome.css" />
     <title>TLDR</title>
+    <script src="../scripts/loginScript.js"></script>
   </head>
   <body>
     <header class="header">

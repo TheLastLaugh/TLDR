@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/login-styles.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../scripts/registrationScript.js" defer></script>
+    <script src="../scripts/qsdRegScript.js" defer></script>
 </head>
 <body>
     <div>
