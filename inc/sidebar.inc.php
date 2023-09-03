@@ -1,7 +1,11 @@
 <head>
     <link rel="stylesheet" href="../styles/styles.css">
+    <script src="../scripts/sidebarScript.js" defer></script>
 </head>
-
+<div id="banner">
+    <img id="menuIcon" src="../images/menu.png" alt="Menu Icon" style="width:40px;height:40px;">
+    Welcome to TLDR
+</div>
 <div id="sidebar">
         <ul>
             <li><a href="../dashboard/welcome.php">Home</a></li>

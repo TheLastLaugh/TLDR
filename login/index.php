@@ -27,7 +27,6 @@ if (isset($_GET['error'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/welcome.css" />
     <title>TLDR</title>
-    <script src="../scripts/loginScript.js"></script>
   </head>
   <body>
     <header class="header">
@@ -52,7 +51,7 @@ if (isset($_GET['error'])) {
             <span class="icon">
               <i class="fa-solid fa-envelope"></i>
             </span>
-            <input type="text" class="input" name="email" id="user-input" placeholder="Enter your email" autocomplete="off" required /> 
+            <input type="email" class="input" name="email" id="user-input" placeholder="Enter your email" autocomplete="off" required /> 
           </div>
           <div class="input-box">
             <span class="icon">

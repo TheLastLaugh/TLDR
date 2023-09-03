@@ -18,7 +18,6 @@ else if ($_SESSION['user_type'] == 'qsd') {
     exit;
 }
 ?>
-
 <!-- Super simple dashboard page for now, we can update this with anything we want -->
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +30,6 @@ else if ($_SESSION['user_type'] == 'qsd') {
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
-    <div id="banner">Welcome to TLDR</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <div id="dashboard">

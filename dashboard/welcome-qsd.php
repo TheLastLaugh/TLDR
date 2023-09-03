@@ -31,7 +31,6 @@ else if ($_SESSION['user_type'] == 'instructor') {
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
-    <div id="banner">Welcome to TLDR</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <div id="dashboard">

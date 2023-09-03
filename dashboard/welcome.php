@@ -35,7 +35,6 @@ else if ($_SESSION['user_type'] == 'qsd') {
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
-    <div id="banner">Welcome to TLDR</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
