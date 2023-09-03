@@ -31,7 +31,7 @@ $learnerId = $_SESSION['userid'];
     <meta name="author" content="Alistair Macvicar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lesson Progress</title>
-    <link rel="stylesheet" href="../styles/style.css"/>
+    <link rel="stylesheet" href="../styles/styles.css"/>
     <link rel="stylesheet" href="../styles/lesson-progress-styles.css">
     <script src="../scripts/moduleScript.js" defer></script>
 </head>
@@ -68,8 +68,35 @@ $learnerId = $_SESSION['userid'];
                 }
                 echo '<div id="modules-' . $row['id'] . '" style="display:none">';
                 while ($row2 = mysqli_fetch_assoc($moduleResult)) {
-                    echo '<h3>' . $row2['module_number'] . ' ' . $row2['module_name'] . '</h3>';
-                    echo '<p>' . $row2['module_description'] . '</p>';
+                    // Fetch the tasks associated with the current module
+                    $sqlTasks = "SELECT * FROM cbta_module_tasks WHERE module_number = ?";
+                    $taskStatement = mysqli_prepare($conn, $sqlTasks);
+                    mysqli_stmt_bind_param($taskStatement, "i", $row2['module_number']);
+                    mysqli_stmt_execute($taskStatement);
+                    $taskResult = mysqli_stmt_get_result($taskStatement);
+
+
+                    echo '<h3 id="submodule_headings" onclick="toggleSubModules(' . $row2['module_number'] . ')">' . $row2['module_name'] . '</h3>';
+                    echo '<div id="submodules-' . $row2['module_number'] . '" style="display:none">';
+                    
+                    while ($taskRow = mysqli_fetch_assoc($taskResult)) {
+                        echo '<h4 id="description_headings" onclick="toggleDescriptions(' . $row2['module_number'] . ', ' . $taskRow['task_number'] . ')">' . $taskRow['task_name'] . '</h4>';
+                        echo '<div id="descriptions-' . $row2['module_number'] . '-' . $taskRow['task_number'] . '" style="display:none">';
+                        
+                        // Fetch and display descriptions
+                        $sqlDescription = "SELECT * FROM cbta_module_task_description WHERE module_number = ? AND task_number = ?";
+                        $descriptionStatement = mysqli_prepare($conn, $sqlDescription);
+                        mysqli_stmt_bind_param($descriptionStatement, "ii", $row2['module_number'], $taskRow['task_number']);
+                        mysqli_stmt_execute($descriptionStatement);
+                        $descriptionResult = mysqli_stmt_get_result($descriptionStatement);
+                        
+                        while ($descriptionRow = mysqli_fetch_assoc($descriptionResult)) {
+                            echo '<p>' . $descriptionRow['module_task_listing'] . ' ' . $descriptionRow['description'] . '</p>';
+                        }
+            
+                        echo '</div>';
+                    }
+                    echo '</div>';
                 }
                 echo '</div>';
             }
