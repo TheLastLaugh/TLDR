@@ -10,4 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 sideBar.style.width = "0px";
             }
     })
+    document.getElementById("title").innerText = document.title;
+
 });

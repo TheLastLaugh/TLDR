@@ -4,7 +4,7 @@
 </head>
 <div id="banner">
     <img id="menuIcon" src="../images/menu.png" alt="Menu Icon" style="width:40px;height:40px;">
-    Welcome to TLDR
+    <div id = "title">Welcome to TLDR</div>
 </div>
 <div id="sidebar">
         <ul>
