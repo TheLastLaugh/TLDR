@@ -131,8 +131,6 @@ if ($user_type == 'instructor') {
             </form>
             <button id="editButton">Edit Profile</button>
         </div>
-        
-        <?php endif; ?>
 
         <!-- QSD Details -->
         <?php if ($user_type == 'qsd'): ?>
