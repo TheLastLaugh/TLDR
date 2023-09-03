@@ -125,11 +125,12 @@ if ($user_type == 'instructor') {
                 <input type="text" name="price" id="price" value="<?php echo htmlspecialchars($price); ?>" required>
             </div>
             
-            <?php endif; ?>
+            
             
             <input type="submit" value="Update">
             </form>
             <button id="editButton">Edit Profile</button>
+            <?php endif; ?>
         </div>
 
         <!-- QSD Details -->
