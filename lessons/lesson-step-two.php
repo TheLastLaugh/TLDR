@@ -41,46 +41,46 @@ $unitName = $row['unit_name'];
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    
-    <!-- Step 2: Select lesson -->
-    <form action="lesson-step-three.php" method="POST">
-        <?php echo  '<input type="hidden" name="unit" value="' . $selectedUnit . '">' .
-                    '<h1>
-                        Select Instructor for your ' . $unitName . ' lesson' .
-                    '</h1>';  // This is just to show the user what they selected, can be styled later 
-        ?>
-        <label for="instructor">Select Instructor:</label>
-        <select name="instructor" id="instructor">
-            <?php
-                // Get all the instructors from the database and display them in a drop-down menu
-                // doesn't show instructors that don't have available bookings
-                $sql = "SELECT i.user_id, i.username, i.price
-                FROM instructors i
-                WHERE EXISTS (
-                    SELECT 1
-                    FROM availability a
-                    WHERE a.instructor_id = i.user_id AND a.is_booked = 0
-                )
-                ";
-                $statement = mysqli_stmt_init($conn);
-                mysqli_stmt_prepare($statement, $sql);
-                mysqli_stmt_execute($statement);
-                $result = mysqli_stmt_get_result($statement);
-                
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // Display the option in the drop-down menu
-                    // FORMAT= Instructor #<id> - Price: $<price>
-                    echo '<option value="' . $row['user_id'] . '">'
-                            . $row['username'] . ' - Price: $' . $row['price'] . 
-                         '</option>';
-                }
+    <div id = "content">
+        <!-- Step 2: Select lesson -->
+        <form action="lesson-step-three.php" method="POST">
+            <?php echo  '<input type="hidden" name="unit" value="' . $selectedUnit . '">' .
+                        '<h1>
+                            Select Instructor for your ' . $unitName . ' lesson' .
+                        '</h1>';  // This is just to show the user what they selected, can be styled later 
             ?>
-        </select>
+            <label for="instructor">Select Instructor:</label>
+            <select name="instructor" id="instructor">
+                <?php
+                    // Get all the instructors from the database and display them in a drop-down menu
+                    // doesn't show instructors that don't have available bookings
+                    $sql = "SELECT i.user_id, i.username, i.price
+                    FROM instructors i
+                    WHERE EXISTS (
+                        SELECT 1
+                        FROM availability a
+                        WHERE a.instructor_id = i.user_id AND a.is_booked = 0
+                    )
+                    ";
+                    $statement = mysqli_stmt_init($conn);
+                    mysqli_stmt_prepare($statement, $sql);
+                    mysqli_stmt_execute($statement);
+                    $result = mysqli_stmt_get_result($statement);
+                    
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        // Display the option in the drop-down menu
+                        // FORMAT= Instructor #<id> - Price: $<price>
+                        echo '<option value="' . $row['user_id'] . '">'
+                                . $row['username'] . ' - Price: $' . $row['price'] . 
+                            '</option>';
+                    }
+                ?>
+            </select>
 
-        <input type="submit" id="instructorButton" value="Choose a Time -->"></input>
-    </form>
+            <input type="submit" id="instructorButton" value="Choose a Time -->"></input>
+        </form>
+    </div>
 </body>
 </html>

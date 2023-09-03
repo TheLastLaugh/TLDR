@@ -36,10 +36,9 @@ $learnerId = $_SESSION['userid'];
     <script src="../scripts/moduleScript.js" defer></script>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    <div>
+    <div id = "content">
         <h1>Module Progress</h1>
         <?php
             $sql = "SELECT unit_number, unit_name, id FROM lessons;";

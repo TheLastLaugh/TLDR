@@ -36,39 +36,40 @@ $learnerName = $_SESSION['username'];
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    <?php
-        echo '<h1>
-                Hello, ' . $learnerName . '. Select which lesson you would like to book.' .
-             '</h1>';
-    ?>
-    <!-- Step 1: Select lesson -->
-    <form action="lesson-step-two.php" method="POST">
-        <label for="unit">Select Lesson (Unit):</label>
-        <select name="unit" id="lesson">
-            <?php
-                // Get all the lessons (as units) from the database and display them in a drop-down menu
-                $result = mysqli_query($conn, "SELECT id, unit_name FROM lessons");
-                if ($result) { // If the query was successful
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            // If the user has already selected a unit, set it as the selected option
-                            // This means that when the button is pressed, it doesn't go back to default and the user can see what they selected
-                            $selectedText = ($selected_unit == $row['id']) ? "selected" : ""; 
+    <div id = "content">
+        <?php
+            echo '<h1>
+                    Hello, ' . $learnerName . '. Select which lesson you would like to book.' .
+                '</h1>';
+        ?>
+        <!-- Step 1: Select lesson -->
+        <form action="lesson-step-two.php" method="POST">
+            <label for="unit">Select Lesson (Unit):</label>
+            <select name="unit" id="lesson">
+                <?php
+                    // Get all the lessons (as units) from the database and display them in a drop-down menu
+                    $result = mysqli_query($conn, "SELECT id, unit_name FROM lessons");
+                    if ($result) { // If the query was successful
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // If the user has already selected a unit, set it as the selected option
+                                // This means that when the button is pressed, it doesn't go back to default and the user can see what they selected
+                                $selectedText = ($selected_unit == $row['id']) ? "selected" : ""; 
 
-                            // Display the option in the drop-down menu
-                            // FORMAT= Unit #<id> - <unit_name>
-                            echo '<option value="' . $row['id'] . '" ' . $selectedText . '>'
-                                     . $row['unit_name'] . 
-                                 '</option>';
+                                // Display the option in the drop-down menu
+                                // FORMAT= Unit #<id> - <unit_name>
+                                echo '<option value="' . $row['id'] . '" ' . $selectedText . '>'
+                                        . $row['unit_name'] . 
+                                    '</option>';
+                            }
                         }
                     }
-                }
-            ?>
-        </select>
-        <input type="submit" id="lessonButton" value="Select an Instructor -->"></input>
-    </form>
+                ?>
+            </select>
+            <input type="submit" id="lessonButton" value="Select an Instructor -->"></input>
+        </form>
+    </div>
 </body>
 </html>

@@ -27,21 +27,22 @@ else if ($_SESSION['user_type'] == 'instructor') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alistair Macvicar"; />
-    <title>TLDR</title>
+    <title>TLDR For Qualified Supervised Driver</title>
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
-    <div id="banner">Welcome to TLDR</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    <div id="dashboard">
-        <div class="stats-container">
-            <div class="stat-card">
-                <h3>Some stuff relating to qsds</h3>
-                <p>stats on their learner maybe</p> 
+    <div id="content">
+        <div id="dashboard">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Some stuff relating to qsds</h3>
+                    <p>stats on their learner maybe</p> 
+                </div>
             </div>
         </div>
-    </div>
+    </div>  
 </body>
 
 </html>

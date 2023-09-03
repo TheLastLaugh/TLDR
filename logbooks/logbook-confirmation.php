@@ -43,42 +43,43 @@ $result = mysqli_stmt_get_result($stmt);
     <link rel="stylesheet" href="../styles/logbook-styles.css"/>
 </head>
 <body>
-    <div id="banner">Confirm Logbook</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-
-    <?php
-    // If there are no logbooks to confirm, display a message saying so
-        if (mysqli_num_rows($result) == 0) {
-            echo '<h1>
-                    Hello, ' . $learnerName . '. You have no logbooks to confirm.' .
-                 '</h1>';
-        } 
-        // Otherwise display the logbooks in a drop-down menu
-        else {
-            echo '<h1>
-                    Hello, ' . $learnerName . '. Select which logbook you would like to confirm.' .
-                 '</h1>';
-
-            // <!-- Step 1: Select logbook to confirm -->
-            echo '<form action="logbook-confirm-details.php" method="POST">
-                    <input type="hidden" name="learner_id" value="' . $learnerId . '">'; ?>
-                <label for="unit">Select Logbook You Wish To Confirm:</label>
-                <select name="logbook">
-                    <?php
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            // Display the option in the drop-down menu
-                            // FORMAT= <qsd_name> on <date>
-                            echo '<option value="' . $row['id']  . '">' . 
-                                    $row['qsd_name'] . ' on ' . $row['date'] .
-                                 '</option>';
-                        } 
-                    ?>
-                </select>
-                <input type="submit" value="View Details -->"></input>
-            </form>
+    <div id = "content">
         <?php
-        }
-    ?>
+        // If there are no logbooks to confirm, display a message saying so
+            if (mysqli_num_rows($result) == 0) {
+                echo '<h1>
+                        Hello, ' . $learnerName . '. You have no logbooks to confirm.' .
+                    '</h1>';
+            } 
+            // Otherwise display the logbooks in a drop-down menu
+            else {
+                echo '<h1>
+                        Hello, ' . $learnerName . '. Select which logbook you would like to confirm.' .
+                    '</h1>';
+
+                // <!-- Step 1: Select logbook to confirm -->
+                echo '<form action="logbook-confirm-details.php" method="POST">
+                        <input type="hidden" name="learner_id" value="' . $learnerId . '">'; ?>
+                    <label for="unit">Select Logbook You Wish To Confirm:</label>
+                    <select name="logbook">
+                        <?php
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // Display the option in the drop-down menu
+                                // FORMAT= <qsd_name> on <date>
+                                echo '<option value="' . $row['id']  . '">' . 
+                                        $row['qsd_name'] . ' on ' . $row['date'] .
+                                    '</option>';
+                            } 
+                        ?>
+                    </select>
+                    <input type="submit" value="View Details -->"></input>
+                </form>
+            <?php
+            }
+        ?>
+    </div>
+   
 </body>
 </html>
