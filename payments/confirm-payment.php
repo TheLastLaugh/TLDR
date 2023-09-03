@@ -50,24 +50,24 @@ $bookingDetails = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="../styles/payments-styles.css"/>
 </head>
 <body>
-    <div id="banner">Payments</div>
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    <div id = "content">
+        <div class="confirm" id="confirm">
+            <h1>Payment Confirmation</h1>
+            <p>Thank you for your payment!</p>
 
-    <div class="confirm" id="confirm">
-        <h1>Payment Confirmation</h1>
-        <p>Thank you for your payment!</p>
+            <h2>Booking Details:</h2>
+            <!-- FORMAT: <attribute>: <value> -->
+            <p>Instructor: <?php echo $bookingDetails['instructor_name']; ?></p>
+            <p>Date: <?php echo $bookingDetails['booking_date']; ?></p>
+            <p>Lesson Price: $<?php echo $bookingDetails['lesson_price']; ?></p>
 
-        <h2>Booking Details:</h2>
-        <!-- FORMAT: <attribute>: <value> -->
-        <p>Instructor: <?php echo $bookingDetails['instructor_name']; ?></p>
-        <p>Date: <?php echo $bookingDetails['booking_date']; ?></p>
-        <p>Lesson Price: $<?php echo $bookingDetails['lesson_price']; ?></p>
-
-        <!-- Send the user to the invoice link with the bookingid in the url -->
-        <a href="generate-invoice.php?booking_id=<?php echo $bookingId; ?>">View Invoice</a>
-        <!-- Go to the dashboard -->
-        <a href="../dashboard/welcome.php">Go to Home</a>
+            <!-- Send the user to the invoice link with the bookingid in the url -->
+            <a href="generate-invoice.php?booking_id=<?php echo $bookingId; ?>">View Invoice</a>
+            <!-- Go to the dashboard -->
+            <a href="../dashboard/welcome.php">Go to Home</a>
+        </div>
     </div>
 </body>
 </html>

@@ -73,15 +73,16 @@ if (isset($_POST['confirm'])) {
     <script src="../scripts/bookingScript.js"></script>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    <div id = "content">
+        <?php
+            echo '<h1>
+                    Lesson booked successfully! <br>
+                    ' . $unitName . ' lesson with ' . $instructorName . ' on ' . $bookingTime . '
+                </h1>';
+        ?>
+    </div>
     
-    <?php
-        echo '<h1>
-                Lesson booked successfully! <br>
-                ' . $unitName . ' lesson with ' . $instructorName . ' on ' . $bookingTime . '
-              </h1>';
-    ?>
 </body>
 </html>

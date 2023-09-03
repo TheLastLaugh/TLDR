@@ -12,24 +12,55 @@ body {
     text-align: center;
     font-size: 24px;
 }
-#banner img {
+#menuIcon {
     float:left;
     position:relative;
     left:10px;
 }
 
+#profileIcon {
+    float:right;
+    position:relative;
+    right:30px;
+    fill: white;
+    bottom:30px;
+}
+
+#banner-username{
+    color:#bfbfbf;
+    font-weight:bold;
+    position:relative;
+    float:right;
+    right:20px;
+    bottom:25px;
+}
+
+#content {
+    transition: margin-left 0.5s ease;
+}
+
 #dashboard {
-    margin-left: 220px;
+    margin-left: 20px;
+    margin-right:20px;
     padding: 20px;
 }
 
+.tab {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
 
 /* SIDEBAR STYLING */
 #sidebar {
     position:fixed;
     float: left;
-    width: 140px;
+    width: 0px;
     overflow:hidden;
     transition: width 0.5s ease;
     height: 100vmin;

@@ -50,35 +50,36 @@ $qsd_license = $row['qsd_license'];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Alistair Macvicar" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book A Lesson</title>
+    <title>Logbook Confirmation</title>
     <link rel="stylesheet" href="../styles/logbook-styles.css"/>
 </head>
 <body>
-    <div id="banner">Logbook confirmation</div>
     <!-- includ the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <!-- FORMAT: Drive with <qsd_name> on <date> -->
-    <h1>Drive with <?php echo $row['qsd_name'] . ' on ' . $row['date']; ?></h1>
-    
-    <form action="process-logbook-confirmation.php" method="POST">
-        <h2>Logbook Details:</h2>
-        <!-- FORMAT FOR ALL ENTRIES: <attribute>: <value> -->
-        <p><strong>QSD:</strong> <?php echo htmlspecialchars($name); ?></p>
-        <p><strong>QSD License:</strong> <?php echo htmlspecialchars($qsd_license); ?></p>
-        <p><strong>Date:</strong> <?php echo htmlspecialchars($date); ?></p>
-        <p><strong>Start Time:</strong> <?php echo htmlspecialchars($start_time); ?></p>
-        <p><strong>End Time:</strong> <?php echo htmlspecialchars($end_time); ?></p>
-        <p><strong>Total Duration (minutes):</strong> <?php echo htmlspecialchars($duration); ?></p>
-        <p><strong>Start Location:</strong> <?php echo htmlspecialchars($start_location); ?></p>
-        <p><strong>End Location:</strong> <?php echo htmlspecialchars($end_location); ?></p>
-        <p><strong>Road Type:</strong> <?php echo htmlspecialchars($road_type); ?></p>
-        <p><strong>Weather:</strong> <?php echo htmlspecialchars($weather); ?></p>
-        <p><strong>Traffic:</strong> <?php echo htmlspecialchars($traffic); ?></p>
-
-        <!-- Hidden field for data -->
-        <input type="hidden" name="logbook_id" value="<?php echo $logbook_id ?>">
+    <div id = "content">
+        <h1>Drive with <?php echo $row['qsd_name'] . ' on ' . $row['date']; ?></h1>
         
-        <input type="submit" value="Confirm Logbook Entry">
-    </form>
+        <form action="process-logbook-confirmation.php" method="POST">
+            <h2>Logbook Details:</h2>
+            <!-- FORMAT FOR ALL ENTRIES: <attribute>: <value> -->
+            <p><strong>QSD:</strong> <?php echo htmlspecialchars($name); ?></p>
+            <p><strong>QSD License:</strong> <?php echo htmlspecialchars($qsd_license); ?></p>
+            <p><strong>Date:</strong> <?php echo htmlspecialchars($date); ?></p>
+            <p><strong>Start Time:</strong> <?php echo htmlspecialchars($start_time); ?></p>
+            <p><strong>End Time:</strong> <?php echo htmlspecialchars($end_time); ?></p>
+            <p><strong>Total Duration (minutes):</strong> <?php echo htmlspecialchars($duration); ?></p>
+            <p><strong>Start Location:</strong> <?php echo htmlspecialchars($start_location); ?></p>
+            <p><strong>End Location:</strong> <?php echo htmlspecialchars($end_location); ?></p>
+            <p><strong>Road Type:</strong> <?php echo htmlspecialchars($road_type); ?></p>
+            <p><strong>Weather:</strong> <?php echo htmlspecialchars($weather); ?></p>
+            <p><strong>Traffic:</strong> <?php echo htmlspecialchars($traffic); ?></p>
+
+            <!-- Hidden field for data -->
+            <input type="hidden" name="logbook_id" value="<?php echo $logbook_id ?>">
+            
+            <input type="submit" value="Confirm Logbook Entry">
+        </form>
+    </div>
 </body>
 </html>

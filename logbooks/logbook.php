@@ -21,22 +21,23 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <link rel="stylesheet" href="../styles/logbook-styles.css"/>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
-    <div class="content">
-        <h1>Would you like to...</h1>
-        <a href="logbook-submissions.php">View previous entries</a>
+    <div id="content">
+        <div class="tab">
+            <h1>Would you like to...</h1>
+            <a href="logbook-submissions.php">View previous entries</a>
 
-        <!-- If the user is a learner, they can confirm the entries -->
-        <?php if($_SESSION['user_type'] == 'learner'): ?>
-        <a href="logbook-confirmation.php">Confirm logbook entries</a>
-        
-        <!-- Otherwise, the user can create a new entry -->
-        <?php else: ?>
-        <a href="logbook-entry.php">Add a new entry</a>
-        <?php endif; ?>
+            <!-- If the user is a learner, they can confirm the entries -->
+            <?php if($_SESSION['user_type'] == 'learner'): ?>
+            <a href="logbook-confirmation.php">Confirm logbook entries</a>
+            
+            <!-- Otherwise, the user can create a new entry -->
+            <?php else: ?>
+            <a href="logbook-entry.php">Add a new entry</a>
+            <?php endif; ?>
+        </div>
     </div>
 </body>
 </html>

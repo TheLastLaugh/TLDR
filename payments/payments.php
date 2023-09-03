@@ -50,42 +50,42 @@ WHERE
     <link rel="stylesheet" href="../styles/payments-styles.css"/>
 </head>
 <body>
-    <div id="banner">Payments</div>
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-
+    <div id = "content">
     <?php
-    // If the user has no lessons to pay for, display a message
-        if (mysqli_num_rows($result) == 0) {
-            echo '<h1>
-                    Hello, ' . $learnerName . '. You have no lessons to pay for.' .
-                 '</h1>';
-        } 
-        // Otherwise, display the lessons in a drop-down menu
-        else {
-            echo '<h1>
-                    Hello, ' . $learnerName . '. Select which lesson you would like to pay for.' .
-                 '</h1>';
+        // If the user has no lessons to pay for, display a message
+            if (mysqli_num_rows($result) == 0) {
+                echo '<h1>
+                        Hello, ' . $learnerName . '. You have no lessons to pay for.' .
+                    '</h1>';
+            } 
+            // Otherwise, display the lessons in a drop-down menu
+            else {
+                echo '<h1>
+                        Hello, ' . $learnerName . '. Select which lesson you would like to pay for.' .
+                    '</h1>';
 
-            // <!-- Step 1: Select lesson to pay for -->
-            echo '<form action="payments-step-two.php" method="POST">'; ?>
-                <label for="unit">Select Lesson You Wish To Pay For:</label>
-                <select name="unit" id="lesson">
-                    <?php
-                    // paid = 0 means it hasn't been paid for yet
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            // Display the option in the drop-down menu
-                            // FORMAT: <instructor_name> on <booking_date> $<lesson_price>
-                            echo '<option value="' . $row['booking_id']  . '">' . 
-                                    $row['instructor_name'] . ' on ' . $row['booking_date'] . ' $' . $row['lesson_price'] .
-                                 '</option>';
-                        } 
-                    ?>
-                </select>
-                <input type="submit" id="lessonButton" value="Continue to payment -->"></input>
-            </form>
-        <?php
-        }
-    ?>
+                // <!-- Step 1: Select lesson to pay for -->
+                echo '<form action="payments-step-two.php" method="POST">'; ?>
+                    <label for="unit">Select Lesson You Wish To Pay For:</label>
+                    <select name="unit" id="lesson">
+                        <?php
+                        // paid = 0 means it hasn't been paid for yet
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // Display the option in the drop-down menu
+                                // FORMAT: <instructor_name> on <booking_date> $<lesson_price>
+                                echo '<option value="' . $row['booking_id']  . '">' . 
+                                        $row['instructor_name'] . ' on ' . $row['booking_date'] . ' $' . $row['lesson_price'] .
+                                    '</option>';
+                            } 
+                        ?>
+                    </select>
+                    <input type="submit" id="lessonButton" value="Continue to payment -->"></input>
+                </form>
+            <?php
+            }
+        ?>
+    </div>
 </body>
 </html>

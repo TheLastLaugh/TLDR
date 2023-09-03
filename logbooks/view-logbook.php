@@ -48,10 +48,9 @@ $name = $_POST['name'];
     <script src="../scripts/logbookScript.js"></script>
 </head>
 <body>
-    <div id="banner">Logbook confirmation</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    
+    <div id = "content">
     <h2>Logbook Details:</h2>
     <!-- FORMAT FOR ALL FIELDS: <attribute>: <value> -->
     <!-- If the user is a learner, we show the QSD name, otherwise we show the learner's name -->
@@ -69,5 +68,6 @@ $name = $_POST['name'];
 
     <!-- Button that just goes back to the previous page -->
     <button id="go_back">Back</button>
+    </div>
 </body>
 </html>

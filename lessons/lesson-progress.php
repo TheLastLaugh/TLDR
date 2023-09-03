@@ -27,9 +27,10 @@ else if ($_SESSION['user_type'] != 'learner') {
     <link rel="stylesheet" href="../styles/style.css"/>
 </head>
 <body>
-    <div id="banner">Lessons</div>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    
+    <div id = "content">
+        
+    </div>
 </body>
 </html>

@@ -51,25 +51,25 @@ $bookingDetails = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="../styles/invoice-styles.css"/>
 </head>
 <body>
-    <div id="banner">Invoice</div>
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    <div id = content>
+        <div class="invoice" id="invoice">
+            <h1>Invoice</h1>
+            <h2>Booking #<?php echo $bookingId; ?></h2>
+            
+            <!-- FORMAT: <attribute>: <value> -->
+            <section class="invoice-details">
+                <p><strong>Instructor:</strong> <?php echo $bookingDetails['instructor_name']; ?></p>
+                <p><strong>Date:</strong> <?php echo $bookingDetails['booking_date']; ?></p>
+                <p><strong>Lesson Price:</strong> $<?php echo $bookingDetails['lesson_price']; ?></p>
+                <hr>
+                <p><strong>Total Amount:</strong> $<?php echo $bookingDetails['lesson_price']; ?></p> 
+            </section>
 
-    <div class="invoice" id="invoice">
-        <h1>Invoice</h1>
-        <h2>Booking #<?php echo $bookingId; ?></h2>
-        
-        <!-- FORMAT: <attribute>: <value> -->
-        <section class="invoice-details">
-            <p><strong>Instructor:</strong> <?php echo $bookingDetails['instructor_name']; ?></p>
-            <p><strong>Date:</strong> <?php echo $bookingDetails['booking_date']; ?></p>
-            <p><strong>Lesson Price:</strong> $<?php echo $bookingDetails['lesson_price']; ?></p>
-            <hr>
-            <p><strong>Total Amount:</strong> $<?php echo $bookingDetails['lesson_price']; ?></p> 
-        </section>
-
-        <!-- button to allow a user to print the invoice easily -->
-        <a href="javascript:window.print()">Print Invoice</a>
+            <!-- button to allow a user to print the invoice easily -->
+            <a href="javascript:window.print()">Print Invoice</a>
+        </div>
     </div>
 </body>
 </html>
