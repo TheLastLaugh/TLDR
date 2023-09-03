@@ -13,6 +13,8 @@ if (isset($_GET['error'])) {
     $error = $_GET['error'];
     if ($error == "incorrect_email") {
         $error_msg = "This email is already in use. Please try again.";
+    } else if ($error == 'invalid_licenses') {
+        $error_msg = "License is not in our database. Please try again.";
     }
     echo '<script>alert("' . $error_msg . '")</script>';
 }
@@ -46,6 +48,8 @@ if ($user_type == 'instructor') {
     $company_address = $row['company_address'];
     $phone = $row['phone'];
     $price = $row['price'];
+} else if ($user_type == 'qsd') {
+    $result = mysqli_query($conn, "SELECT learner_id FROM qsd_learners WHERE qsd_id = $user_id");
 }
 ?>
 
@@ -127,6 +131,44 @@ if ($user_type == 'instructor') {
             </form>
             <button id="editButton">Edit Profile</button>
         </div>
+        
+        <?php endif; ?>
+
+        <!-- QSD Details -->
+        <?php if ($user_type == 'qsd'): ?>
+        <h2>QSD Details</h2>
+        
+        <!-- Learners -->
+        <p><strong>Learners:</strong>
+        <?php
+                // Store the learner ids in an array
+                $learner_ids = [];
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    array_push($learner_ids, $row['learner_id']);
+                    $sql = "SELECT username FROM users WHERE id = ?";
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, "i", $row['learner_id']);
+                    mysqli_stmt_execute($stmt);
+                    $nameResult = mysqli_stmt_get_result($stmt);
+                    $nameRow = mysqli_fetch_assoc($nameResult);
+
+                    $learners = $nameRow['username'];
+                    echo htmlspecialchars($learners);
+                }
+            ?></p>
+        <div class="edit-field" style="display: none;">
+            <button type="button" id="addLearner">Add a Learner</button>
+            <div id="learnerInputs">
+                
+            </div>
+        </div>
+        
+        <?php endif; ?>
+        
+        <input type="submit" value="Update">
+        </form>
+        <button id="editButton">Edit Profile</button>
     </div>
 </body>
 </html>
