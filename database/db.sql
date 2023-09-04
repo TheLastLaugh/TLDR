@@ -162,6 +162,7 @@ CREATE TABLE logbooks (
     qsd_name varchar(255) NOT NULL,
     qsd_license varchar(255) NOT NULL,
     confirmed BOOLEAN NOT NULL DEFAULT FALSE,
+    time_of_day enum('Day', 'Night'),
     FOREIGN KEY (learner_id) REFERENCES users(id)
 );
 
