@@ -11,6 +11,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
+// Define the insertion of logbooks so that I don't have to keep repeating the statements
+function insertLogbook($learner_id, $qsd_id, $date, $start_time, $end_time, $duration, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day, $conn) {
+    $sql = "INSERT INTO logbooks (learner_id, qsd_id, date, start_time, end_time, duration, start_location, end_location, road_type, weather, traffic, qsd_name, qsd_license, time_of_day) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "iisssissssssss", $learner_id, $qsd_id, $date, $start_time, $end_time, $duration, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day);
+    mysqli_stmt_execute($stmt);
+}
+
 // Get the id of the learner from the entered license number 
 $learner_license = $_POST['license'];
 $sql = "SELECT id FROM users WHERE license = ?";
@@ -21,14 +29,20 @@ $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
 $learner_id = $row['id'];
 
+// Set the timezone to Adelaide
+$timezone = new DateTimeZone('Australia/Adelaide');
+
 // Grab the date and times of the drive from the form
 $date = $_POST['date'];
 $start_time = $_POST['start_time'];
 $end_time = $_POST['end_time'];
 
+// echo $start_time;
+// echo $end_time;
+
 // Calculate the duration of the drive
-$start = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $start_time);
-$end = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $end_time);
+$start = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $start_time, $timezone);
+$end = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $end_time, $timezone);
 $interval = date_diff($start, $end);
 
 // Convert the duration to minutes
@@ -53,12 +67,38 @@ $row = mysqli_fetch_assoc($result);
 $qsd_name = $row['username'];
 $qsd_license = $row['license'];
 
-// Insert the logbook entry into the database
-// All of the attributes are straight from the learner's handbook, that's why there are sooooo many
-$sql = "INSERT INTO logbooks (learner_id, qsd_id, date, start_time, end_time, duration, start_location, end_location, road_type, weather, traffic, qsd_name, qsd_license) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-$stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "iisssisssssss", $learner_id, $qsd_id, $date, $start_time, $end_time, $duration, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license);
-mysqli_stmt_execute($stmt);
+// Calculate the sunset time for the given date using date_sun_info
+$latitude = -34.9285;
+$longitude = 138.6007;
+$sunInfo = date_sun_info(strtotime($date), $latitude, $longitude);
+$sunset = new DateTime('@' . $sunInfo['sunset']);
+$sunset->setTimezone($timezone); 
+
+if ($end <= $sunset) {
+    echo 'day';
+    $time_of_day = 'Day';
+    insertLogbook($learner_id, $qsd_id, $date, $start_time, $end_time, $duration, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day, $conn);
+} elseif ($start >= $sunset) {
+    echo 'night';
+    $time_of_day = 'Night';
+    insertLogbook($learner_id, $qsd_id, $date, $start_time, $end_time, $duration, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day, $conn);
+} else {
+    echo 'split';
+    $time_of_day_day = 'Day';
+    $time_of_day_night = 'Night';
+    $sunsetTimeStr = $sunset->format('H:i');
+    $day_duration = date_diff($start, $sunset);
+    $night_duration = date_diff($sunset, $end);
+
+    // Convert the durations to minutes
+    $day_duration_minutes = $day_duration->format('%a') * 24 * 60 + $day_duration->format('%h') * 60 + $day_duration->format('%i');
+    $night_duration_minutes = $night_duration->format('%a') * 24 * 60 + $night_duration->format('%h') * 60 + $night_duration->format('%i');
+
+    // Insert the logbook entry for day
+    insertLogbook($learner_id, $qsd_id, $date, $start_time, $sunsetTimeStr, $day_duration_minutes, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day_day, $conn);
+    // Insert the logbook entry for night
+    insertLogbook($learner_id, $qsd_id, $date, $sunsetTimeStr, $end_time, $night_duration_minutes, $start_location, $end_location, $road_type, $weather, $traffic, $qsd_name, $qsd_license, $time_of_day_night, $conn);
+}
 
 // Redirect to the processed logbook page
 header("Location: ../logbooks/logbook-processed.php");
@@ -67,3 +107,4 @@ header("Location: ../logbooks/logbook-processed.php");
 mysqli_close($conn);
 exit();
 ?>
+
