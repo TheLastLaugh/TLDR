@@ -48,7 +48,7 @@ else if ($_SESSION['user_type'] == 'qsd') {
                 </div>
                 <div class="stat-card">
                     <h3>Billing</h3>
-                    <a href="../search/search.php">View Issued Bills</a><br>
+                    <a href="#">View Issued Bills</a><br>
                 </div>
                 <div class="stat-card">
                     <h3>Some stuff relating to instructors</h3>
