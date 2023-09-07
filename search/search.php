@@ -35,7 +35,7 @@ require_once "../inc/dbconn.inc.php";
     <script type="text/javascript" src="./search.js" defer></script>
 </head>
 <body>
-    <div id="banner">Search Student</div>
+    <!-- <div id="banner">Search Student</div> -->
     
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
