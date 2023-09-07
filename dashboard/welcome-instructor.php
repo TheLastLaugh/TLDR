@@ -42,6 +42,7 @@ else if ($_SESSION['user_type'] == 'qsd') {
             </div>
         </div>
     </div>
+    <a href="../search/search.php">Search Student</a>
 </body>
 
 </html>
