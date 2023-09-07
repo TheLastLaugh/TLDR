@@ -20,6 +20,11 @@ else if ($_SESSION['user_type'] == 'qsd') {
     header("Location: ../dashboard/welcome-qsd.php");
     exit;
 }
+// If the user is the government, don't give them access to this page
+else if ($_SESSION['user_type'] == 'government') {
+    header("Location: ../dashboard/welcome-government.php");
+    exit;
+}
 
 ?>
 

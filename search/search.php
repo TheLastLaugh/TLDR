@@ -30,7 +30,7 @@ require_once "../inc/dbconn.inc.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="Jordan Prime" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Student</title>
+    <title>Search</title>
     <link rel="stylesheet" href="../styles/search.css"/>
     <script type="text/javascript" src="./search.js" defer></script>
 </head>
