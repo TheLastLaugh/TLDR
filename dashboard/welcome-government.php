@@ -48,21 +48,33 @@ else if ($_SESSION['user_type'] != 'government') {
                 <div class="stat-card">
                     <h3>Students</h3>
                     <?php
-                        $studentname = "***Insert Student Name***";
-                        echo "<p>Student Name: {$studentname}</p>";
+                        if (isset($_SESSION['student-username'])) {
+                            $studentname = $_SESSION['student-username'];
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo '<a href="../search/search.php">Change Student</a><br>';
+                            echo '<a href="#">CBT&A Items</a><br>';
+                            echo '<a href="#">Logbook</a>';
+                        } else {
+                            $studentname = "No Student Selected";
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo '<a href="../search/search.php">Search Student</a><br>';
+                        }
                     ?>
-                    <a href="../search/search.php">Search Student(s)</a><br>
-                    <a href="#">CBT&A Items</a><br>
-                    <a href="#">Logbook</a>
                 </div>
                 <div class="stat-card">
                     <h3>Instructors</h3>
                     <?php
-                        $instructorname = "***Insert Instructor Name***";
-                        echo "<p>Instructor Name: {$instructorname}</p>";
+                        if (isset($_SESSION['instructor-username'])) {
+                            $instructorname = $_SESSION['instructor-username'];
+                            echo "<p>Instructor Name: {$instructorname}</p>";
+                            echo '<a href="../search/search.php">Change Instructor</a><br>';
+                            echo '<a href="#">View Report</a>';
+                        } else {
+                            $instructorname = "No Instructor Selected";
+                            echo "<p>Instructor Name: {$instructorname}</p>";
+                            echo '<a href="../search/search.php">Search Instructor</a><br>';
+                        }
                     ?>
-                    <a href="../search/search.php">Search Instructor(s)</a><br>
-                    <a href="#">View Report</a>
                 </div>
                 <div class="stat-card">
                     <h3>Other</h3>
