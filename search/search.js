@@ -140,7 +140,7 @@ function addStudentsToTable (searchResults) {
         for (let i = 0; i < searchResults.length; i++) {
             console.log(searchResults[i]);
             var row = table.insertRow();
-            row.insertCell(0).innerHTML = searchResults[i].username;
+            row.insertCell(0).innerHTML = `<button onclick="selectUser('${searchResults[i].user_type}', '${searchResults[i].username}')">${searchResults[i].username}</button>`;
             row.insertCell(1).innerHTML = searchResults[i].license;
             row.insertCell(2).innerHTML = searchResults[i].dob;
             row.insertCell(3).innerHTML = searchResults[i].address;
@@ -191,6 +191,26 @@ function searchExisting () {
     };
 
     xhttp.open("POST", "./locateusers.php", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(params);
+
+}
+
+function selectUser (usertype, username) {
+
+    const params = `usertype=${usertype}&username=${username}`;
+
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(xhttp.responseText);
+            console.log("user selected");
+            window.location.href = "../dashboard/welcome.php";
+        }
+    };
+
+    xhttp.open("POST", "./selectuser.php", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(params);
 

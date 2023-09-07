@@ -38,13 +38,19 @@ else if ($_SESSION['user_type'] == 'qsd') {
                 <div class="stat-card">
                     <h3>Students</h3>
                     <?php
-                        $studentname = "***Insert Student Name***";
-                        echo "<p>Student Name: {$studentname}</p>";
+                        if (isset($_SESSION['student-username'])) {
+                            $studentname = $_SESSION['student-username'];
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo '<a href="../search/search.php">Change Student</a><br>';
+                            echo '<a href="#">CBT&A Items</a><br>';
+                            echo '<a href="#">Logbook</a><br>';
+                            echo '<a href="#">Issue Bill</a>';
+                        } else {
+                            $studentname = "No Student Selected";
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo '<a href="../search/search.php">Search Student</a><br>';
+                        }
                     ?>
-                    <a href="../search/search.php">Search Student(s)</a><br>
-                    <a href="#">CBT&A Items</a><br>
-                    <a href="#">Logbook</a><br>
-                    <a href="#">Issue Bill</a>
                 </div>
                 <div class="stat-card">
                     <h3>Billing</h3>
