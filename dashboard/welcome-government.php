@@ -63,14 +63,14 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Date of Birth: {$studentdob} ( Age: {$studentage} )</li>
                                 <li>Contact Number: {$studentnumber}</li>
                             </ul>
-                            <a href='../search/search.php'>Change Student</a><br>
+                            <a href='../search/search.php?usertype=student'>Change Student</a><br>
                             <a href='../students/cbt&a.php'>CBT&A Items</a><br>
                             <a href='#'>Logbook</a>
                             ";
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
-                            echo '<a href="../search/search.php">Search Student</a><br>';
+                            echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
                         }
                     ?>
                 </div>
@@ -92,13 +92,13 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Date of Birth: {$instructordob} ( Age: {$instructorage} )</li>
                                 <li>Contact Number: {$instructornumber}</li>
                             </ul>
-                            <a href='../search/search.php'>Change Instructor</a><br>
+                            <a href='../search/search.php?usertype=instructor'>Change Instructor</a><br>
                             <a href='#'>View Total Billed Hours Report</a>
                             ";
                         } else {
                             $instructorname = "No Instructor Selected";
                             echo "<p>Instructor Name: {$instructorname}</p>";
-                            echo '<a href="../search/search.php">Search Instructor</a><br>';
+                            echo '<a href="../search/search.php?usertype=instructor">Search Instructor</a><br>';
                         }
                     ?>
                 </div>
@@ -106,11 +106,26 @@ else if ($_SESSION['user_type'] != 'government') {
                     <h3>Qualified Supervising Drivers</h3>
                     <?php
                         if (isset($_SESSION['qsd'])) {
-
+                            $qsdname = $_SESSION['qsd']['username'];
+                            $qsdlicense = $_SESSION["qsd"]["license"];
+                            $qsdaddress = $_SESSION["qsd"]["address"];
+                            $qsddob = $_SESSION["qsd"]["dob"];
+                            $qsdage = date_diff(date_create(date("Y-m-d")), date_create($qsddob));
+                            $qsdage = $qsdage->format('%y');
+                            $qsdnumber = '***';
+                            echo "<p>Instructor Name: {$qsdname}</p>
+                            <ul>
+                                <li>Drivers License: {$qsdlicense}</li>
+                                <li>Address: {$qsdaddress}</li>
+                                <li>Date of Birth: {$qsddob} ( Age: {$qsdage} )</li>
+                                <li>Contact Number: {$qsdnumber}</li>
+                            </ul>
+                            <a href='../search/search.php?usertype=qsd'>Change Qualified Supervising Driver</a><br>
+                            ";
                         } else {
                             $qsdname = "No QSD Selected";
                             echo "<p>Qualified Supervising Driver: {$qsdname}</p>";
-                            echo '<a href="#">Search Qualified Supervising Driver</a><br>';
+                            echo '<a href="../search/search.php?usertype=qsd">Search Qualified Supervising Driver</a><br>';
                         }
                     ?>
                 </div>

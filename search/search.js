@@ -26,6 +26,13 @@ if (document.getElementById("instructor")) {
     });
 }
 
+if (document.getElementById("qsd")) {
+    document.getElementById("qsd").addEventListener('click', function(event) {
+        document.getElementById("usertype1").value = "qsd";
+        document.getElementById("usertype2").value = "qsd";
+    });
+}
+
 document.getElementById("name-dob").addEventListener('click', function(event) {
     deleteAllRowsInTable();
     searchStudentPlaceholder();
@@ -213,5 +220,34 @@ function selectUser (usertype, username) {
     xhttp.open("POST", "./selectuser.php", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(params);
+
+}
+
+const url = new URL(window.location.href);
+const searchParams = url.searchParams;
+
+if (searchParams.has('usertype')) {
+
+    // console.log('usertype query string present');
+    const usertype = searchParams.get('usertype'); 
+    // console.log(usertype);
+    // console.log(typeof usertype);
+
+    if (usertype == 'instructor') {
+        console.log('instructor query string');
+        document.getElementById("instructor").checked = true;
+        document.getElementById("usertype1").value = "instructor";
+        document.getElementById("usertype2").value = "instructor";
+    } else if (usertype == 'student') {
+        console.log('student query string');
+        document.getElementById("student").checked = true;
+        document.getElementById("usertype1").value = "student";
+        document.getElementById("usertype2").value = "student";
+    } else if (usertype == 'qsd') {
+        console.log('qsd query string');
+        document.getElementById("qsd").checked = true;
+        document.getElementById("usertype1").value = "qsd";
+        document.getElementById("usertype2").value = "qsd";
+    } 
 
 }

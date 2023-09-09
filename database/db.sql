@@ -188,7 +188,8 @@ CREATE TABLE student_tasks (
 INSERT INTO users (username, email, password, address, license, dob, user_type) VALUES
 ('Joe Rogan', 'learner@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '1', '1999-01-01', 'learner'), -- We can allow more entries for learner as they log in through the mySAGOV portal
 ('Brett Wilkinson', 'instructor@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '2', '1999-01-01', 'instructor'), -- same here but with the instructor portal
-('government', 'admin@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '3', '1999-01-01', 'government'); -- not sure if we should have a gov login or just have an account with admin rights
+('government', 'admin@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '3', '1999-01-01', 'government'), -- not sure if we should have a gov login or just have an account with admin rights
+('qsd', 'qsd@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Wisteria Lane', '4', '1980-06-20', 'qsd');
 
 -- Each lesson is the unit, I haven't included the modules since they're part of the unit, but we can add them if we want
 INSERT INTO lessons (unit_number, unit_name) VALUES

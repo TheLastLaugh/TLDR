@@ -41,14 +41,14 @@ else if ($_SESSION['user_type'] == 'qsd') {
                         if (isset($_SESSION['student']['username'])) {
                             $studentname = $_SESSION['student']['username'];
                             echo "<p>Student Name: {$studentname}</p>";
-                            echo '<a href="../search/search.php">Change Student</a><br>';
+                            echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
                             echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo '<a href="#">Logbook</a><br>';
                             echo '<a href="#">Issue Bill</a>';
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
-                            echo '<a href="../search/search.php">Search Student</a><br>';
+                            echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
                         }
                     ?>
                 </div>

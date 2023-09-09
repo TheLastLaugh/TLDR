@@ -50,7 +50,7 @@ require_once "../inc/dbconn.inc.php";
             <div id='content'>
 
                 <p>Student Name: {$studentname}</p>
-                <a href='../search/search.php'>Change Student</a><br>
+                <a href='../search/search.php?usertype=student'>Change Student</a><br>
                 <p>Please select a unit and task below.</p>
 
                 <button id='unit-1' class='accordion'>Unit 1 - Basic driving procedures</button>

@@ -103,6 +103,32 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
         }
     }
     mysqli_free_result($result);
+} elseif ($searchBy == 'dl' && $searchType == 'qsd' && $_SESSION['user_type'] == 'government') {
+    $qsd_dl = $_POST['license'];
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'qsd' AND license = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $qsd_dl);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ( mysqli_num_rows($result) >= 1 ) {
+        while ( $row = mysqli_fetch_assoc($result) ) {
+            array_push($data, $row);
+        }
+    }
+    mysqli_free_result($result);
+} elseif ($searchBy == 'name' && $searchType == 'qsd' && $_SESSION['user_type'] == 'government') {
+    $qsd_name = $_POST['fname'];
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'qsd' AND username = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "s", $qsd_name);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ( mysqli_num_rows($result) >= 1 ) {
+        while ( $row = mysqli_fetch_assoc($result) ) {
+            array_push($data, $row);
+        }
+    }
+    mysqli_free_result($result);
 } 
 
 //Return JSON list of learner drivers found in search
