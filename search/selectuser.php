@@ -74,6 +74,23 @@ if ($selectedUserType == 'learner') {
         $_SESSION["instructor"]["address"] = $row["address"];
     }
 
+} elseif ($selectedUserType == 'qsd') {
+
+    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'qsd' AND id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ( mysqli_num_rows($result) >= 1 ) {
+        $row = $result -> fetch_assoc();
+        $_SESSION["qsd"]["id"] = $row["id"];
+        $_SESSION["qsd"]["license"] = $row["license"];
+        $_SESSION["qsd"]["username"] = $row["username"];
+        $_SESSION["qsd"]["dob"] = $row["dob"];
+        $_SESSION["qsd"]["address"] = $row["address"];
+    }
+
 } 
 
 

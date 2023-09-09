@@ -19,6 +19,19 @@ else if ($_SESSION['user_type'] == 'qsd') {
     exit;
 }
 
+$qs = $_SERVER['QUERY_STRING'];
+parse_str($qs, $qs_arr);
+
+if ($qs_arr['usertype'] == 'student') {
+
+} elseif ($qs_arr['usertype'] == 'instructor') {
+    
+} else if ($qs_arr['usertype'] == 'qsd') {
+    
+} else {
+    exit;
+}
+
 // Add the database connection
 require_once "../inc/dbconn.inc.php"; 
 ?>
@@ -94,7 +107,9 @@ require_once "../inc/dbconn.inc.php";
                         <input type="radio" id="student" name="userType" value="student" checked>
                         <label for="student">Student (Learner Driver)</label><br>
                         <input type="radio" id="instructor" name="userType" value="instructor">
-                        <label for="instructor">Instructor</label><br><br>
+                        <label for="instructor">Instructor</label><br>
+                        <input type="radio" id="qsd" name="userType" value="qsd">
+                        <label for="qsd">Qualified Supervising Driver</label><br><br>
                         <label for="searchby">Search By:</label><br>
                         <input type="radio" id="name-dob" name="searchby" value="name-dob" checked>
                         <label for="html">Name</label><br>
