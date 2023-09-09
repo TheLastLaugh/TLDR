@@ -39,97 +39,105 @@ require_once "../inc/dbconn.inc.php";
     
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
-    <br>
+    <div id='content'>
 
-    <?php
+        <div id="dashboard">
 
-        if ($_SESSION['user_type'] == 'instructor') {
-
-            echo '<form>
-                <label for="searchby">Search By:</label><br>
-                <input type="radio" id="existing" name="searchby" value="existing" checked>
-                <label for="html">Existing Students</label><br>
-                <input type="radio" id="name-dob" name="searchby" value="name-dob">
-                <label for="html">Name</label><br>
-                <input type="radio" id="dl" name="searchby" value="dl">
-                <label for="css">Drivers License</label><br>
-            </form>
-        
             <br>
-        
-            <form id="search-name">
-                <input type="text" id="fname" name="fname" placeholder="Enter name here" required><br><br>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Search"><br><br>
-            </form>
-        
-            <form id="search-dl">
-                <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter drivers license here" required><br><br>
-                <input type="reset" value="Clear">
-                <input type="submit" value="Search"><br><br>
-            </form>
 
-            <table id="studentsTable">
-                <tr>
-                    <th>Full Name</th>
-                    <th>Drivers License</th>
-                    <th>Date of Birth</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-                <tr>
-                    <td colspan="5">Please search a student above</td>
-                </tr>
-            </table>';
+            <?php
 
-        } elseif ($_SESSION['user_type'] == 'government') {
+                if ($_SESSION['user_type'] == 'instructor') {
 
-            echo '
-            <form>
-                <label for="userType">Select User Type:</label><br>
-                <input type="radio" id="student" name="userType" value="student" checked>
-                <label for="student">Student (Learner Driver)</label><br>
-                <input type="radio" id="instructor" name="userType" value="instructor">
-                <label for="instructor">Instructor</label><br><br>
-                <label for="searchby">Search By:</label><br>
-                <input type="radio" id="name-dob" name="searchby" value="name-dob" checked>
-                <label for="html">Name</label><br>
-                <input type="radio" id="dl" name="searchby" value="dl">
-                <label for="css">Drivers License</label><br>
-            </form>
-        
-            <br>
-        
-            <form id="search-name">
-                <input type="text" id="fname" name="fname" placeholder="Enter name here" required><br><br>
-                <input type="hidden" id="usertype1" name="usertype1" value="student">
-                <input type="reset" value="Clear">
-                <input type="submit" value="Search"><br><br>
-            </form>
-        
-            <form id="search-dl">
-                <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter drivers license here" required><br><br>
-                <input type="hidden" id="usertype2" name="usertype2" value="student">
-                <input type="reset" value="Clear">
-                <input type="submit" value="Search"><br><br>
-            </form>
+                    echo '<form>
+                        <label for="searchby">Search By:</label><br>
+                        <input type="radio" id="existing" name="searchby" value="existing" checked>
+                        <label for="html">Existing Students</label><br>
+                        <input type="radio" id="name-dob" name="searchby" value="name-dob">
+                        <label for="html">Name</label><br>
+                        <input type="radio" id="dl" name="searchby" value="dl">
+                        <label for="css">Drivers License</label><br>
+                    </form>
+                
+                    <br>
+                
+                    <form id="search-name">
+                        <input type="text" id="fname" name="fname" placeholder="Enter name here" required><br><br>
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
+                
+                    <form id="search-dl">
+                        <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter drivers license here" required><br><br>
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
 
-            <table id="studentsTable">
-                <tr>
-                    <th>Full Name</th>
-                    <th>Drivers License</th>
-                    <th>Date of Birth</th>
-                    <th>Address</th>
-                    <th>Contact Number</th>
-                </tr>
-                <tr>
-                    <td colspan="5">Please search a student above</td>
-                </tr>
-            </table>';
+                    <table id="studentsTable">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Drivers License</th>
+                            <th>Date of Birth</th>
+                            <th>Address</th>
+                            <th>Contact Number</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Please search a student above</td>
+                        </tr>
+                    </table>';
 
-        }
+                } elseif ($_SESSION['user_type'] == 'government') {
 
-    ?>
+                    echo '
+                    <form>
+                        <label for="userType">Select User Type:</label><br>
+                        <input type="radio" id="student" name="userType" value="student" checked>
+                        <label for="student">Student (Learner Driver)</label><br>
+                        <input type="radio" id="instructor" name="userType" value="instructor">
+                        <label for="instructor">Instructor</label><br><br>
+                        <label for="searchby">Search By:</label><br>
+                        <input type="radio" id="name-dob" name="searchby" value="name-dob" checked>
+                        <label for="html">Name</label><br>
+                        <input type="radio" id="dl" name="searchby" value="dl">
+                        <label for="css">Drivers License</label><br>
+                    </form>
+                
+                    <br>
+                
+                    <form id="search-name">
+                        <input type="text" id="fname" name="fname" placeholder="Enter name here" required><br><br>
+                        <input type="hidden" id="usertype1" name="usertype1" value="student">
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
+                
+                    <form id="search-dl">
+                        <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter drivers license here" required><br><br>
+                        <input type="hidden" id="usertype2" name="usertype2" value="student">
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
+
+                    <table id="studentsTable">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Drivers License</th>
+                            <th>Date of Birth</th>
+                            <th>Address</th>
+                            <th>Contact Number</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Please search a student above</td>
+                        </tr>
+                    </table>';
+
+                }
+
+            ?>
+
+        </div>
+
+    </div>
 
 </body>
 </html>

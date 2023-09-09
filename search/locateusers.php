@@ -39,7 +39,7 @@ $data = array();
 // Get the matching students for the search
 if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
     $student_fullname = $_POST['fname'];
-    $sql = "SELECT username, license, dob, address, user_type FROM users WHERE user_type = 'learner' AND username = ?";
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'learner' AND username = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $student_fullname);
     mysqli_stmt_execute($stmt);
@@ -52,7 +52,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
     mysqli_free_result($result);
 } elseif ($searchBy == 'name' && $searchType == 'instructor' && $_SESSION['user_type'] == 'government' ) {
     $student_fullname = $_POST['fname'];
-    $sql = "SELECT username, license, dob, address, user_type FROM users WHERE user_type = 'instructor' AND username = ?";
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'instructor' AND username = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $student_fullname);
     mysqli_stmt_execute($stmt);
@@ -65,7 +65,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
     mysqli_free_result($result);
 } elseif ($searchBy == 'dl' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
     $student_dl = $_POST['license'];
-    $sql = "SELECT username, license, dob, address, user_type FROM users WHERE user_type = 'learner' AND license = ?";
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'learner' AND license = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $student_dl);
     mysqli_stmt_execute($stmt);
@@ -78,7 +78,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
     mysqli_free_result($result);
 } elseif ($searchBy == 'dl' && $searchType == 'instructor' && $_SESSION['user_type'] == 'government') {
     $student_dl = $_POST['license'];
-    $sql = "SELECT username, license, dob, address, user_type FROM users WHERE user_type = 'instructor' AND license = ?";
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users WHERE user_type = 'instructor' AND license = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $student_dl);
     mysqli_stmt_execute($stmt);
@@ -92,7 +92,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
 } elseif ($searchBy == 'existing' && $_SESSION['user_type'] == 'instructor') {
     // $student_dl = $_POST['license'];
     // $sql = "SELECT username, license, dob, address FROM users WHERE user_type = 'learner' AND license = ?";
-    $sql = "SELECT username, license, dob, address, user_type FROM users LEFT JOIN instructor_learners ON instructor_learners.learner_id = users.id WHERE users.user_type = 'learner' AND instructor_learners.instructor_id = ?";
+    $sql = "SELECT id, username, license, dob, address, user_type FROM users LEFT JOIN instructor_learners ON instructor_learners.learner_id = users.id WHERE users.user_type = 'learner' AND instructor_learners.instructor_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "s", $_SESSION['userid']);
     mysqli_stmt_execute($stmt);

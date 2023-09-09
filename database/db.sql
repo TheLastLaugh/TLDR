@@ -166,6 +166,21 @@ CREATE TABLE logbooks (
     FOREIGN KEY (learner_id) REFERENCES users(id)
 );
 
+-- This table stores the completed tasks by instructors for students
+CREATE TABLE student_tasks (
+    student_id int NOT NULL,
+    unit int NOT NULL,
+    task int NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    completed_date DATE,
+    completed_instructor_id int,
+    student_followup BOOLEAN NOT NULL DEFAULT FALSE,
+    instructor_followup BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (student_id, unit, task),
+    FOREIGN KEY (student_id) REFERENCES users(id),
+    FOREIGN KEY (completed_instructor_id) REFERENCES users(id)
+);
+
 -- ------------------------------------------------------------------------------------------------*
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
@@ -645,6 +660,14 @@ INSERT INTO cbta_module_task_description (module_number, task_number, module_tas
 (30, 1, '(b)', "Comply with the 'System of Car Control' to left and right turns, traffic lights, stopping, lane changes and other potential traffic hazards"),
 (30, 1, '(c)', 'Comply with the Rules of Braking, Steering and Observation'),
 (30, 1, '(d)', 'Demonstrate appropriate forward planning, correct and timely road positioning, and safe driving strategies');
+
+
+INSERT INTO student_tasks (student_id, unit, task, completed, completed_date, completed_instructor_id, student_followup, instructor_followup) VALUES
+(1, 1, 1, 1,'2023-09-09', 3, 1, 1),
+(1, 1, 2, 1,'2023-09-09', 3, 0, 0),
+(1, 1, 3, 0, NULL, NULL, 1, 1),
+(1, 1, 5, 1, '2023-09-09', 3, 0, 0),
+(1, 1, 8, 0, NULL, NULL, 1, 0);
 
 -- This part is important for testing since you'll need all mod rights. I'm not sure if we have to change this later for the submission
 CREATE user IF NOT EXISTS dbadmin@localhost;

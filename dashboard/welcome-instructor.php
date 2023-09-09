@@ -38,11 +38,11 @@ else if ($_SESSION['user_type'] == 'qsd') {
                 <div class="stat-card">
                     <h3>Students</h3>
                     <?php
-                        if (isset($_SESSION['student-username'])) {
-                            $studentname = $_SESSION['student-username'];
+                        if (isset($_SESSION['student']['username'])) {
+                            $studentname = $_SESSION['student']['username'];
                             echo "<p>Student Name: {$studentname}</p>";
                             echo '<a href="../search/search.php">Change Student</a><br>';
-                            echo '<a href="#">CBT&A Items</a><br>';
+                            echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo '<a href="#">Logbook</a><br>';
                             echo '<a href="#">Issue Bill</a>';
                         } else {
@@ -58,7 +58,7 @@ else if ($_SESSION['user_type'] == 'qsd') {
                 </div>
                 <div class="stat-card">
                     <h3>Some stuff relating to instructors</h3>
-                    <p>bookings or something</p> 
+                    <p>bookings or something</p>
                 </div>
             </div>
         </div>
