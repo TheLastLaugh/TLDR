@@ -48,12 +48,25 @@ else if ($_SESSION['user_type'] != 'government') {
                 <div class="stat-card">
                     <h3>Students</h3>
                     <?php
-                        if (isset($_SESSION['student-username'])) {
-                            $studentname = $_SESSION['student-username'];
-                            echo "<p>Student Name: {$studentname}</p>";
-                            echo '<a href="../search/search.php">Change Student</a><br>';
-                            echo '<a href="#">CBT&A Items</a><br>';
-                            echo '<a href="#">Logbook</a>';
+                        if (isset($_SESSION['student'])) {
+                            $studentname = $_SESSION['student']['username'];
+                            $studentlicense = $_SESSION['student']['license'];
+                            $studentaddress = $_SESSION['student']['address'];
+                            $studentdob = $_SESSION['student']['dob'];
+                            $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
+                            $studentage = $studentage->format('%y');
+                            $studentnumber = '***';
+                            echo "<p>Student Name: {$studentname}</p>
+                            <ul>
+                                <li>Drivers License: {$studentlicense}</li>
+                                <li>Address: {$studentaddress}</li>
+                                <li>Date of Birth: {$studentdob} ( Age: {$studentage} )</li>
+                                <li>Contact Number: {$studentnumber}</li>
+                            </ul>
+                            <a href='../search/search.php'>Change Student</a><br>
+                            <a href='../students/cbt&a.php'>CBT&A Items</a><br>
+                            <a href='#'>Logbook</a>
+                            ";
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
@@ -64,15 +77,40 @@ else if ($_SESSION['user_type'] != 'government') {
                 <div class="stat-card">
                     <h3>Instructors</h3>
                     <?php
-                        if (isset($_SESSION['instructor-username'])) {
-                            $instructorname = $_SESSION['instructor-username'];
-                            echo "<p>Instructor Name: {$instructorname}</p>";
-                            echo '<a href="../search/search.php">Change Instructor</a><br>';
-                            echo '<a href="#">View Report</a>';
+                        if (isset($_SESSION['instructor'])) {
+                            $instructorname = $_SESSION['instructor']['username'];
+                            $instructorlicense = $_SESSION["instructor"]["license"];
+                            $instructoraddress = $_SESSION["instructor"]["address"];
+                            $instructordob = $_SESSION["instructor"]["dob"];
+                            $instructorage = date_diff(date_create(date("Y-m-d")), date_create($instructordob));
+                            $instructorage = $instructorage->format('%y');
+                            $instructornumber = '***';
+                            echo "<p>Instructor Name: {$instructorname}</p>
+                            <ul>
+                                <li>Drivers License: {$instructorlicense}</li>
+                                <li>Address: {$instructoraddress}</li>
+                                <li>Date of Birth: {$instructordob} ( Age: {$instructorage} )</li>
+                                <li>Contact Number: {$instructornumber}</li>
+                            </ul>
+                            <a href='../search/search.php'>Change Instructor</a><br>
+                            <a href='#'>View Total Billed Hours Report</a>
+                            ";
                         } else {
                             $instructorname = "No Instructor Selected";
                             echo "<p>Instructor Name: {$instructorname}</p>";
                             echo '<a href="../search/search.php">Search Instructor</a><br>';
+                        }
+                    ?>
+                </div>
+                <div class="stat-card">
+                    <h3>Qualified Supervising Drivers</h3>
+                    <?php
+                        if (isset($_SESSION['qsd'])) {
+
+                        } else {
+                            $qsdname = "No QSD Selected";
+                            echo "<p>Qualified Supervising Driver: {$qsdname}</p>";
+                            echo '<a href="#">Search Qualified Supervising Driver</a><br>';
                         }
                     ?>
                 </div>

@@ -3,7 +3,7 @@
 session_start();
 
 // Add the database connection
-// require_once "../inc/dbconn.inc.php";
+require_once "../inc/dbconn.inc.php";
 
 // Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -12,13 +12,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // If the user is a learner, don't give them access to this page
-// else if ($_SESSION['user_type'] != 'government' || $_SESSION['user_type'] != 'instructor') {
-
-//     // If the user is a learner, don't give them access to this page
-//     if ($_SESSION['user_type'] == 'learner') {
-//         header("Location: ../dashboard/welcome.php");
-//         exit;
-//     }
+else if ($_SESSION['user_type'] == 'learner') {
+    header("Location: ../dashboard/welcome.php");
+    exit;
+}
 
 //     // If the user is a qsd, don't give them access to this page
 //     else if ($_SESSION['user_type'] == 'qsd') {
@@ -43,14 +40,43 @@ else if ($_SESSION['user_type'] == 'government') {
 }
 
 
-// $_SESSION["student-username"] = 'test';
-// $_SESSION["instructor-username"] = 'test';
-
 if ($selectedUserType == 'learner') {
-    $_SESSION["student-username"] = $selectedUsername;
+
+    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'learner' AND id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ( mysqli_num_rows($result) >= 1 ) {
+        $row = $result -> fetch_assoc();
+        $_SESSION["student"]["id"] = $row["id"];
+        $_SESSION["student"]["license"] = $row["license"];
+        $_SESSION["student"]["username"] = $row["username"];
+        $_SESSION["student"]["dob"] = $row["dob"];
+        $_SESSION["student"]["address"] = $row["address"];
+    }
+
 } elseif ($selectedUserType == 'instructor') {
-    $_SESSION["instructor-username"] = $selectedUsername;
+
+    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'instructor' AND id = ?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ( mysqli_num_rows($result) >= 1 ) {
+        $row = $result -> fetch_assoc();
+        $_SESSION["instructor"]["id"] = $row["id"];
+        $_SESSION["instructor"]["license"] = $row["license"];
+        $_SESSION["instructor"]["username"] = $row["username"];
+        $_SESSION["instructor"]["dob"] = $row["dob"];
+        $_SESSION["instructor"]["address"] = $row["address"];
+    }
+
 } 
+
+
 
 
 //Close the connection and terminate the script.

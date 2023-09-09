@@ -140,7 +140,7 @@ function addStudentsToTable (searchResults) {
         for (let i = 0; i < searchResults.length; i++) {
             console.log(searchResults[i]);
             var row = table.insertRow();
-            row.insertCell(0).innerHTML = `<button onclick="selectUser('${searchResults[i].user_type}', '${searchResults[i].username}')">${searchResults[i].username}</button>`;
+            row.insertCell(0).innerHTML = `<button onclick="selectUser('${searchResults[i].user_type}', '${searchResults[i].id}')">${searchResults[i].username}</button>`;
             row.insertCell(1).innerHTML = searchResults[i].license;
             row.insertCell(2).innerHTML = searchResults[i].dob;
             row.insertCell(3).innerHTML = searchResults[i].address;
