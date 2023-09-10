@@ -2296,18 +2296,18 @@ class Tasks {
             "taskDescription":"Driving at night",
             "taskRequirements":`
                 (a) Recognition of current skills and knowledge
-                • Question learner on speed limits, keeping to the left, 3-Second Rule Formula, Use of headlights, ‘System of Car Control’, Rules of Braking, Steering and Observation; and
-                (b) Driving at night
-                • Explain adjustments required in speed and positioning in regard to visual deficiencies.
-                • Explain the requirements in relation to clean windscreens and headlights.
-                • Explain the requirements in relation to dipping headlights. (eg when following within 200m from the rear of other traffic and when approaching vehicle reaches a point 200m from your vehicle or immediately the headlights of an approaching vehicle are dipped, whichever is sooner).
-                • Explain the confusion that may occur when driving in built up areas due to the mixture of neon signs, traffic lights, store lights, street lighting, etc.
-                • Explain the need to be ‘seen’ (eg do not forget to turn on headlights). Explain the lack of visual eye contact with other road users.
-                • Demonstrate correct application of ‘System’.
-                (c) Demonstrate night driving
-                • Trainee to demonstrate under full instruction.
-                • Trainee to demonstrate with instruction as required; and
-                • Trainee to practice until competent.`,
+                <br>• Question learner on speed limits, keeping to the left, 3-Second Rule Formula, Use of headlights, ‘System of Car Control’, Rules of Braking, Steering and Observation; and
+                <br><br>(b) Driving at night
+                <br>• Explain adjustments required in speed and positioning in regard to visual deficiencies.
+                <br>• Explain the requirements in relation to clean windscreens and headlights.
+                <br>• Explain the requirements in relation to dipping headlights. (eg when following within 200m from the rear of other traffic and when approaching vehicle reaches a point 200m from your vehicle or immediately the headlights of an approaching vehicle are dipped, whichever is sooner).
+                <br>• Explain the confusion that may occur when driving in built up areas due to the mixture of neon signs, traffic lights, store lights, street lighting, etc.
+                <br>• Explain the need to be ‘seen’ (eg do not forget to turn on headlights). Explain the lack of visual eye contact with other road users.
+                <br>• Demonstrate correct application of ‘System’.
+                <br><br>(c) Demonstrate night driving
+                <br>• Trainee to demonstrate under full instruction.
+                <br>• Trainee to demonstrate with instruction as required; and
+                <br>• Trainee to practice until competent.`,
             "learningOutcome":`
                 The learner will be able to safely and competently demonstrate the maintenance of safe following distances, passing clearances and appropriate position of the vehicle for improved forward observation in relation to visual and speed adjustments using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
