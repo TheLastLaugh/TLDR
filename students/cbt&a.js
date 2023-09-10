@@ -69,6 +69,21 @@ function viewTask (task) {
 
 class Tasks {
 
+    static successAlert(message) {
+        document.getElementById(`taskAlert`).innerHTML = `<div class="alert success">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Success!</strong> Indicates a successful or positive action.
+            </div>`;
+        document.getElementById(`taskAlert`).style.display = "block";
+
+        // Scroll to anchor position. Remove any achor first and then scroll.
+        location.hash = "";
+        location.hash = "#view-task";
+
+        // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
+        setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
+    }
+
     static snapshot () {
 
         var params= `action=snapshot`;
@@ -81,6 +96,9 @@ class Tasks {
                 const result = JSON.parse(xhttp.responseText);
                 for (let i = 0; i < result.length; i++) {
                     let taskDescription = document.getElementById(`unit-${i+1}`).innerHTML;
+                    const myArray = taskDescription.split(" (");
+                    taskDescription = myArray[0];
+
                     document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete})`;
                     for (let j = 0; j < result[i].tasks.length; j++) {
                         if (result[i].tasks[j].completed == 1) {
@@ -90,14 +108,15 @@ class Tasks {
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                             <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
                           </svg> Task Completed`;
-                        } 
-                        
-                        // else {
-                        //     document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                        //     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                        //     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                        //   </svg> Task incomplete`;
-                        // }
+                        } else {
+                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("incomplete");
+                            document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
+                            <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                            <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
+                            </svg>
+                            Incomplete`;
+                        }
                     }
                 }
             }
@@ -120,6 +139,8 @@ class Tasks {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
                 // const result = JSON.parse(xhttp.responseText);
+                Tasks.successAlert("message");
+                Tasks.snapshot();
             }
         };
     
@@ -134,10 +155,12 @@ class Tasks {
         var params= `action=${action}&unit=${unit}&task=${task}`;
     
         var xhttp = new XMLHttpRequest();
-        
+
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
+                Tasks.successAlert();
+                Tasks.snapshot();
             }
         };
     
@@ -182,6 +205,78 @@ class Tasks {
             case 8:
                 taskData = this.task8();
                 break;
+            case 9:
+                taskData = this.task9();
+                break;
+            case 10:
+                taskData = this.task10();
+                break;
+            case 11:
+                taskData = this.task11();
+                break;
+            case 12:
+                taskData = this.task12();
+                break;
+            case 13:
+                taskData = this.task13();
+                break;
+            case 14:
+                taskData = this.task14();
+                break;
+            case 15:
+                taskData = this.task15();
+                break;
+            case 16:
+                taskData = this.task16();
+                break;
+            case 17:
+                taskData = this.task17();
+                break;
+            case 18:
+                taskData = this.task18();
+                break;
+            case 19:
+                taskData = this.task19();
+                break;
+            case 20:
+                taskData = this.task20();
+                break;
+            case 21:
+                taskData = this.task21();
+                break;
+            case 22:
+                taskData = this.task22();
+                break;
+            case 23:
+                taskData = this.task23();
+                break;
+            case 24:
+                taskData = this.task24();
+                break;
+            case 25:
+                taskData = this.task25();
+                break;
+            case 26:
+                taskData = this.task26();
+                break;
+            case 27:
+                taskData = this.task27();
+                break;
+            case 28:
+                taskData = this.task28();
+                break;
+            case 29:
+                taskData = this.task29();
+                break;
+            case 30:
+                taskData = this.task30();
+                break;
+            case 31:
+                taskData = this.task31();
+                break;
+            case 32:
+                taskData = this.task32();
+                break;
             default:
                 this.clear();
         }
@@ -207,6 +302,7 @@ class Tasks {
         
         const form = `
         <h2>Unit ${unit}: Task ${task} - ${taskDescription}</h2>
+        <div id="taskAlert"></div>
         <div class="stats-container">
 
             <div class="stat-card">
@@ -708,19 +804,61 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'></td>
+                            <td colspan='7'>Demonstration 1</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2' rowspan='2'>(1) Steer in a forward direction (minimum of 4 left and 4 right turns)</td>
+                            <td>100% (left)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'></td>
+                            <td>100% (right)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'>(2) Steer in reverse (minimum of 1 left reverse)</td>
+                            <td>100% (left reverse)</td>
+                            <td colspan='4'><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='7'>Demonstration 2</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2' rowspan='2'>(1) Steer in a forward direction (minimum of 4 left and 4 right turns)</td>
+                            <td>100% (left)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td>100% (right)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) Steer in reverse (minimum of 1 left reverse)</td>
+                            <td>100% (left reverse)</td>
+                            <td colspan='4'><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='7'><input type="submit" value="Mark task completed"></td>
                         <tr>
 
                     </table>
@@ -796,6 +934,1303 @@ class Tasks {
 
                         <tr>
                             <td colspan='2'>Task 7 - steering (forward and reverse)</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task9() {
+
+        const unitNumber = 2;
+        const taskNumber = 9;
+
+        const task = {
+            "unit":"2",
+            "task":"9",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"Moving off uphill",
+            "taskRequirements":`
+                (1) Stopping and securing the vehicle on a hill
+                <br>(a) Select a suitable safe and legal place on the gradient to stop;
+                <br>(b) Check the centre mirror, then the left mirror (for cyclists etc.), and signal left;
+                <br>(c) Smoothly slow the vehicle (to just above engine idle speed) using the footbrake operated by the right foot;
+                <br>(d) (For manuals) push the clutch down just before reaching engine idle speed to prevent stalling while maintaining light pressure on the footbrake;
+                <br>(e) Bring vehicle to a smooth stop without jerking the vehicle;
+                <br>(f) Check that the vehicle has stopped (as above) and correctly apply the park brake to prevent rolling;
+                <br>(g) Select ‘Neutral’ (manuals) or ‘Park’ (automatics), then release the brake pedal, then (for manuals) release the clutch;
+                <br>(h) Perform all steps 1(a) to 1(g) in sequence;
+                <br>(i) cancel any signal after stopping.
+                <br><br>(2) Moving off uphill
+                <br>(a) If the park brake is not applied, correctly apply it;
+                <br>(b) Check the centre mirror, then the right mirror, then signal right for at least 5 seconds;
+                <br>(c) Push clutch pedal down (manuals) / right foot on brake pedal (automatics);
+                <br>(d) Select first gear (manuals) / or select ‘drive’ (automatics);
+                <br>(e) Apply appropriate power to prevent rolling backwards and/or stalling, (and for manuals) bring the clutch to ‘friction point’ absorbing about half of the engine noise;
+                <br>(f) Check the centre mirror again then the right mirror, then over the right shoulder (blind spot check) for traffic (from driveways, roads opposite or U-turning traffic);
+                <br>(g) If safe, look forward, release the park brake;
+                <br>(h) Accelerate smoothly from the kerb without stalling or rolling back, and then cancel the signal;
+                <br>(i) Perform all steps 2(a) to 2(h) in sequence while maintaining full control of the vehicle.`,
+            "learningOutcome":`
+                (1) The learner will be able to smoothly stop and secure the vehicle on any reasonable uphill gradient; and
+                <br>(2) The learner will be able to move off competently and safely on any reasonable uphill gradient while in full control of the vehicle without stalling or rolling backwards.`,
+            "assessmentStandard":`
+                The learner will accurately perform parts (1) and (2) of this task together without assistance.
+                <br>The assessment will be a demonstration on at least two consecutive but separate occasions.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>(1) Stop and secure the vehicle on a hill</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) Moving off uphill (using the park brake)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task10() {
+
+        const unitNumber = 2;
+        const taskNumber = 10;
+
+        const task = {
+            "unit":"2",
+            "task":"10",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"The U-turn",
+            "taskRequirements":`
+                (1) Selecting a location for the U-turn
+                <br>(a) Select a location where the U-turn is legally permitted, can be completed without reversing and is not in a ‘No Stopping’ area, or opposite parked vehicles or where visibility in any direction is poor;
+                <br>(b) Select a location where there is sufficient visibility in all directions to enable the U-turn to be done safely; and
+                <br>(c) When stopping at the kerb comply with Task 4.
+                <br><br>(2) The ‘U’ Turn
+                <br>(a) Comply with the Give Way rules (for U-turn) by giving way to all other traffic using the road during this manoeuvre;
+                <br>(b) Comply with the ‘moving off from the kerb’ procedure where practicable as stated in Task 3;
+                <br>(c) Move the vehicle slowly forward (signalling appropriately) while turning the steering wheel (while not prohibited, dry/stationary steering is not encouraged) until on full steering lock (if required);
+                <br>(d) Prior to the vehicle changing direction, observe in all directions for approaching traffic and other road users e.g. pedestrians (also paying attention to driveways and roads opposite); and
+                <br>(e) When safe, accelerate smoothly away without stalling or over-steering while maintaining full control of the vehicle.`,
+            "learningOutcome":`
+                (1) The learner will be able to select a suitable and safe location to perform the U-turn (kerb to kerb and at intersections); and
+                <br>(2) The learner will be able to turn the vehicle around competently and safely within the confines of the carriageway of a road without the need for reversing while maintaining full control
+                of the vehicle.`,
+            "assessmentStandard":`
+                The learner will accurately perform parts (1) and (2) of this task together without assistance.
+                <br>The assessment will be a demonstration on at least two consecutive but separate occasions.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>(1) Selecting the location for the U-turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) The U-turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task11() {
+
+        const unitNumber = 2;
+        const taskNumber = 11;
+
+        const task = {
+            "unit":"2",
+            "task":"11",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"The 3-point turn",
+            "taskRequirements":`
+                (1) Selecting a location for the 3-point turn
+                <br>(a) Select a suitable safe and legal place at the kerb to stop;
+                <br>(b) Check the centre mirror, then the left mirror (for cyclists etc.) and signal left.
+                <br>(c) Ensure that there are no obstructions next to the kerb forward of the centre of the vehicle on the left (reversing area);
+                <br>(d) Smoothly slow the vehicle (to just above engine idle speed) using the footbrake operated by the right foot;
+                <br>(e) (For manuals) push the clutch down just before reaching engine idle speed to prevent stalling while maintaining light pressure on the footbrake;
+                <br>(f) Bring vehicle to a smooth stop without jerking the vehicle;
+                <br>(g) Check that the vehicle has stopped;
+                <br>(h) If preparing to immediately commence the 3-point turn, ensure the correct gear has been selected in preparation to move off (apply park brake if required);
+                <br>OR If intending to fully secure the vehicle, apply the park brake and select neutral (manuals) Park (automatics) and release the brake pedal and then (for manuals) release the clutch;
+                <br>(i) Perform all steps 1(a) to 1(h) in sequence;
+                <br>(j) Cancel any signal after stopping.
+                <br><br>(2) The 3-point turn (U-turn including reversing)
+                <br>(a) Check the centre mirror, then the right mirror, then signal right for at least 5 seconds;
+                <br>(b) (If moving off from fully secured) Push clutch pedal down (manuals) / right foot on brake pedal (automatics) / select 1st gear (manuals) / select ‘drive’ (automatics);
+                <br>(c) Apply appropriate power, (and for manuals) clutch to ‘friction point’;
+                <br>(d) Check the centre mirror again, then the right mirror, then over the right shoulder (blind spot check) for traffic (from driveways, roads opposite or U-turning traffic);
+                <br>(e) If safe, look forward (release the park brake as required);
+                <br>(f) Accelerate smoothly away from the kerb without stalling or rolling back while turning the steering wheel to the right (while not prohibited, dry/stationary steering is not encouraged) until on full steering lock (if required) and cancel the signal;
+                <br>(g) About 1 metre from the right kerb and whilst keeping the vehicle moving, turn the steering wheel sufficiently to the left (while not prohibited, dry/stationary steering is not encouraged);
+                <br>(h) Stop before touching the kerb;
+                <br>(i) Select reverse gear, apply the park brake if required (holding the button in - optional) and check both directions and behind (over shoulders);
+                <br>(j) Move off in reverse without rolling or stalling (continue steering left as required), under full control and continue checking in all directions (moving head and eyes) whilst reversing;
+                <br>(k) About 1 metre from the kerb whilst keeping the vehicle moving, steer sufficiently to the right (while not prohibited, dry/stationary steering is not encouraged); and prepare to move off down the road;
+                <br>(l) Stop before touching the kerb;
+                <br>(m) Select first gear or ‘Drive’, apply the park brake if required (holding the button in - optional) and check both ways for traffic;
+                <br>(n) When safe, move off down the road maintaining full control of the vehicle without stalling or over-steering (aim high in steering); and
+                <br>(o) Perform all steps 2(a) to 2(n) in sequence.`,
+            "learningOutcome":`
+                (1) The learner will be able to select a safe and suitable location to perform the 3-point turn; and
+                <br>(2) The learner will be able to turn the vehicle around safely and competently within
+                the boundaries of a carriageway that is narrower than the turning circle of the vehicle while maintaining full control of the vehicle.`,
+            "assessmentStandard":`
+                The learner will accurately perform parts (1) and (2) of this task together without assistance.
+                <br>The assessment will be a demonstration on at least two consecutive but separate occasions.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>(1) Selecting the location for the 3-point turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) The 3-point turn (U-turn including reverse)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task12() {
+
+        const unitNumber = 2;
+        const taskNumber = 12;
+
+        const task = {
+            "unit":"2",
+            "task":"12",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"90 degree angle park (front to kerb)",
+            "taskRequirements":`
+                (1) Entering a 90 degree angle park (front to kerb)
+                <br>(a) Select a suitable parking bay, check the centre mirror, then check the appropriate side mirror, then apply the appropriate signal for sufficient time and slow the vehicle to a safe and controllable speed;
+                <br>(b) Choose the appropriate gear for control (if required);
+                <br>(c) Check appropriate mirror/s or blind spot/s (for approaching vehicles and/or pedestrians) prior to turning into the parking bay; and
+                <br>(d) Correctly position the vehicle, front to kerb, wholly within the bay (on the first attempt) while maintaining full control without touching the kerb:
+                <br>(i) Not more than 300 mm out of parallel with the lines;
+                <br>(ii) Not more than 300 mm from the kerb or end of parking bay; &
+                <br>(iii) Where practicable, central within the parking bay with the front wheels pointing straight ahead towards the kerb.
+                <br><br>(2) Leaving a 90 degree angle park
+                <br>(a) Select reverse gear;
+                <br>(b) Constantly check behind (over shoulders), both sides and to the front before moving and during reversing;
+                <br>(c) Reverse slowly under full control of the vehicle and check for clearance of the front of the vehicle (where appropriate);
+                <br>(d) Reverse the vehicle only for such a distance as is necessary and turn the steering wheel sufficiently to allow the vehicle to safely clear the parking bay alongside and counter steering sufficiently (while not prohibited, dry/stationary steering is not encouraged) in preparation to move off safely down the road without stalling or rolling; and
+                <br>(e) Perform all steps above in sequence.`,
+            "learningOutcome":`
+                (1) The learner will be able to enter a 90 degree angle park (if available), front to the kerb, safely and competently while maintaining full control of the vehicle; and
+                <br>(2) The learner will be able to leave a 90 degree angle park (if available) safely and competently while maintaining full control of the vehicle.`,
+            "assessmentStandard":`
+                The learner will accurately perform parts (1) and (2) of this task together without assistance.
+                <br>The assessment will be a demonstration on at least two consecutive but separate occasions.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>(1) Enter a 90 degree angle parking bay</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) Leave a 90 degree angle parking bay</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task13() {
+
+        const unitNumber = 2;
+        const taskNumber = 13;
+
+        const task = {
+            "unit":"2",
+            "task":"13",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"Reverse parallel parking",
+            "taskRequirements":`
+                (1) Leaving a confined parallel parking bay
+                <br>(a) Prior to and during reversing, check right, left and behind (over shoulders) for other road users, including cyclists and pedestrians;
+                <br>(b) Check the centre mirror, then check the right mirror, then signal right for minimum of five (5) seconds whilst complying with Task 3 (moving off from the kerb); (use of the park brake is optional as required)
+                <br>(c) Exit the parking bay without touching the poles and without driving between the pole and the kerb.
+                <br>(d) Stop so that the rear of the vehicle is just past the parking bay’s front pole and parallel to the kerb.
+                <br><br>(2) Parking in a confined parallel parking bay
+                <br>(a) Prior to and during reversing, check right, left and behind (over shoulders) for other road users, including cyclists and pedestrians;
+                <br>(b) Check all around prior to turning the wheel to the left when reversing into the bay.
+                <br>(c) After entering the parking bay, complete the exercise with no more than two directional changes (i.e. changes direction to drive forward to straighten, then changes direction for the second time to centralise between the poles);
+                <br>(d) Parallel park the vehicle so that the left wheels are within 300mm of the kerb and straight, and centrally located not less than 900mm to the nearest pole;
+                <br>(e) The wheels must not touch the kerb and the vehicle must not touch any pole or pass between any pole and the kerb; and
+                <br>(f) Maintain full control of the vehicle (without stalling).`,
+            "learningOutcome":`
+                (1) The learner will be able to leave a confined parallel parking bay safely and competently while maintaining full control of the vehicle; and
+                <br>(2) The learner will be able to park the vehicle in a confined parallel parking bay safely and competently while maintaining full control of the vehicle.`,
+            "assessmentStandard":`
+                The learner will accurately perform parts (1) and (2) of this task together without assistance.
+                <br>The assessment will be a demonstration on at least two consecutive but separated occasions
+                if training has been given. Two attempts at the manoeuvre are allowed to achieve each successful demonstration.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>(1) Leave a confined parallel parking bay</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>(2) Park in a confined parallel parking bay</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task14() {
+
+        const unitNumber = 2;
+        const taskNumber = 14;
+
+        const task = {
+            "unit":"2",
+            "task":"14",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"Review all slow speed manoeuvres",
+            "taskRequirements":`
+                (a) Demonstrate one complete example of Task 9 (‘stopping and securing the vehicle on a hill’ and ‘moving off uphill’ procedure) on request;
+                <br>(b) Demonstrate one complete example of Task 10 (‘the U-turn’) on request;
+                <br>(c) Demonstrate one complete example of Task 11 (‘the 3-point turn’) on request;
+                <br>(d) Demonstrate one complete example of Task 12 (‘entering and leaving a 90 degree angle park’) on request; and
+                <br>(e) Demonstrate one complete example of Task 13 (‘reverse parallel parking’) on request.*`,
+            "learningOutcome":`
+                The learner will be able to competently demonstrate each learning outcome from Tasks 9 to 13.`,
+            "assessmentStandard":`
+                The learner will perform one complete example of each of the learning outcomes for Tasks 9 to 13 without assistance. Any learning outcome that does not meet the standard for the task must be re-trained and re-assessed in accordance with the assessment method and standard for that original task.`,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>Task 9 - moving off up hill</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 10 - the simple U-turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 11 - the 3-point turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 12 -  90 degree angle park (front to kerb)</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 13 - reverse parallel parking</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task15() {
+
+        const unitNumber = 3;
+        const taskNumber = 15;
+
+        const task = {
+            "unit":"3",
+            "task":"15",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task16() {
+
+        const unitNumber = 3;
+        const taskNumber = 16;
+
+        const task = {
+            "unit":"3",
+            "task":"16",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task17() {
+
+        const unitNumber = 3;
+        const taskNumber = 17;
+
+        const task = {
+            "unit":"3",
+            "task":"17",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task18() {
+
+        const unitNumber = 3;
+        const taskNumber = 18;
+
+        const task = {
+            "unit":"3",
+            "task":"18",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task19() {
+
+        const unitNumber = 3;
+        const taskNumber = 19;
+
+        const task = {
+            "unit":"3",
+            "task":"19",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task20() {
+
+        const unitNumber = 3;
+        const taskNumber = 20;
+
+        const task = {
+            "unit":"3",
+            "task":"20",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task21() {
+
+        const unitNumber = 3;
+        const taskNumber = 21;
+
+        const task = {
+            "unit":"3",
+            "task":"21",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task22() {
+
+        const unitNumber = 3;
+        const taskNumber = 22;
+
+        const task = {
+            "unit":"3",
+            "task":"22",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task23() {
+
+        const unitNumber = 4;
+        const taskNumber = 23;
+
+        const task = {
+            "unit":"4",
+            "task":"23",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task24() {
+
+        const unitNumber = 4;
+        const taskNumber = 24;
+
+        const task = {
+            "unit":"4",
+            "task":"24",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task25() {
+
+        const unitNumber = 4;
+        const taskNumber = 25;
+
+        const task = {
+            "unit":"4",
+            "task":"25",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task26() {
+
+        const unitNumber = 4;
+        const taskNumber = 26;
+
+        const task = {
+            "unit":"4",
+            "task":"26",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task27() {
+
+        const unitNumber = 4;
+        const taskNumber = 27;
+
+        const task = {
+            "unit":"4",
+            "task":"27",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task28() {
+
+        const unitNumber = 4;
+        const taskNumber = 28;
+
+        const task = {
+            "unit":"4",
+            "task":"28",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task29() {
+
+        const unitNumber = 4;
+        const taskNumber = 29;
+
+        const task = {
+            "unit":"4",
+            "task":"28A",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task30() {
+
+        const unitNumber = 4;
+        const taskNumber = 30;
+
+        const task = {
+            "unit":"4",
+            "task":"28B",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task31() {
+
+        const unitNumber = 5;
+        const taskNumber = 31;
+
+        const task = {
+            "unit":"1-2",
+            "task":"29",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"Review of basic driving skills",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                        <tr>
+
+                    </table>
+
+                </form>`
+        }
+
+        return task;
+
+    }
+
+    static task32() {
+
+        const unitNumber = 6;
+        const taskNumber = 32;
+
+        const task = {
+            "unit":"3-4",
+            "task":"30",
+            "unitNumber":unitNumber,
+            "taskNumber":taskNumber,
+            "taskDescription":"Review of road skills and traffic management",
+            "taskRequirements":`
+                `,
+            "learningOutcome":`
+                `,
+            "assessmentStandard":`
+                `,
+            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionForm":`
+                <form id="taskCompletion">
+
+                    <input type="hidden" id="unit" name="unit" value="${unitNumber}">
+                    <input type="hidden" id="task" name="task" value="${taskNumber}">
+
+                    <table>
+
+                        <tr>
+                            <td colspan='2'>***</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>***</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 

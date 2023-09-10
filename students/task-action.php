@@ -75,7 +75,7 @@ function incompleteTask ($conn, $unit, $task) {
     // echo $_SESSION["student"]["id"];
     // echo $unit;
     // echo $task;
-    $sql = "UPDATE student_tasks SET completed_instructor_id = NULL, completed = 0, completed_date = NULL WHERE student_id = ? AND unit = ? AND task = ?;";
+    $sql = "UPDATE student_tasks SET completed_instructor_id = null, completed = 0, completed_date = null WHERE student_id = ? AND unit = ? AND task = ?;";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "iii", $_SESSION["student"]["id"], $unit, $task);
     mysqli_stmt_execute($stmt);
@@ -150,7 +150,7 @@ function countThings ($conn, $unit, $count_type) {
 
 function getTaskStatuses($conn, $unit) {
 
-    $sql = "SELECT task, completed, completed_date, student_followup, instructor_followup FROM student_tasks WHERE student_id = ? AND unit = ? AND completed = 1";
+    $sql = "SELECT task, completed, completed_date, student_followup, instructor_followup FROM student_tasks WHERE student_id = ? AND unit = ?;";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $unit);
     mysqli_stmt_execute($stmt);
