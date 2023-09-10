@@ -301,7 +301,7 @@ class Tasks {
         
         
         const form = `
-        <h2>Unit ${unit}: Task ${task} - ${taskDescription}</h2>
+        <h2 class="task-header">Unit ${unit}: Task ${task} - ${taskDescription}</h2>
         <div id="taskAlert"></div>
         <div class="stats-container">
 
@@ -1375,13 +1375,27 @@ class Tasks {
             "task":"15",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Vehicle road positioning",
             "taskRequirements":`
-                `,
+                (1) Vehicle positioning on laned and unlaned roads
+                <br>(a) Keep the vehicle as near as practicable to the left on unlaned roads without unnecessarily obstructing other traffic;
+                <br>(b) Keep the vehicle wholly within the marked lane when travelling straight or in bends; and
+                <br>(c) Use the space within the lane to maintain safety margins.
+                <br><br>(2) Maintain safe following distances and safety margins
+                <br>(a) Maintain a minimum of three (3) seconds following interval (see page 17) from the vehicle in front;
+                <br>(b) Allow a safety margin of at least 1.2 m (where practicable) when passing objects, vehicles/ obstructions;
+                <br>(c) Allow a minimum safety margin of 1 metre when passing a cyclist where the speed limit is 60kmh or less, and 1.5 metres where the speed limit is over 60kmh; and
+                <br>(d) Stop in a position behind other vehicles allowing sufficient space to turn away from the vehicle in front if necessary.
+                <br><br>(3) Positioning for turns
+                <br>(a) Correctly position the vehicle at ‘Stop’ lines (associated with ‘Stop’ signs, crossings and traffic lights etc.);
+                <br>(b) Demonstrate appropriate road position at intersections when view is obstructed; and
+                <br>(c) Demonstrate the correct approach and turn positions for turning left and right at intersections in accordance with the law.`,
             "learningOutcome":`
-                `,
+                (1) The learner will safely and competently position the vehicle correctly on laned and unlaned roads in accordance with the law and ’System of Car Control’;
+                <br>(2) The learner will maintain safe following distances from other vehicles and safety margins when passing stationary objects or bicycle riders; and
+                <br>(3) The learner will correctly position the vehicle when turning left or right.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1424,13 +1438,24 @@ class Tasks {
             "task":"16",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Lane changing and diverging/merging",
             "taskRequirements":`
-                `,
+                (1) Changing lanes procedure
+                <br>(a) Select a suitable location (not approaching traffic lights etc.);
+                <br>(b) Accurately apply the ‘System of Car Control’ when changing from one lane to another (either left or right); and
+                <br>(c) Check the appropriate blind spot just before changing to the new lane.
+                <br>(2) Diverging or merging procedure
+                <br>(a) When attempting to diverge, merge or zip merge ensure the vehicle is not directly alongside another vehicle (i.e. where practicable keep the vehicle off-set to others - Rules of Observation);
+                <br>(b) When merging or diverging by more than 1 metre or crossing a lane line, comply with the ‘Lane Changing Procedure’(steps 1(a) to 3(c)) above and give way rules; and
+                <br>(c) When merging or diverging by less than 1 metre, or diverging over a long distance when passing parked vehicles on an unlaned road, comply with step 1(b) above except signals and blind spots may be omitted only if safe.
+                <br>(d) When merging with the flow of traffic, ensure that adequate speed is achieved prior to entering. The merge must have minimal impact on other road users (freeway on-ramps, extended slip lanes etc.); and
+                <br>(e) When zip merging, pay particular attention when approaching signs and lane markings.`,
             "learningOutcome":`
-                `,
+                (1) The learner will be able to change lanes safely and competently to the right and to the left while complying with the ‘System of Car Control’; and
+                <br>(2) The learner will be able to diverge safely and competently to the left or right or merge with other traffic while complying with the ‘System of Car Control’.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time
+                (see pages 10 to 17) and compliance with the law over the complete assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1473,13 +1498,26 @@ class Tasks {
             "task":"17",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Turning at intersections",
             "taskRequirements":`
-                `,
+                (1) Turning at intersections (with a stop)
+                <br>(a) Demonstrate turning left and right at intersections incorporating a stop while complying with the laws for turning;
+                <br>(b) Demonstrate the ‘System of Car Control’ when turning right and left at intersections;
+                <br>(c) Demonstrate safe observation patterns (Rules of Observation) while maintaining full vehicle control; and
+                <br>(d) Comply with signalling requirements, ‘Stop’ and ‘Give Way’ signs and lines, and the give way rules at all times.
+                <br><br>(2) Turning at intersections (without a stop)
+                <br>(a) Demonstrate turning left and right at intersections without a stop where practicable while complying with the laws for turning;
+                <br>(b) Demonstrate the ‘System of Car Control’ when turning right and left at intersections;
+                <br>(c) Demonstrate correct and timely observation patterns when turning left and right at intersections while maintaining full control of the vehicle; and
+                <br>(d) Comply with signalling and ‘Give Way’ rules.
+                <br><br>(3) Negotiate ‘Stop’ and ‘Give Way’ signs/lines
+                <br>(a) Comply with the ‘System of Car Control’ when negotiating ‘Stop’ and ‘Give Way’ signs and lines; and
+                <br>(b) Comply with ‘Stop’ and ‘Give Way’ signs and lines.`,
             "learningOutcome":`
-                `,
+                (1 & 2)The learner will be able to turn safely and competently to the left and to the right (with and without a stop) at simple intersections while complying with the ‘System of Car Control’ and the rules for turning and giving way; and
+                <br>(3) The learner will demonstrate correct compliance with ‘Stop’ and ‘Give Way’ signs.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1522,13 +1560,24 @@ class Tasks {
             "task":"18",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Turning onto and from laned roads",
             "taskRequirements":`
-                `,
+                (1) Turning left onto and from laned roads
+                <br>(a) Comply with all laws relating to signalling, turning and ‘Giving Way’;
+                <br>(b) Approach every turn at a safe speed under full control;
+                <br>(c) Correct and timely observation of any conflicting traffic when turning left;
+                <br>(d) Apply appropriate acceleration during and after turning when entering the traffic flow of the other road; and
+                <br>(e) Comply with the ‘System of Car Control’
+                <br><br>(2) Turning right onto and from laned roads
+                <br>(a) Comply with all laws relating to signalling, turning and ‘Giving Way’;
+                <br>(b) Approach every turn at a safe speed under full control;
+                <br>(c) Correct and timely observation of any conflicting traffic when turning right;
+                <br>(d) Apply appropriate acceleration during and after turning when entering the traffic flow of the other road; and
+                <br>(e) Comply with the ‘System of Car Control’.`,
             "learningOutcome":`
-                `,
+                The learner will be able to demonstrate turning left and right safely on to and from laned roads using the ‘System of Car Control’ while complying with the ‘Give Way’ rules and the laws relating to turning.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1571,13 +1620,27 @@ class Tasks {
             "task":"19",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Negotiating roundabouts",
             "taskRequirements":`
-                `,
+                (1) Turning at unlaned roundabouts
+                <br>(a) Comply with give way rules, signalling and correct vehicle positioning at unlaned roundabouts;
+                <br>(b) Negotiate every roundabout at a safe speed under full control;
+                <br>(c) Observe in the appropriate directions when approaching and during turns at unlaned roundabouts; and
+                <br>(d) Comply with the ‘System of Car Control’.
+                <br><br>(2) Turning at laned roundabouts
+                <br>(a) Demonstrate compliance with give way rules, signalling, arrows and correct vehicle positioning at roundabouts;
+                <br>(b) Negotiate every roundabout at a safe speed under full control;
+                <br>(c) Observe in the appropriate directions when approaching and during turns at laned roundabouts; and
+                <br>(d) Comply with the ‘System of Car Control’.
+                <br><br>(3) Travelling straight on at a roundabout
+                <br>(a) Demonstrate compliance with give way rules, signalling, arrows and co roundabout;
+                <br>(b) Negotiate every roundabout at a safe speed under full control;
+                <br>(c) Look in the appropriate directions when approaching and proceding through roundabouts; and
+                <br>(d) Comply with the ‘System of Car Control’.`,
             "learningOutcome":`
-                `,
+                The learner will be able to turn left, turn right and go straight on safely at unlaned and laned roundabouts while complying with all laws relating to giving way and positioning on roundabouts, and the ‘System of Car Control’.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1620,13 +1683,26 @@ class Tasks {
             "task":"20",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Negotiating traffic lights",
             "taskRequirements":`
-                `,
+                (1) Turning left and right at traffic lights (without arrows)
+                <br>(a) Comply with the law for traffic light signals, associated stop lines, turning lines and arrows;
+                <br>(b) Enter and correctly position vehicle lawfully within the intersection when stopping to give way to opposing traffic;
+                <br>(c) When turning right, keep the front wheels straight (where practicable) while waiting to give way to on-coming traffic; and
+                <br>(d) Comply with Tasks 17 and 18 requirements when turning.
+                <br><br>(2) Following a straight course through traffic lights
+                <br>(a) Comply with the law for traffic light signals and associated stop lines;
+                <br>(b) Comply with ‘System of Car Control’ approaching lights; and
+                <br>(c) Apply correct stopping procedure (Task 4) as applicable.
+                <br><br>(3) Turning left through a slip lane (without arrows)
+                <br>(a) Comply with all ‘Give Way’, signalling and road law;
+                <br>(b) Comply with turning left requirements for Tasks 17 and 18 including safe speed of approach to the turn; and
+                <br>(c) Demonstrate appropriate and timely observation patterns, and ‘System of Car Control’.`,
             "learningOutcome":`
-                `,
+                (1 & 2) The learner will safely negotiate traffic lights (without arrows) by turning right, left and proceeding straight ahead while complying with all laws and ‘System of Car Control’; and
+                <br>(3) The learner will safely demonstrate turning left at slip lanes.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1669,13 +1745,27 @@ class Tasks {
             "task":"21",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Light traffic urban driving",
             "taskRequirements":`
-                `,
+                (1) Pedestrian crossings, school zones and cross road intersections
+                <br>(a) Comply with the laws for pedestrian crossings and school zones; and
+                <br>(b) Accurately comply with the ‘System of Car Control’ at all cross road intersections on unlaned roads (centre mirror must be checked prior to observation).
+                <br><br>(2) Speed limits
+                <br>(a) Comply with all speed limits in speed zones and built-up areas whilst demonstrating awareness of changing speed limits; and
+                <br>(b) Comply with speed limits for bridges, roadworks, schools, car parks and learner requirements.
+                <br><br>(3) Maintain reasonable progress
+                <br>(a) Where safe and practicable, maintain a speed which is within 5 km/h of the legal speed limit but does not exceed the speed limit;
+                <br>(b) Move off in a line of traffic without any unnecessary delay or obstructing other traffic;
+                <br>(c) Does not slow excessively or stop unnecessarily at intersections where the view is open and clear, and it is safe to go; and
+                <br>(d) Maintain at least a ‘3 second’ following distance between the vehicle in front and the learner’s vehicle.`,
             "learningOutcome":`
-                `,
+                (1) The learner will comply with the law while negotiating Emu, Koala and Wombat pedestrian crossings, school zones and cross road intersections (where available);
+                <br>(2) The learner will comply with all speed limits associated with speed zones, road works, bridges, built-up areas, schools and car parks; and
+                <br>(3) The learner will demonstrate reasonable progress:
+                <br>(i) by keeping up with the flow of traffic when it is practicable, legal and safe,
+                <br>(ii) when negotiating cross road intersections whilst complying with the ‘System of Car Control’.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1718,13 +1808,26 @@ class Tasks {
             "task":"22",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Country driving (driving at higher speeds)",
             "taskRequirements":`
-                `,
+                (1) Negotiating bends and crests
+                <br>(a) Comply with speed limits, road markings, keeping left and ‘Due Care’ requirements while maintaining reasonable progress;
+                <br>(b) Demonstrate a safe speed and position of approach to all bends and crests;
+                <br>(c) Comply with ‘System of Car Control’ approaching bends and crests (including selection of the correct gear before the bend or crest);
+                <br>(d) Comply with the Rules of Braking and ‘acceleration sense’ approaching bends and crests;
+                <br>(e) Comply with the Rules of Steering when braking and cornering;
+                <br>(f) Demonstrate good forward observation (Aim high in steering) and complies with the Rules of Observation; and
+                <br>(g) Display safe and complete control of the vehicle at all times.
+                <br><br>(2) Overtaking other vehicles
+                <br>(a) Correctly select a safe and suitable location to overtake while complying with the law (road markings, sufficient clear view);
+                <br>(b) Maintain a reasonable following distance before overtaking in order to comply with the Rules of Observation; and
+                <br>(c) Comply with ‘System of Car Control’ and use appropriate gears and acceleration where necessary; or
+                <br>(d) If suitable overtaking situations do not occur, verbally demonstrate to the Authorised Examiner the selection of five safe and suitable locations where there is sufficient distance to overtake safely.`,
             "learningOutcome":`
-                `,
+                (1) The learner will demonstrate accurate compliance with the ‘System of Car Control’, Rules of Braking, Steering and Observation (see pages 10 to 17) as applied to bends, crests and overtaking while driving at higher speeds; and
+                <br>(2) The learner will maintain full control of the vehicle while driving at higher speeds.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1767,13 +1870,28 @@ class Tasks {
             "task":"23",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Safe driving strategies",
             "taskRequirements":`
-                `,
+                (1) Safe positioning of the vehicle in traffic
+                <br>(a) Keep at least 3 seconds time interval between the learner’s vehicle and the vehicle in front, increasing this interval for adverse weather conditions or if being closely followed;
+                <br>(b) Where safe and practicable, keep at least 1.2 metre clearance when passing parked vehicles, or other hazards;
+                <br>(c) Allow a minimum safety margin of 1 metre when passing a cyclist where the speed limit is 60kmh or less, and 1.5 metres where the speed limit is over 60kmh;
+                <br>(d) Adjust the vehicle’s position by holding back if the vehicle in front obstructs the view ahead (Observation - Get the big picture);
+                <br>(e) Maintain the vehicle’s position in a line of traffic without obstructing following traffic where it is safe and legal to do so;
+                <br>(f) Avoid unnecessary travel in blind spots of other vehicles (Observation - Leave yourself an OUT);
+                <br>(g) Where practicable, stop in a position behind other vehicles to allow sufficient space to turn away from the vehicle in front;
+                <br>(h) Without obstructing the intersection stop in a line of traffic (road law); and
+                <br>(i) Comply with all appropriate road rules.
+                <br><br>(2) ‘System of Car Control’ as applied to traffic hazards
+                <br>(a) Comply with the features of the ‘System of Car Control’ in the correct sequence when approaching hazards in traffic;
+                <br>(b) Comply with ‘System of Car Control’ when approaching traffic lights (eg. check mirror, cover the brake, etc.);
+                <br>(c) Demonstrate ‘System of Car Control’ when passing stationary buses or other similar hazards; and
+                <br>(d) Demonstrate ‘System of Car Control’ when giving way.`,
             "learningOutcome":`
-                `,
+                (1) The learner will competently maintain safe following distances, passing clearances and appropriate positioning of the vehicle for improved forward observation in medium to heavy traffic; and
+                <br>(2) Demonstrate compliance with the ‘System of Car Control’ when approaching potential hazards in traffic.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1816,13 +1934,22 @@ class Tasks {
             "task":"24",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Lane management in traffic",
             "taskRequirements":`
-                `,
+                (1) Lane selection in traffic
+                <br>(a) Identify potential hazards well in advance and take safe and appropriate action (Observation - Get the Big Picture);
+                <br>(b) Confidently select safe gaps when changing lanes; and
+                <br>(c) Select suitable and timely locations when changing lanes (‘System of Car Control’ - select the course).
+                <br><br>(2) Lane changing in traffic
+                <br>(a) Competently apply the ‘System of Car Control’ when changing from one lane to another (either left or right);
+                <br>(b) Check the appropriate blind spot just before changing lanes;
+                <br>(c) Co-operate with other drivers by accepting and giving reasonable offers of courtesy when safe; and
+                <br>(d) Change lanes in traffic only when safe without significantly interfering with the flow of traffic in the newly selected lane.`,
             "learningOutcome":`
-                `,
+                (1) The learner will be able to select the appropriate lane safely and competently well in advance to maintain reasonable progress and efficient traffic flow; and
+                <br>(2) The learner will be able to change lanes safely and competently in traffic while complying with the ‘System of Car Control’.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1865,13 +1992,27 @@ class Tasks {
             "task":"25",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Turning in traffic",
             "taskRequirements":`
-                `,
+                (1) Turning left onto and from busy roads
+                <br>(a) Display compliance with all ‘Give Way’ and ‘turning’ rules (observation, braking and steering);
+                <br>(b) Maintain full vehicle control throughout each turn (ie. no wide exits, question-mark turns, or stalls);
+                <br>(c) When exiting or entering a busy road, keep as near as reasonably practicable to the left;
+                <br>(d) Comply with the ‘System of Car Control’ throughout the assessment;
+                <br>(e) Display competent selection of safe gaps when entering a traffic flow; and
+                <br>(f) Display competent acceleration skills when entering a gap (See ‘System of Car Control’).
+                <br><br>(2) Turning right onto and from busy roads
+                <br>(a) Display compliance with all ‘Give Way’ and turning’ rules (observation, braking and steering);
+                <br>(b) Maintain full vehicle control throughout each turn (ie. no wide exits, question-mark turns, or stalls);
+                <br>(c) Comply with the ‘System of Car Control’ throughout the assessment;
+                <br>(d) Make early selection of the most appropriate and lawful lane for turning;
+                <br>(e) Display competent selection of safe gaps when entering or crossing a traffic flow when turning right; and
+                <br>(f) Display competent acceleration skills when entering a safe gap or crossing a flow of traffic - (See ‘System of Car Control’).`,
             "learningOutcome":`
-                `,
+                (1) The learner will turn right and left safely and competently in traffic under full control while complying with the ‘Give Way’ laws, ‘turning’ laws and the ‘System of Car Control’; and
+                <br>(2) The learner will competently select safe gaps when entering or crossing a flow of traffic on busy roads without unnecessary hesitation.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1914,13 +2055,21 @@ class Tasks {
             "task":"26",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Managing traffic at roundabouts",
             "taskRequirements":`
-                `,
+                (1) Managing traffic at unlaned roundabouts
+                <br>(a) Comply with the requirements and standard as documented in Task 19 (1) - turning at unlaned roundabouts;
+                <br>(b) Display competent and confident decision making when selecting safe gaps in traffic on the roundabout; and
+                <br>(c) Demonstrate competent use of acceleration when joining and leaving a traffic stream on the carriageway of the roundabout.
+                <br><br>(2) Managing traffic at laned roundabouts
+                <br>(a) Comply with the requirements and standard as documented in Task 19 (2) - turning at laned roundabouts;
+                <br>(b) Demonstrate early selection of correct lanes before, during and after turning or when travelling straight on at the roundabout;
+                <br>(c) Display competent and confident decision making when selecting safe gaps in traffic at the roundabout; and
+                <br>(d) Demonstrate competent use of acceleration when joining and leaving a traffic stream on the carriageway of the roundabout.`,
             "learningOutcome":`
-                `,
+                The learner will be able to turn right, left and travel straight-on safely and competently at laned and unlaned roundabouts in medium to heavy traffic while complying with the law and the ‘System of Car Control’.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -1963,13 +2112,25 @@ class Tasks {
             "task":"27",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"U-turn in traffic manoeuvre",
             "taskRequirements":`
-                `,
+                (1) Selecting a safe U-turn starting position
+                <br>(a) Select a suitable position whilst complying with ‘System of Car Control’;
+                <br>(b) Select a position where only one major flow of traffic is required to be crossed during the U-turn; and
+                <br>(c) Select the most appropriate position that minimises the disruption to overtaking or following traffic for that road (eg. a right turn store lane opposite a quiet road).
+                <br><br>(2) Perform a safe and complete U-turn
+                <br>(a) Comply with all road markings, and the ‘Give Way’ rules for turning and moving off (as required);
+                <br>(b) Confidently select a safe gap in the traffic flow when presented;
+                <br>(c) Use safe stopping areas within the U-turn as required; and
+                <br>(d) Complete the U-turn safely without reversing while maintaining full control of the vehicle.
+                <br><br>(3) Select a safe alternative to the U-turn due to traffic
+                <br>(a) If traffic conditions change where the U-turn could become confusing or dangerous to any road users, select an acceptable safe option; and
+                <br>(b) Perform the optional action with safety.`,
             "learningOutcome":`
-                `,
+                (1) The learner will be able to select a safe and suitable location on a busy road and competently perform a U-turn with safety without the need for reversing; and
+                <br>(2 & 3) The learner will be able to choose a safer option to a U-turn where the turn may be obstructed due to changing traffic conditions.`,
             "assessmentStandard":`
-                `,
+                The learner will accurately perform Parts (1) and (2), or (1) and (3) of this task without assistance. The assessment will be a demonstration on at least two consecutive but separate occasions.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2012,13 +2173,27 @@ class Tasks {
             "task":"28",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Negotiating traffic lights in traffic",
             "taskRequirements":`
-                `,
+                (1) Turning left and right at traffic lights (without arrows)
+                <br>(a) Comply with Task 20;
+                <br>(b) While waiting to turn right or left , correctly position the vehicle within the intersection when permitted by the traffic lights;
+                <br>(c) Demonstrate confident selection of safe gaps when turning into or across a traffic flow;
+                <br>(d) Display appropriate use of acceleration for safety during the turn while maintaining full control of the vehicle; and
+                <br>(e) Ensure that other vehicles are not unnecessarily obstructed when turning.
+                <br><br>(2) Following a straight course through traffic lights
+                <br>(a) Comply with Task 20; and
+                <br>(b) Display correct and confident decision making on approach to traffic lights having regard for weather, road conditions and following traffic (type of vehicle and how near they are).
+                <br><br>(3) Negotiating ‘slip’ lanes (without arrows)
+                <br>(a) Comply with Task 20;
+                <br>(b) Demonstrate confident selection of safe gaps when turning left through a ‘slip’ lane into a flow of traffic; and
+                <br>(c) Display appropriate use of acceleration for safety during and after the turn while maintaining full control of the vehicle.`,
             "learningOutcome":`
-                `,
+                (1) The learner will be able to travel straight on, turn left and right safely and competently at traffic lights (with and without arrows) in medium to heavy traffic in accordance with the ‘System of Car Control’; and
+                <br>(2) The learner will comply with the appropriate road laws governing the operation of traffic lights, signalling, turning, positioning the vehicle and ‘Giving Way’.
+                <br>(3) The learner will comply with the appropriate road laws when negotiating ‘slip’ lanes`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2061,13 +2236,21 @@ class Tasks {
             "task":"28A",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Driving on unsealed roads",
             "taskRequirements":`
-                `,
+                (a) Demonstrate compliance with all appropriate road laws (eg. as near as practicable to the left, etc.);
+                <br>(b) Maintain full control of the vehicle at all times (skidding or sliding at any time is considered to be loss of control – see system of car control);
+                <br>(c) Demonstrate a safe speed of approach to bends, crests and intersections at all times;
+                <br>(d) Demonstrate safe and correct entry lines into bends (for good view and being seen - Rules of Observation);
+                <br>(e) Demonstrate safe and correct exit lines from bends (ensuring the vehicle leaves the bend on the correct side of the road – if any part of the vehicle strays onto the incorrect side of the road it is a road law fault – see step (a));
+                <br>(f) Comply with the ‘System of Car Control’, Rules of Braking, Steering and Observation;
+                <br>(g) Correctly adjust speed to that which is suitable to any change of road surface;
+                <br>(h) Correctly adjust the following distance and use headlights as required when following another vehicle (eg. decreased visibility due to dust etc.); and
+                <br>(i) Correctly adjust the speed (minimum use of the accelerator) when passing another vehicle travelling in the opposite direction (to reduce the risk of possible windscreen damage).`,
             "learningOutcome":`
-                `,
+                The learner will be able to negotiate bends, crests and intersections safely and competently on unsealed roads using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2110,13 +2293,25 @@ class Tasks {
             "task":"28B",
             "unitNumber":unitNumber,
             "taskNumber":taskNumber,
-            "taskDescription":"",
+            "taskDescription":"Driving at night",
             "taskRequirements":`
-                `,
+                (a) Recognition of current skills and knowledge
+                • Question learner on speed limits, keeping to the left, 3-Second Rule Formula, Use of headlights, ‘System of Car Control’, Rules of Braking, Steering and Observation; and
+                (b) Driving at night
+                • Explain adjustments required in speed and positioning in regard to visual deficiencies.
+                • Explain the requirements in relation to clean windscreens and headlights.
+                • Explain the requirements in relation to dipping headlights. (eg when following within 200m from the rear of other traffic and when approaching vehicle reaches a point 200m from your vehicle or immediately the headlights of an approaching vehicle are dipped, whichever is sooner).
+                • Explain the confusion that may occur when driving in built up areas due to the mixture of neon signs, traffic lights, store lights, street lighting, etc.
+                • Explain the need to be ‘seen’ (eg do not forget to turn on headlights). Explain the lack of visual eye contact with other road users.
+                • Demonstrate correct application of ‘System’.
+                (c) Demonstrate night driving
+                • Trainee to demonstrate under full instruction.
+                • Trainee to demonstrate with instruction as required; and
+                • Trainee to practice until competent.`,
             "learningOutcome":`
-                `,
+                The learner will be able to safely and competently demonstrate the maintenance of safe following distances, passing clearances and appropriate position of the vehicle for improved forward observation in relation to visual and speed adjustments using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
-                `,
+                Task 28B is an optional Task. It is not compulsory for the Authorised Examiner to sign. This task has been placed in the Driving Companion primarily for the use by the Qualified Supervising Driver for guidance when recording the compulsory 15 hours of night driving.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2161,11 +2356,25 @@ class Tasks {
             "taskNumber":taskNumber,
             "taskDescription":"Review of basic driving skills",
             "taskRequirements":`
-                `,
+                (1) Review of all tasks in Unit 1
+                <br>(a) Accurately perform Task 1 - cabin drill and controls
+                <br>(b) Accurately perform Task 2 - starting up and shutting down the engine
+                <br>(c) Accurately perform Task 3 - moving off from the kerb
+                <br>(d) Accurately perform Task 4 - stopping and securing the vehicle
+                <br>(e) Accurately perform Task 5 - stop and go (using the park brake)
+                <br>(f) Accurately demonstrate Task 6 - gear changing
+                <br>(g) Accurately demonstrate Task 7 - control of the steering (forward and reverse)
+                <br><br>(2) Review of all tasks in Unit 2
+                <br>(a) Accurately perform Task 9 - stopping and securing the vehicle on a hill and moving off uphill
+                <br>(b) Accurately perform Task 10 - the U-turn
+                <br>(c) Accurately perform Task 11 - the 3-point turn
+                <br>(d) Accurately perform Task 12 - entering and leaving a 90 degree angle park
+                <br>(e) Accurately perform Task 13 - reverse parallel parking`,
             "learningOutcome":`
-                `,
+                (1) The learner will be able to accurately perform one example of each of the learning outcomes for the Basic Driving Procedures as identified in Unit 1, Tasks 1 to 7 without assistance; and
+                <br>(2) The learner will be able to accurately perform one example of each of the Slow Speed Manoeuvres as identified in Unit 2, Tasks 9 to 13 without assistance.`,
             "assessmentStandard":`
-                `,
+                The learner will accurately perform one example of each of the learning outcomes for Tasks 1 to 7 and 9 to 13 without assistance. Any learning outcome that does not meet the standard for the original task must be re-assessed (after any retraining) in accordance with the assessment method and standard for that original task.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2176,12 +2385,62 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'>Task 1 - cabin drill and controls</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'>Task 2 - starting up and shutting down the engine</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 3 -  moving off from the kerb</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 4 - stopping and securing the vehicle</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 5 - stop and go (using the park brake)</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 6 - gear changing</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 7 - steering (forward and reverse)</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 9 - moving off up hill</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 10 - the U–turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 11 - the 3–point turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 12 - 90 Degree Angle Park (front to kerb)</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'>Task 13 -  reverse parallel parking</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -2210,11 +2469,14 @@ class Tasks {
             "taskNumber":taskNumber,
             "taskDescription":"Review of road skills and traffic management",
             "taskRequirements":`
-                `,
+                a Comply with all road laws;
+                <br>b Comply with the ‘System of Car Control’ to left and right turns, traffic lights, stopping, lane changes and other potential traffic hazards;
+                <br>c Comply with the Rules of Braking, Steering and Observation; and
+                <br>d Demonstrate appropriate forward planning, correct and timely road positioning, and safe driving strategies.`,
             "learningOutcome":`
-                `,
+                The learner will competently demonstrate a safe, efficient drive in medium to heavy traffic where practicable, of not less than 25 minutes duration without assistance while complying with all road laws, the ‘System of Car Control’, Rules of Braking, Steering and Observation.`,
             "assessmentStandard":`
-                `,
+                The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
             "taskCompletionTitle":"Task Assessment Records",
             "taskCompletionForm":`
                 <form id="taskCompletion">
@@ -2225,17 +2487,12 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'>Task 30 – A short drive of not less than 25 minutes duration in medium to heavy traffic.</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='3'><input type="submit" value="Mark task completed"></td>
                         <tr>
 
                     </table>
