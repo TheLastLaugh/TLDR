@@ -104,3 +104,9 @@ td.incomplete {
 .closebtn:hover {
     color: black;
 }
+
+/* Task Header */
+
+.task-header {
+    text-align: center;
+}
