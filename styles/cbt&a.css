@@ -9,6 +9,7 @@
     border: none;
     outline: none;
     transition: 0.4s;
+    font-size: 16px;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -62,4 +63,12 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+td.complete {
+    color:green;
+}
+
+td.incomplete {
+    color:red;
 }
