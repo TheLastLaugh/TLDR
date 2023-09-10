@@ -55,7 +55,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentdob = $_SESSION['student']['dob'];
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
-                            $studentnumber = '***';
+                            $studentnumber = $_SESSION['student']['contact_number'];
                             echo "<p>Student Name: {$studentname}</p>
                             <ul>
                                 <li>Drivers License: {$studentlicense}</li>
@@ -84,7 +84,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $instructordob = $_SESSION["instructor"]["dob"];
                             $instructorage = date_diff(date_create(date("Y-m-d")), date_create($instructordob));
                             $instructorage = $instructorage->format('%y');
-                            $instructornumber = '***';
+                            $instructornumber = $_SESSION["instructor"]["contact_number"];
                             echo "<p>Instructor Name: {$instructorname}</p>
                             <ul>
                                 <li>Drivers License: {$instructorlicense}</li>
@@ -112,7 +112,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $qsddob = $_SESSION["qsd"]["dob"];
                             $qsdage = date_diff(date_create(date("Y-m-d")), date_create($qsddob));
                             $qsdage = $qsdage->format('%y');
-                            $qsdnumber = '***';
+                            $qsdnumber = $_SESSION["qsd"]["contact_number"];
                             echo "<p>Instructor Name: {$qsdname}</p>
                             <ul>
                                 <li>Drivers License: {$qsdlicense}</li>
