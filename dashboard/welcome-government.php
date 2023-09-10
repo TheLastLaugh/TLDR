@@ -56,7 +56,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
                             $studentnumber = $_SESSION['student']['contact_number'];
-                            echo "<p>Student Name: {$studentname}</p>
+                            echo "<p>Name: {$studentname}</p>
                             <ul>
                                 <li>Drivers License: {$studentlicense}</li>
                                 <li>Address: {$studentaddress}</li>
@@ -71,6 +71,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
                             echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
+                            echo '<a href="#">Create New Student</a><br>';
                         }
                     ?>
                 </div>
@@ -85,7 +86,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $instructorage = date_diff(date_create(date("Y-m-d")), date_create($instructordob));
                             $instructorage = $instructorage->format('%y');
                             $instructornumber = $_SESSION["instructor"]["contact_number"];
-                            echo "<p>Instructor Name: {$instructorname}</p>
+                            echo "<p>Name: {$instructorname}</p>
                             <ul>
                                 <li>Drivers License: {$instructorlicense}</li>
                                 <li>Address: {$instructoraddress}</li>
@@ -93,12 +94,13 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Contact Number: {$instructornumber}</li>
                             </ul>
                             <a href='../search/search.php?usertype=instructor'>Change Instructor</a><br>
-                            <a href='#'>View Total Billed Hours Report</a>
+                            <a href='#'>View Report</a>
                             ";
                         } else {
                             $instructorname = "No Instructor Selected";
                             echo "<p>Instructor Name: {$instructorname}</p>";
                             echo '<a href="../search/search.php?usertype=instructor">Search Instructor</a><br>';
+                            echo '<a href="#">Create New Instructor</a><br>';
                         }
                     ?>
                 </div>
@@ -113,19 +115,21 @@ else if ($_SESSION['user_type'] != 'government') {
                             $qsdage = date_diff(date_create(date("Y-m-d")), date_create($qsddob));
                             $qsdage = $qsdage->format('%y');
                             $qsdnumber = $_SESSION["qsd"]["contact_number"];
-                            echo "<p>Instructor Name: {$qsdname}</p>
+                            echo "<p>Name: {$qsdname}</p>
                             <ul>
                                 <li>Drivers License: {$qsdlicense}</li>
                                 <li>Address: {$qsdaddress}</li>
                                 <li>Date of Birth: {$qsddob} ( Age: {$qsdage} )</li>
                                 <li>Contact Number: {$qsdnumber}</li>
                             </ul>
+                            <a href='#'>Create New QSD</a><br>
                             <a href='../search/search.php?usertype=qsd'>Change Qualified Supervising Driver</a><br>
                             ";
                         } else {
                             $qsdname = "No QSD Selected";
                             echo "<p>Qualified Supervising Driver: {$qsdname}</p>";
                             echo '<a href="../search/search.php?usertype=qsd">Search Qualified Supervising Driver</a><br>';
+                            echo '<a href="#">Create New QSD</a><br>';
                         }
                     ?>
                 </div>
