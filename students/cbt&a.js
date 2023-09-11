@@ -57,11 +57,25 @@ function viewTask (task) {
 
     document.getElementById("view-task").innerHTML = Tasks.get(Number(task));
 
+    Tasks.getTaskData(task);
+
     document.getElementById('taskCompletion').addEventListener('submit', function(event) {
 
         event.preventDefault();
         console.log(event);
         Tasks.complete(event.target[0].value, event.target[1].value); 
+    
+    });
+
+    document.getElementById('commentsForm').addEventListener('submit', function(event) {
+
+        event.preventDefault();
+        console.log(event);
+        const comment = event.target[0].value;
+        const unit = event.target[1].value;
+        const task = event.target[2].value
+        console.log(comment);
+        Tasks.updateComment(unit, task, comment);
     
     });
 
@@ -82,6 +96,29 @@ class Tasks {
 
         // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
         setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
+    }
+
+    static getTaskData(task) {
+
+        var params= `action=get-task&task=${task}`;
+    
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(xhttp.responseText);
+                const result = JSON.parse(xhttp.responseText);
+                if ('instructor_notes' in result['task'] && result['task']['instructor_notes'] != null) {
+                    console.log("notes existtttt");
+                    document.getElementById("notes").value = result['task']['instructor_notes'];
+                }
+            }
+        };
+    
+        xhttp.open("POST", "./task-action.php", true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.send(params);
+
     }
 
     static snapshot () {
@@ -149,6 +186,44 @@ class Tasks {
         xhttp.send(params);
 
     }
+
+    static updateComment (unit, task, message) {
+
+        var params= `action=update-comment&unit=${unit}&task=${task}&message=${message}`;
+    
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(xhttp.responseText);
+                Tasks.successAlert();
+            }
+        };
+    
+        xhttp.open("POST", "./task-action.php", true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.send(params);
+
+    }
+
+    // static getTask (unit, task, message) {
+
+    //     var params= `action=update-comment&unit=${unit}&task=${task}&message=${message}`;
+    
+    //     var xhttp = new XMLHttpRequest();
+
+    //     xhttp.onreadystatechange = function() {
+    //         if (this.readyState == 4 && this.status == 200) {
+    //             console.log(xhttp.responseText);
+    //             Tasks.successAlert();
+    //         }
+    //     };
+    
+    //     xhttp.open("POST", "./task-action.php", true);
+    //     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //     xhttp.send(params);
+
+    // }
 
     static taskAction (action, unit, task) {
 
@@ -330,6 +405,16 @@ class Tasks {
                 <button type="button" onclick="Tasks.taskAction('student_followup', ${unitNumber}, ${taskNumber})">Flag for student practice</button>
                 <button type="button" onclick="Tasks.taskAction('instructor_followup', ${unitNumber}, ${taskNumber})">Flag for instructor follow-up</button>
                 <button type="button" onclick="Tasks.taskAction('incomplete-task', ${unitNumber}, ${taskNumber})">Mark task incomplete</button>
+            </div>
+
+            <div class="stat-card">
+                <h3>Authorised Examiner Notes</h3>
+                <form id="commentsForm">
+                    <textarea id="notes" rows="4" cols="50" placeholder="Enter notes here..."></textarea><br>
+                    <input type="hidden" value="${unitNumber}">
+                    <input type="hidden" value="${taskNumber}">
+                    <input type="submit" value="Update">
+                </form>
             </div>
 
         </div>`

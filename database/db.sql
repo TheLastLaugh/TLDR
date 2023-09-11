@@ -177,6 +177,7 @@ CREATE TABLE student_tasks (
     completed_instructor_id int,
     student_followup BOOLEAN NOT NULL DEFAULT FALSE,
     instructor_followup BOOLEAN NOT NULL DEFAULT FALSE,
+    instructor_notes varchar(255),
     PRIMARY KEY (student_id, unit, task),
     FOREIGN KEY (student_id) REFERENCES users(id),
     FOREIGN KEY (completed_instructor_id) REFERENCES users(id)
