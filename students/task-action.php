@@ -31,20 +31,10 @@ elseif ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'gov
     if (isset($_POST['task'])) {
         $task = $_POST['task'];
     }
-    // $unit = $_POST['unit'];
-    // $task = $_POST['task'];
+    if (isset($_POST['message'])) {
+        $message = $_POST['message'];
+    }
 }
-
-// elseif ($_SESSION['user_type'] == 'government') {
-//     $action = $_POST['action'];
-//     $unit = $_POST['unit'];
-//     $task = $_POST['task'];
-// }
-
-// Check unit number
-// if (preg_match("/^[1-6]$/", $unit)) {
-
-// }
 
 function createStudentTask ($conn, $unit, $task) {
     // echo 'createStudentTask';
@@ -102,6 +92,13 @@ function instructorFollowup ($conn, $unit, $task) {
     $sql = "UPDATE student_tasks SET instructor_followup = 1 WHERE student_id = ? AND unit = ? AND task = ?;";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "iii", $_SESSION["student"]["id"], $unit, $task);
+    mysqli_stmt_execute($stmt);
+}
+
+function updateComment ($conn, $unit, $task, $comment) {
+    $sql = "UPDATE student_tasks SET instructor_notes = ? WHERE student_id = ? AND unit = ? AND task = ?;";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "siii", $comment, $_SESSION["student"]["id"], $unit, $task);
     mysqli_stmt_execute($stmt);
 }
 
@@ -277,7 +274,8 @@ if ($action == 'complete-task') {
 } elseif ($action == 'snapshot') {
 
     $data = array();
-    $totals = array(8, 6, 8, 8, 1, 1);
+    $totals = array(8, 6, 8, 8, 1, 1); //total tasks per unit
+    $alltasks = 32; //total tasks of all units
 
     for ($x = 0; $x <= 5; $x++) {
         $myObj['unit'] = $x + 1;
@@ -292,6 +290,54 @@ if ($action == 'complete-task') {
 
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($data);
+
+} elseif ($action == 'get-task') {
+
+    $sql = "SELECT * FROM student_tasks WHERE student_id = ? AND task = ?;";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $task);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $returnData = null;
+    $returnData['usertype'] = $_SESSION['user_type'];
+
+    if ( mysqli_num_rows($result) >= 1 ) {
+        if ($row = $result -> fetch_assoc()) {
+            $returnData['task'] = $row;
+        }
+    } else {
+        $returnData['task'] = json_decode ("{}");
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode($returnData);
+
+} elseif ($action == 'update-comment') {
+
+    $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND task = ?;";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $task);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ( mysqli_num_rows($result) >= 1 ) {
+
+        if ($row = $result -> fetch_assoc()) {
+
+            if ($row['COUNT(*)'] >= 1) {
+
+                updateComment($conn, $unit, $task, $message);
+
+            } else {
+                
+                createStudentTask($conn, $unit, $task);
+                updateComment($conn, $unit, $task, $message);
+
+            }
+
+        }
+    }
 
 }
 
