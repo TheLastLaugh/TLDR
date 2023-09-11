@@ -53,11 +53,11 @@ document.getElementById('search-name').addEventListener('submit', function(event
 
     event.preventDefault();
     console.log(event);
-    const fname = event.target[0].value;
+    const fname = encodeURIComponent(event.target[0].value);
     var params;
 
     if (event.target[1].id == 'usertype1') {
-        const userType = event.target[1].value;
+        const userType = encodeURIComponent(event.target[1].value);
         params = `type=${userType}&search=name&fname=${fname}`;
     } else {
         params = `search=name&fname=${fname}`;
@@ -98,11 +98,11 @@ document.getElementById('search-dl').addEventListener('submit', function(event) 
 
     event.preventDefault();
     console.log(event);
-    const license = event.target[0].value;
+    const license = encodeURIComponent(event.target[0].value);
     var params;
 
     if (event.target[1].id == 'usertype2') {
-        const userType = event.target[1].value;
+        const userType = encodeURIComponent(event.target[1].value);
         params = `type=${userType}&search=dl&license=${license}`;
     } else {
         params = `search=dl&license=${license}`;
@@ -204,6 +204,9 @@ function searchExisting () {
 }
 
 function selectUser (usertype, username) {
+
+    usertype = encodeURIComponent(usertype);
+    username = encodeURIComponent(username);
 
     const params = `usertype=${usertype}&username=${username}`;
 
