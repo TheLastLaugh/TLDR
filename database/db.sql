@@ -167,7 +167,7 @@ CREATE TABLE logbooks (
 );
 
 -- ------------------------------------------------------------------------------------------------*
--- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
+-- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **--------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
 -- Password is Password1! for all of these
 INSERT INTO users (username, email, password, address, license, dob, user_type) VALUES

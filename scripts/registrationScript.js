@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const isValidPassword = function(password) {
         // Regular expression for a strong password
         // I stole this from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/; 
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
         // cmon like i'm ever gonna figure that regex out 
         
         return regex.test(password);
@@ -16,16 +16,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const checkPasswordValidity = function() {
         if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity('Passwords do not match');
-        }else if (!isValidPassword(password.value)) {
+        } else if (!isValidPassword(password.value)) {
             password.setCustomValidity('Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
-        } 
-        else {
+        } else {
             confirmPassword.setCustomValidity('');
             password.setCustomValidity('');
         }
     }    
 
     password.addEventListener('change', checkPasswordValidity);
-    confirmPassword.addEventListener('keyup', checkPasswordValidity);
+    confirmPassword.addEventListener('change', checkPasswordValidity);
 
 });
