@@ -110,3 +110,9 @@ td.incomplete {
 .task-header {
     text-align: center;
 }
+
+/* Smooth Scrolling so tasks arent teleported to */
+
+html {
+    scroll-behavior: smooth;
+}

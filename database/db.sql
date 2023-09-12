@@ -176,6 +176,7 @@ CREATE TABLE student_tasks (
     completed_date DATE,
     completed_instructor_id int,
     student_followup BOOLEAN NOT NULL DEFAULT FALSE,
+    student_signature BOOLEAN,
     instructor_followup BOOLEAN NOT NULL DEFAULT FALSE,
     instructor_notes varchar(255),
     PRIMARY KEY (student_id, unit, task),

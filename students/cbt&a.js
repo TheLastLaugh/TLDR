@@ -92,9 +92,9 @@ class Tasks {
 
         // Scroll to anchor position. Remove any achor first and then scroll.
         location.hash = "";
-        // location.hash = "#view-task";
+        location.hash = "#view-task";
 
-        document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
+        // document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
 
         // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
         setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
@@ -236,6 +236,9 @@ class Tasks {
                 console.log(xhttp.responseText);
                 Tasks.successAlert();
                 Tasks.snapshot();
+                if (action == 'incomplete-task') {
+                    enableFormInput();
+                }
             }
         };
     
@@ -2659,6 +2662,30 @@ function disableFormInput () {
     for (let i = 0; i < allCheckboxElements.length; i++) {
         allCheckboxElements[i].checked = true;
     }
+
+}
+
+function enableFormInput () {
+
+    const allInputElements = document.getElementById("taskCompletion").querySelectorAll("input");
+
+    for (let i = 0; i < allInputElements.length; i++) {
+        allInputElements[i].disabled = false;
+    }
+
+    const allSelectElements = document.getElementById("taskCompletion").querySelectorAll("select");
+
+    for (let i = 0; i < allSelectElements.length; i++) {
+        allSelectElements[i].disabled = false;
+    }
+
+    const allCheckboxElements = document.getElementById("taskCompletion").querySelectorAll("input[type=checkbox]");
+
+    for (let i = 0; i < allCheckboxElements.length; i++) {
+        allCheckboxElements[i].checked = false;
+    }
+
+    document.getElementById("taskCompletionMessage").innerHTML = "";
 
 }
 
