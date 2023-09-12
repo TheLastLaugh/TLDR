@@ -37,7 +37,7 @@ if (isset($_GET['error'])) {
       <div class="content">
         <h2>Welcome</h2>
         <p>
-          Welcome to the TLDR. Online serive to input your driving lessons and
+          Welcome to the TLDR. Online service to input your driving lessons and
           hours at ease.
         </p>
       </div>
