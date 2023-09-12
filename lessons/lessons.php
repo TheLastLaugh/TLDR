@@ -19,15 +19,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <meta name="author" content="Alistair Macvicar" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Lessons</title>
-        <link rel="stylesheet" href="../styles/lesson-dashboard-style.css"/>
+        <link rel="stylesheet" href="../styles/lesson-bookings-styles.css"/>
     </head>
     <body>
         <!-- include the menu bar -->
         <?php include_once "../inc/sidebar.inc.php"; ?>
         <div id ="content">
             <div id="tab">
-            <button><a href="lesson-progress.php">Lesson Progress</a></button>
-            <button><a href="lesson-bookings.php">Book a lesson</a></button>
+            <button class="my-button"><a href="lesson-progress.php">Lesson Progress</a></button>
+            <button class="my-button"><a href="lesson-bookings.php">Book a lesson</a></button>
                 
             </div>
         </div>
