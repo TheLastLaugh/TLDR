@@ -42,7 +42,7 @@ else if ($_SESSION['user_type'] == 'government') {
 
 if ($selectedUserType == 'learner') {
 
-    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'learner' AND id = ?";
+    $sql = "SELECT id, username, license, dob, address, contact_number FROM users WHERE user_type = 'learner' AND id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
     mysqli_stmt_execute($stmt);
@@ -55,11 +55,12 @@ if ($selectedUserType == 'learner') {
         $_SESSION["student"]["username"] = $row["username"];
         $_SESSION["student"]["dob"] = $row["dob"];
         $_SESSION["student"]["address"] = $row["address"];
+        $_SESSION["student"]["contact_number"] = $row["contact_number"];
     }
 
 } elseif ($selectedUserType == 'instructor') {
 
-    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'instructor' AND id = ?";
+    $sql = "SELECT id, username, license, dob, address, contact_number FROM users WHERE user_type = 'instructor' AND id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
     mysqli_stmt_execute($stmt);
@@ -72,11 +73,12 @@ if ($selectedUserType == 'learner') {
         $_SESSION["instructor"]["username"] = $row["username"];
         $_SESSION["instructor"]["dob"] = $row["dob"];
         $_SESSION["instructor"]["address"] = $row["address"];
+        $_SESSION["instructor"]["contact_number"] = $row["contact_number"];
     }
 
 } elseif ($selectedUserType == 'qsd') {
 
-    $sql = "SELECT id, username, license, dob, address FROM users WHERE user_type = 'qsd' AND id = ?";
+    $sql = "SELECT id, username, license, dob, address, contact_number FROM users WHERE user_type = 'qsd' AND id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $selectedUsername);
     mysqli_stmt_execute($stmt);
@@ -89,6 +91,7 @@ if ($selectedUserType == 'learner') {
         $_SESSION["qsd"]["username"] = $row["username"];
         $_SESSION["qsd"]["dob"] = $row["dob"];
         $_SESSION["qsd"]["address"] = $row["address"];
+        $_SESSION["qsd"]["contact_number"] = $row["contact_number"];
     }
 
 } 

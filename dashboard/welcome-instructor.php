@@ -26,7 +26,8 @@ else if ($_SESSION['user_type'] == 'qsd') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alistair Macvicar"; />
-    <title>TLDR For Instructor</title>
+    <meta name="author" content="Jordan Prime"; />
+    <title>TLDR for Instructor</title>
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
@@ -40,7 +41,18 @@ else if ($_SESSION['user_type'] == 'qsd') {
                     <?php
                         if (isset($_SESSION['student']['username'])) {
                             $studentname = $_SESSION['student']['username'];
-                            echo "<p>Student Name: {$studentname}</p>";
+                            $studentnumber = $_SESSION['student']['contact_number'];
+                            $studentaddress = $_SESSION['student']['address'];
+                            $studentdob = $_SESSION['student']['dob'];
+                            $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
+                            $studentage = $studentage->format('%y');
+                            echo "<p>Student Name: {$studentname}</p>
+                            <ul>
+                                <li>Address: {$studentaddress}</li>
+                                <li>Age: {$studentage}</li>
+                                <li>Contact Number: {$studentnumber}</li>
+                            </ul>";
+                            echo '<a href="#">Create New Student</a><br>';
                             echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
                             echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo '<a href="#">Logbook</a><br>';
@@ -49,8 +61,13 @@ else if ($_SESSION['user_type'] == 'qsd') {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
                             echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
+                            echo '<a href="#">Create New Student</a><br>';
                         }
                     ?>
+                </div>
+                <div class="stat-card">
+                    <h3>Qualified Supervising Drivers</h3>
+                    <a href="#">Create New QSD</a><br>
                 </div>
                 <div class="stat-card">
                     <h3>Billing</h3>
