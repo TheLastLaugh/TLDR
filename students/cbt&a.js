@@ -92,7 +92,9 @@ class Tasks {
 
         // Scroll to anchor position. Remove any achor first and then scroll.
         location.hash = "";
-        location.hash = "#view-task";
+        // location.hash = "#view-task";
+
+        document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
 
         // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
         setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
@@ -113,6 +115,8 @@ class Tasks {
                     document.getElementById("notes").value = result['task']['instructor_notes'];
                 }
                 if('completed' in result['task'] && result['task']['completed'] == 1){
+                    disableFormInput();
+                    document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${result['task']['completed_date']}`;
                     document.getElementById("drivers-name").innerHTML = result['task']['student_name'];
                     document.getElementById("completion-date").innerHTML = result['task']['completed_date'];
                     document.getElementById("student-license").innerHTML = result['task']['student_license'];
@@ -394,6 +398,7 @@ class Tasks {
             <div class="stat-card">
                 <h3>${taskCompletionTitle}</h3>
                 ${taskCompletionForm}
+                <p id="taskCompletionMessage"></>
             </div>
 
             <div class="stat-card">
@@ -2634,5 +2639,28 @@ class Tasks {
     }
 
 }
+
+function disableFormInput () {
+
+    const allInputElements = document.getElementById("taskCompletion").querySelectorAll("input");
+
+    for (let i = 0; i < allInputElements.length; i++) {
+        allInputElements[i].disabled = true;
+    }
+
+    const allSelectElements = document.getElementById("taskCompletion").querySelectorAll("select");
+
+    for (let i = 0; i < allSelectElements.length; i++) {
+        allSelectElements[i].disabled = true;
+    }
+
+    const allCheckboxElements = document.getElementById("taskCompletion").querySelectorAll("input[type=checkbox]");
+
+    for (let i = 0; i < allCheckboxElements.length; i++) {
+        allCheckboxElements[i].checked = true;
+    }
+
+}
+
 
 Tasks.snapshot();
