@@ -37,7 +37,7 @@ if (isset($_GET['error'])) {
       <div class="content">
         <h2>Welcome</h2>
         <p>
-          Welcome to the TLDR. Online serive to input your driving lessons and
+          Welcome to the TLDR. Online service to input your driving lessons and
           hours at ease.
         </p>
       </div>
@@ -62,7 +62,7 @@ if (isset($_GET['error'])) {
 
           <!-- Currently these have no implementation -->
           <div class="remember-forgot">
-            <label> <input type="checkbox" />Remember me</label>
+            <label> <input type="checkbox" /> Remember me</label>
             <a href="#">Forgot Password?</a>
           </div>
           <button type="submit">Login</button>
