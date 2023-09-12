@@ -62,7 +62,7 @@ if (isset($_GET['error'])) {
 
           <!-- Currently these have no implementation -->
           <div class="remember-forgot">
-            <label> <input type="checkbox" />Remember me</label>
+            <label> <input type="checkbox" /> Remember me</label>
             <a href="#">Forgot Password?</a>
           </div>
           <button type="submit">Login</button>
