@@ -73,6 +73,9 @@ td.incomplete {
     color:red;
 }
 
+td.warning {
+    color:blue;
+}
 /* Task Alerts */
 
 /* .alert.success {

@@ -71,7 +71,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
                             echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
-                            echo '<a href="#">Create New Student</a><br>';
+                            echo '<a href="../login/learner-login.php">Create New Student</a><br>';
                         }
                     ?>
                 </div>
@@ -100,7 +100,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             $instructorname = "No Instructor Selected";
                             echo "<p>Instructor Name: {$instructorname}</p>";
                             echo '<a href="../search/search.php?usertype=instructor">Search Instructor</a><br>';
-                            echo '<a href="#">Create New Instructor</a><br>';
+                            echo '<a href="../login/instructor-login.php">Create New Instructor</a><br>';
                         }
                     ?>
                 </div>
@@ -122,14 +122,14 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Date of Birth: {$qsddob} ( Age: {$qsdage} )</li>
                                 <li>Contact Number: {$qsdnumber}</li>
                             </ul>
-                            <a href='#'>Create New QSD</a><br>
+                            <a href='../login/qsd-login.php'>Create New QSD</a><br>
                             <a href='../search/search.php?usertype=qsd'>Change Qualified Supervising Driver</a><br>
                             ";
                         } else {
                             $qsdname = "No QSD Selected";
                             echo "<p>Qualified Supervising Driver: {$qsdname}</p>";
                             echo '<a href="../search/search.php?usertype=qsd">Search Qualified Supervising Driver</a><br>';
-                            echo '<a href="#">Create New QSD</a><br>';
+                            echo '<a href="../login/qsd-login.php">Create New QSD</a><br>';
                         }
                     ?>
                 </div>
