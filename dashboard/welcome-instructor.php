@@ -46,28 +46,28 @@ else if ($_SESSION['user_type'] == 'qsd') {
                             $studentdob = $_SESSION['student']['dob'];
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
+                            echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
+                            echo '<a href="../login/learner-login.php">Create New Student</a>';
                             echo "<p>Student Name: {$studentname}</p>
                             <ul>
                                 <li>Address: {$studentaddress}</li>
                                 <li>Age: {$studentage}</li>
                                 <li>Contact Number: {$studentnumber}</li>
                             </ul>";
-                            echo '<a href="#">Create New Student</a><br>';
-                            echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
                             echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
-                            echo '<a href="#">Logbook</a><br>';
+                            echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br>';
                             echo '<a href="#">Issue Bill</a>';
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
                             echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
-                            echo '<a href="#">Create New Student</a><br>';
+                            echo '<a href="../login/learner-login.php">Create New Student</a><br>';
                         }
                     ?>
                 </div>
                 <div class="stat-card">
                     <h3>Qualified Supervising Drivers</h3>
-                    <a href="#">Create New QSD</a><br>
+                    <a href="../login/qsd-login.php">Create New QSD</a><br>
                 </div>
                 <div class="stat-card">
                     <h3>Billing</h3>

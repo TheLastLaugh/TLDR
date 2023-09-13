@@ -8,10 +8,10 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // If the user is a learner, don't give them access to this page
-else if ($_SESSION['user_type'] == 'learner') {
-    header("Location: ../dashboard/welcome.php");
-    exit;
-}
+// else if ($_SESSION['user_type'] == 'learner') {
+//     header("Location: ../dashboard/welcome.php");
+//     exit;
+// }
 
 // If the user is a qsd, don't give them access to this page
 else if ($_SESSION['user_type'] == 'qsd') {
@@ -41,16 +41,17 @@ require_once "../inc/dbconn.inc.php";
 
     <?php
 
-        if (isset($_SESSION['student']['username'])) {
-            $studentname = $_SESSION['student']['username'];
+        if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government') && isset($_SESSION['student']['username'])) {
+            // $studentname = $_SESSION['student']['username'];
+            $studentname = "<p>Student Name: {$_SESSION['student']['username']}</p>
+            <a href='../search/search.php?usertype=student'>Change Student</a><br>";
         } 
 
         echo "
         <div id='dashboard'>
             <div id='content'>
 
-                <p>Student Name: {$studentname}</p>
-                <a href='../search/search.php?usertype=student'>Change Student</a><br>
+                {$studentname}
                 <p>Please select a unit and task below.</p>
 
                 <button id='unit-1' class='accordion'>Unit 1 - Basic driving procedures</button>
