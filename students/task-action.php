@@ -315,7 +315,7 @@ if ($action == 'complete-task') {
 
 } elseif ($action == 'get-task') {
 
-    $sql = "SELECT student_tasks.student_id, student_tasks.unit, student_tasks.task, student_tasks.completed, student_tasks.completed_date, student_tasks.completed_instructor_id, students.username as student_name, students.license as student_license, instructors.username as instructor_name, instructors.license as instructor_license
+    $sql = "SELECT student_tasks.student_id, student_tasks.student_signature, student_tasks.unit, student_tasks.task, student_tasks.completed, student_tasks.completed_date, student_tasks.completed_instructor_id, students.username as student_name, students.license as student_license, instructors.username as instructor_name, instructors.license as instructor_license
     FROM student_tasks 
     LEFT JOIN users AS students ON student_tasks.student_id = students.id
     LEFT JOIN users AS instructors ON student_tasks.completed_instructor_id = instructors.id
