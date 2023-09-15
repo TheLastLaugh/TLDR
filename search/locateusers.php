@@ -90,11 +90,24 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
     }
     mysqli_free_result($result);
 } elseif ($searchBy == 'existing' && $_SESSION['user_type'] == 'instructor') {
-    // $student_dl = $_POST['license'];
-    // $sql = "SELECT username, license, dob, address FROM users WHERE user_type = 'learner' AND license = ?";
-    $sql = "SELECT id, username, license, dob, address, user_type FROM users LEFT JOIN instructor_learners ON instructor_learners.learner_id = users.id WHERE users.user_type = 'learner' AND instructor_learners.instructor_id = ?";
+    $sql = "SELECT users.id, users.username, users.license, users.dob, users.address, users.user_type, users.contact_number
+    FROM instructor_learners
+    LEFT JOIN users ON instructor_learners.learner_id = users.id
+    WHERE users.user_type = 'learner' AND instructor_learners.instructor_id = ?
+    UNION
+    SELECT users.id, users.username, users.license, users.dob, users.address, users.user_type, users.contact_number
+    FROM bills
+    LEFT JOIN users
+    ON bills.learner_id = users.id
+    WHERE users.user_type = 'learner' AND bills.instructor_id = ?
+    UNION
+    SELECT users.id, users.username, users.license, users.dob, users.address, users.user_type, users.contact_number
+    FROM student_tasks
+    LEFT JOIN users
+    ON student_tasks.student_id = users.id
+    WHERE users.user_type = 'learner' AND student_tasks.completed_instructor_id = ?;";
     $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "s", $_SESSION['userid']);
+    mysqli_stmt_bind_param($stmt, "iii", $_SESSION['userid'], $_SESSION['userid'], $_SESSION['userid']);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if ( mysqli_num_rows($result) >= 1 ) {

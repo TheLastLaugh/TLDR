@@ -151,7 +151,7 @@ function addStudentsToTable (searchResults) {
             row.insertCell(1).innerHTML = searchResults[i].license;
             row.insertCell(2).innerHTML = searchResults[i].dob;
             row.insertCell(3).innerHTML = searchResults[i].address;
-            row.insertCell(4).innerHTML = "";
+            row.insertCell(4).innerHTML = searchResults[i].contact_number;
         }
     } else {
         var row = table.insertRow();
