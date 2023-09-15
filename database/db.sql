@@ -184,15 +184,33 @@ CREATE TABLE student_tasks (
     FOREIGN KEY (completed_instructor_id) REFERENCES users(id)
 );
 
+-- This table stores the manually issued bills by instructors for students
+CREATE TABLE bills (
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    learner_id int NOT NULL,
+    instructor_id int NOT NULL,
+    issue_date DATE NOT NULL, 
+    due_date DATE NOT NULL, 
+    paid BOOLEAN DEFAULT FALSE,
+    paid_date DATE DEFAULT NULL,
+    hourly_rate DECIMAL(10, 2) NOT NULL,
+    billed_minutes int NOT NULL,
+    FOREIGN KEY (learner_id) REFERENCES users(id),
+    FOREIGN KEY (instructor_id) REFERENCES users(id)
+) AUTO_INCREMENT = 1;
+
 -- ------------------------------------------------------------------------------------------------*
 -- ** BELOW ARE DEFAULT ENTRIES FOR EACH TABLE **-------------------------------------------------*
 -- ------------------------------------------------------------------------------------------------*
 -- Password is Password1! for all of these
 INSERT INTO users (username, email, password, address, license, dob, user_type, contact_number) VALUES
-('Joe Rogan', 'learner@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '1', '1999-01-01', 'learner', '0412345678'), -- We can allow more entries for learner as they log in through the mySAGOV portal
-('Brett Wilkinson', 'instructor@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '2', '1999-01-01', 'instructor', '0487654321'), -- same here but with the instructor portal
+('Joe Rogan', 'learner@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', 'JR0192', '1999-01-01', 'learner', '0412345678'), -- We can allow more entries for learner as they log in through the mySAGOV portal
+('Brett Wilkinson', 'instructor@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', 'BW5467', '1999-01-01', 'instructor', '0487654321'), -- same here but with the instructor portal
 ('government', 'admin@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Fake Street', '3', '1999-01-01', 'government', '0887654321'), -- not sure if we should have a gov login or just have an account with admin rights
-('qsd', 'qsd@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Wisteria Lane', '4', '1980-06-20', 'qsd', '0445362718');
+('qsd', 'qsd@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '123 Wisteria Lane', 'WK9378', '1980-06-20', 'qsd', '0445362718'),
+('Naomi Wildman', 'naomi@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '567 Fake Street', 'NW1234', '2005-06-30', 'learner', '0412345678'),
+('Donald Duck', 'donald@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '890 Fake Street', 'DD1234', '2006-09-03', 'learner', '0412000123'),
+('Kathryn Laneway', 'kathryn@fake.com', '$2y$10$pj8wFJX9IQTfDsuVvo/yg.NzTJM69ye3Kerg3jIKr2oAjYZw5del6', '456 Wisteria Lane', 'KL0987', '1960-01-13', 'instructor', '0400112233');
 
 -- Each lesson is the unit, I haven't included the modules since they're part of the unit, but we can add them if we want
 INSERT INTO lessons (unit_number, unit_name) VALUES
@@ -667,11 +685,22 @@ INSERT INTO cbta_module_task_description (module_number, task_number, module_tas
 
 
 INSERT INTO student_tasks (student_id, unit, task, completed, completed_date, completed_instructor_id, student_followup, instructor_followup) VALUES
-(1, 1, 1, 1,'2023-09-09', 3, 1, 1),
-(1, 1, 2, 1,'2023-09-09', 3, 0, 0),
+(1, 1, 1, 1,'2023-09-09', 2, 1, 1),
+(1, 1, 2, 1,'2023-09-09', 2, 0, 0),
 (1, 1, 3, 0, NULL, NULL, 1, 1),
-(1, 1, 5, 1, '2023-09-09', 3, 0, 0),
-(1, 1, 8, 0, NULL, NULL, 1, 0);
+(1, 1, 5, 1, '2023-09-09', 2, 0, 0),
+(1, 1, 8, 0, NULL, NULL, 1, 0),
+(5, 1, 1, 1,'2023-09-09', 2, 1, 1),
+(5, 1, 2, 1,'2023-09-09', 2, 0, 0),
+(5, 1, 3, 0, NULL, NULL, 1, 1),
+(5, 1, 8, 0, NULL, NULL, 1, 0),
+(6, 1, 2, 1,'2023-09-09', 2, 0, 0);
+
+INSERT INTO bills ( learner_id, instructor_id, issue_date, due_date, hourly_rate, billed_minutes) VALUES
+( '1', '2', '2023-09-14', '2023-09-28', '100.00', '60'),
+( '1', '2', '2023-09-14', '2023-09-28', '100.00', '90'),
+( '1', '2', '2023-09-14', '2023-09-28', '100.00', '60'),
+( '5', '2', '2023-09-14', '2023-09-28', '75.00', '120');
 
 -- This part is important for testing since you'll need all mod rights. I'm not sure if we have to change this later for the submission
 CREATE user IF NOT EXISTS dbadmin@localhost;

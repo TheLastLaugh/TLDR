@@ -94,7 +94,7 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Contact Number: {$instructornumber}</li>
                             </ul>
                             <a href='../search/search.php?usertype=instructor'>Change Instructor</a><br>
-                            <a href='#'>View Report</a>
+                            <a href='../instructors/report.php'>View Report</a>
                             ";
                         } else {
                             $instructorname = "No Instructor Selected";
