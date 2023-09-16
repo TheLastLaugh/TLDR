@@ -684,23 +684,27 @@ INSERT INTO cbta_module_task_description (module_number, task_number, module_tas
 (30, 1, '(d)', 'Demonstrate appropriate forward planning, correct and timely road positioning, and safe driving strategies');
 
 
-INSERT INTO student_tasks (student_id, unit, task, completed, completed_date, completed_instructor_id, student_followup, instructor_followup) VALUES
-(1, 1, 1, 1,'2023-09-09', 2, 1, 1),
-(1, 1, 2, 1,'2023-09-09', 2, 0, 0),
-(1, 1, 3, 0, NULL, NULL, 1, 1),
-(1, 1, 5, 1, '2023-09-09', 2, 0, 0),
-(1, 1, 8, 0, NULL, NULL, 1, 0),
-(5, 1, 1, 1,'2023-09-09', 2, 1, 1),
-(5, 1, 2, 1,'2023-09-09', 2, 0, 0),
-(5, 1, 3, 0, NULL, NULL, 1, 1),
-(5, 1, 8, 0, NULL, NULL, 1, 0),
-(6, 1, 2, 1,'2023-09-09', 2, 0, 0);
+INSERT INTO student_tasks (student_id, unit, task, completed, completed_date, completed_instructor_id, student_followup, instructor_followup, student_signature) VALUES
+(1, 1, 1, 1,'2023-09-09', 2, 1, 1, 1),
+(1, 1, 2, 1,'2023-09-09', 2, 0, 0, 1),
+(1, 1, 3, 1, '2023-09-09', 2, 1, 1, 1),
+(1, 1, 5, 1, '2023-09-09', 2, 0, 0, 0),
+(1, 1, 8, 0, NULL, NULL, 1, 0, 0),
+(5, 1, 1, 1,'2023-09-09', 2, 1, 1, 0),
+(5, 1, 2, 1,'2023-09-09', 2, 0, 0, 1),
+(5, 1, 3, 0, NULL, NULL, 1, 1, 0),
+(5, 1, 8, 0, NULL, NULL, 1, 0, 0),
+(6, 1, 2, 1,'2023-09-09', 2, 0, 0, 0);
 
 INSERT INTO bills ( learner_id, instructor_id, issue_date, due_date, hourly_rate, billed_minutes) VALUES
 ( '1', '2', '2023-09-14', '2023-09-28', '100.00', '60'),
 ( '1', '2', '2023-09-14', '2023-09-28', '100.00', '90'),
 ( '1', '2', '2023-09-14', '2023-09-28', '100.00', '60'),
 ( '5', '2', '2023-09-14', '2023-09-28', '75.00', '120');
+
+INSERT INTO logbooks ( learner_id, qsd_id, date, start_time, end_time, duration, start_location, end_location, road_type, weather, traffic, qsd_name, qsd_license, confirmed, time_of_day ) VALUES
+(1, 2, '2023-09-16','12:30:00', '14:30:00', 120, "WOODCROFT", "HALLETT COVE", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Day"),
+(1, 2, '2023-09-14','09:30:00', '10:30:00', 120, "MORPHETT VALE", "BEDFORD PARK", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Day");;
 
 -- This part is important for testing since you'll need all mod rights. I'm not sure if we have to change this later for the submission
 CREATE user IF NOT EXISTS dbadmin@localhost;
