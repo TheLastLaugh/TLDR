@@ -135,6 +135,11 @@ class Tasks {
                     document.getElementById("instructor-name").innerHTML = result['task']['instructor_name'];
                     document.getElementById("instructor-license").innerHTML = result['task']['instructor_license'];
                 }
+                if (result['usertype'] == "learner") {
+                    document.getElementById("follow-up-actions").style.display = "none";
+                } else {
+                    document.getElementById("follow-up-actions").style.display = "block";
+                }
             }
         };
     
@@ -516,7 +521,7 @@ class Tasks {
                 <p id="taskCompletionMessage"></>
             </div>
 
-            <div class="stat-card">
+            <div id="follow-up-actions" class="stat-card">
                 <h3>Actions</h3>
                 <button type="button" onclick="Tasks.taskAction('student_followup', ${unitNumber}, ${taskNumber})">Flag for student practice</button>
                 <button type="button" onclick="Tasks.taskAction('instructor_followup', ${unitNumber}, ${taskNumber})">Flag for instructor follow-up</button>
