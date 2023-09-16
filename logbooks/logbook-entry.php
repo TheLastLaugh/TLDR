@@ -39,6 +39,7 @@ if ($_SESSION['user_type'] == 'qsd') {
     <meta name="author" content="Alistair Macvicar" />
     <title>Logbook Entry</title>
     <link rel="stylesheet" href="../styles/styles.css">
+    <script src="./suburb-validation.js" defer></script>
 </head>
 <body>
     <!-- Include the menu bar -->
@@ -84,11 +85,11 @@ if ($_SESSION['user_type'] == 'qsd') {
                 </li>
                 <li>
                     <label for="start_location">Starting Address (Suburb)</label>
-                    <input type="text" name="start_location" required>
+                    <input type="text" name="start_location" id="start-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
                 </li>
                 <li>
                     <label for="end_location">Ending Address (Suburb)</label>
-                    <input type="text" name="end_location" required>
+                    <input type="text" name="end_location" id="end-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
                 </li>
                 <li>
                     <label for="road_type">Road Type</label>
@@ -119,6 +120,7 @@ if ($_SESSION['user_type'] == 'qsd') {
                     <input type="submit" value="Submit" class="submit-button">
                 </li>
             </ul>
+            <datalist id="suburbsList"></datalist>
         </form>
     </div>
 </body>

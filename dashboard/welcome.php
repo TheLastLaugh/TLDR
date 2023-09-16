@@ -49,19 +49,55 @@ else if ($_SESSION['user_type'] == 'government') {
             <div class="stats-container">
                 <div class="stat-card">
                     <h3>Total Hours Driven</h3>
-                    <p>125 hours</p> 
-                </div>
-                <div class="stat-card">
-                    <h3>Total Lessons Completed</h3>
-                    <p>15 lessons</p> 
-                </div>
-                <div class="stat-card">
-                    <h3>Day Time Driving</h3>
-                    <p>80% completion</p> 
+                    <?php
+                        $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? and confirmed = 1;";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $total_hours = $row['total_minutes'] / 60;
+                                echo "<p>{$total_hours} / 75 hours completed</p>";
+
+                                $percentage = (int)( 100 / 75 ) * $total_hours;
+
+                                if ($percentage > 100) {
+                                    $percentage = 100;
+                                }
+
+                                echo "<div class='w3-light-grey'>
+                                    <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
+                                </div><br>";
+                            }
+                        }
+                    ?>
                 </div>
                 <div class="stat-card">
                     <h3>Night Time Driving</h3>
-                    <p>50% completion</p> 
+                    <?php
+                        $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Night';";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $total_hours = $row['total_minutes'] / 60;
+                                echo "<p>{$total_hours} / 15 hours completed</p>";
+
+                                $percentage = (int)( 100 / 15 ) * $total_hours;
+
+                                if ($percentage > 100) {
+                                    $percentage = 100;
+                                }
+
+                                echo "<div class='w3-light-grey'>
+                                    <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
+                                </div><br>";
+                            }
+                        }
+                    ?>
                 </div>
                 <div class="stat-card">
                     <h3>Competency Based Training & Assessment Tasks</h3>
@@ -88,6 +124,26 @@ else if ($_SESSION['user_type'] == 'government') {
                     
                     ?>
                 </div>
+                <div class="stat-card">
+                    <h3>Day Time Driving</h3>
+                    <?php
+                        $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $total_hours = $row['total_minutes'] / 60;
+                                echo "<p>{$total_hours} hours</p>";
+                            }
+                        }
+                    ?>
+                </div>
+                <!-- <div class="stat-card">
+                    <h3>Total Lessons Completed</h3>
+                    <p>15 lessons</p> 
+                </div> -->
             </div>
         </div>
     </div>
