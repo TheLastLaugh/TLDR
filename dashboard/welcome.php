@@ -63,6 +63,31 @@ else if ($_SESSION['user_type'] == 'government') {
                     <h3>Night Time Driving</h3>
                     <p>50% completion</p> 
                 </div>
+                <div class="stat-card">
+                    <h3>Competency Based Training & Assessment Tasks</h3>
+                    <?php
+
+                        $total_tasks = 32;
+                        $sql = "SELECT COUNT(*) as task_count FROM student_tasks WHERE student_id = ? AND student_signature = 1;";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $completed_tasks = $row['task_count'];
+                                echo "<p>{$completed_tasks} / {$total_tasks} tasks completed</p>";
+                                // echo "<br>";
+                                $percentage = (int)( 100 / $total_tasks ) * $completed_tasks;
+                                echo "<div class='w3-light-grey'>
+                                    <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
+                                </div><br>";
+                            }
+                        }
+                    
+                    ?>
+                </div>
             </div>
         </div>
     </div>
