@@ -704,7 +704,10 @@ INSERT INTO bills ( learner_id, instructor_id, issue_date, due_date, hourly_rate
 
 INSERT INTO logbooks ( learner_id, qsd_id, date, start_time, end_time, duration, start_location, end_location, road_type, weather, traffic, qsd_name, qsd_license, confirmed, time_of_day ) VALUES
 (1, 2, '2023-09-16','12:30:00', '14:30:00', 120, "WOODCROFT", "HALLETT COVE", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Day"),
-(1, 2, '2023-09-14','09:30:00', '10:30:00', 120, "MORPHETT VALE", "BEDFORD PARK", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Day");;
+(1, 2, '2023-09-14','09:30:00', '10:30:00', 60, "MORPHETT VALE", "BEDFORD PARK", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Day"),
+(1, 2, '2023-09-12','10:30:00', '11:30:00', 60, "SEAFORD MEADOWS", "ALDINGA", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 0, "Day"),
+(1, 2, '2023-09-12','22:00:00', '23:00:00', 60, "GLENELG", "ADELAIDE", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Night"),
+(1, 2, '2023-09-10','22:00:00', '23:00:00', 60, "ONKAPARINGA HILLS", "REYNELLA", "Sealed", "Dry", "Light", "Brett Wilkinson", "BW5467", 1, "Night");
 
 -- This part is important for testing since you'll need all mod rights. I'm not sure if we have to change this later for the submission
 CREATE user IF NOT EXISTS dbadmin@localhost;
