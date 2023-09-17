@@ -36,6 +36,7 @@
             echo "<li><a href='../dashboard/welcome.php'>Home</a></li>";
             echo "<li><a href='../logbooks/logbook.php'>Logbook</a></li>";
             if (isset($_SESSION['student'])) {
+                echo "<li><a href='../students/logbook.php'>Logbook</a></li>";
                 echo "<li><a href='../students/cbt&a.php'>CBT&A</a></li>";
             }
             echo "<li><a href='../login/logout.php'>Logout</a></li>";
@@ -44,6 +45,7 @@
             echo "<ul>";
             echo "<li><a href='../dashboard/welcome.php'>Home</a></li>";
             if (isset($_SESSION['student'])) {
+                echo "<li><a href='../students/logbook.php'>Logbook</a></li>";
                 echo "<li><a href='../students/cbt&a.php'>CBT&A</a></li>";
             }
             echo "<li></li>";

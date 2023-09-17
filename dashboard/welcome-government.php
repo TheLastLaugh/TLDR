@@ -65,7 +65,7 @@ else if ($_SESSION['user_type'] != 'government') {
                             </ul>
                             <a href='../search/search.php?usertype=student'>Change Student</a><br>
                             <a href='../students/cbt&a.php'>CBT&A Items</a><br>
-                            <a href='#'>Logbook</a>
+                            <a href='../students/logbook.php'>View Logbook</a>
                             ";
                         } else {
                             $studentname = "No Student Selected";
