@@ -59,16 +59,35 @@ else if ($_SESSION['user_type'] == 'government') {
                             if ($row = $result -> fetch_assoc()) {
                                 $total_hours = $row['total_minutes'] / 60;
                                 echo "<p>{$total_hours} / 75 hours completed</p>";
-
                                 $percentage = (int)( 100 / 75 ) * $total_hours;
-
                                 if ($percentage > 100) {
                                     $percentage = 100;
                                 }
-
                                 echo "<div class='w3-light-grey'>
                                     <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
                                 </div><br>";
+                            }
+                        }
+
+                        $sql = "SELECT count(*) as confirmation_needed FROM logbooks WHERE learner_id = ? AND confirmed = 0;";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $confirmation_needed = $row['confirmation_needed'];
+                                if ($confirmation_needed == 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> There is {$confirmation_needed} logbook entry to confirm and sign</p>";
+                                } else if ($confirmation_needed > 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> There are {$confirmation_needed} logbook entries to confirm and sign</p>";
+                                }
                             }
                         }
                     ?>
@@ -104,7 +123,7 @@ else if ($_SESSION['user_type'] == 'government') {
                     <?php
 
                         $total_tasks = 32;
-                        $sql = "SELECT COUNT(*) as task_count FROM student_tasks WHERE student_id = ? AND student_signature = 1;";
+                        $sql = "SELECT COUNT(*) as task_count FROM student_tasks WHERE student_id = ? AND completed = 1 AND student_signature = 1;";
                         $stmt = mysqli_prepare($conn, $sql);
                         mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
                         mysqli_stmt_execute($stmt);
@@ -119,6 +138,52 @@ else if ($_SESSION['user_type'] == 'government') {
                                 echo "<div class='w3-light-grey'>
                                     <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
                                 </div><br>";
+                            }
+                        }
+
+                        $sql = "SELECT COUNT(*) as signature_required FROM student_tasks WHERE (student_id = ? AND completed = 1 AND (student_signature = 0 OR student_signature IS NULL));";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $signature_required = $row['signature_required'];
+                                if ($signature_required == 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> There is {$signature_required} task requiring your signature</p>";
+                                } elseif ($signature_required > 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> There are {$signature_required} tasks requiring your signature</p>";
+                                }
+                            }
+                        }
+
+                        $sql = "SELECT COUNT(*) as practise_required FROM student_tasks WHERE student_id = ? AND completed = 0 AND student_followup = 1;";
+                        $stmt = mysqli_prepare($conn, $sql);
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        mysqli_stmt_execute($stmt);
+                        $result = mysqli_stmt_get_result($stmt);
+
+                        if ( mysqli_num_rows($result) >= 1 ) {
+                            if ($row = $result -> fetch_assoc()) {
+                                $followup_required = $row['practise_required'];
+                                if ($followup_required == 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> Your instructor has recommended  practise on {$followup_required} task</p>";
+                                } elseif ($followup_required > 1) {
+                                    echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
+                                    <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                    <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
+                                    </svg> Your instructor has recommended  practise on {$followup_required} tasks</p>";
+                                } 
                             }
                         }
                     
