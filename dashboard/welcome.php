@@ -59,7 +59,7 @@ else if ($_SESSION['user_type'] == 'government') {
                             if ($row = $result -> fetch_assoc()) {
                                 $total_hours = $row['total_minutes'] / 60;
                                 echo "<p>{$total_hours} / 75 hours completed</p>";
-                                $percentage = (int)( 100 / 75 ) * $total_hours;
+                                $percentage = (int)(( 100 / 75 ) * $total_hours);
                                 if ($percentage > 100) {
                                     $percentage = 100;
                                 }
@@ -90,6 +90,7 @@ else if ($_SESSION['user_type'] == 'government') {
                                 }
                             }
                         }
+                        echo "<a href='../students/logbook.php'>View Logbook</a><br>";
                     ?>
                 </div>
                 <div class="stat-card">
@@ -105,7 +106,7 @@ else if ($_SESSION['user_type'] == 'government') {
                                 $total_hours = $row['total_minutes'] / 60;
                                 echo "<p>{$total_hours} / 15 hours completed</p>";
 
-                                $percentage = (int)( 100 / 15 ) * $total_hours;
+                                $percentage = (int)(( 100 / 15 ) * $total_hours);
 
                                 if ($percentage > 100) {
                                     $percentage = 100;
@@ -134,7 +135,7 @@ else if ($_SESSION['user_type'] == 'government') {
                                 $completed_tasks = $row['task_count'];
                                 echo "<p>{$completed_tasks} / {$total_tasks} tasks completed</p>";
                                 // echo "<br>";
-                                $percentage = (int)( 100 / $total_tasks ) * $completed_tasks;
+                                $percentage = (int)(( 100 / $total_tasks ) * $completed_tasks);
                                 echo "<div class='w3-light-grey'>
                                     <div class='w3-container w3-green w3-center' style='width:{$percentage}%'>{$percentage}%</div>
                                 </div><br>";
@@ -186,6 +187,8 @@ else if ($_SESSION['user_type'] == 'government') {
                                 } 
                             }
                         }
+
+                        echo "<a href='../students/cbt&a.php'>View CBT&A Tasks</a><br>";
                     
                     ?>
                 </div>
