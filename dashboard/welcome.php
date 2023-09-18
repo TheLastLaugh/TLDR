@@ -38,6 +38,7 @@ else if ($_SESSION['user_type'] == 'government') {
     <meta name="author" content="Alistair Macvicar"; />
     <title>TLDR For Learner Driver</title>
     <link rel="stylesheet" href="../styles/styles.css">
+    <script src="./welcome.js"></script>
 </head>
 <body>
     <!-- Include the menu bar -->
@@ -193,6 +194,10 @@ else if ($_SESSION['user_type'] == 'government') {
                     ?>
                 </div>
                 <div class="stat-card">
+                    <h3>My Drives</h3>
+                    <div id="googleMap" style="width:100%;height:400px;"></div>
+                </div>
+                <div class="stat-card">
                     <h3>Day Time Driving</h3>
                     <?php
                         $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
@@ -208,13 +213,12 @@ else if ($_SESSION['user_type'] == 'government') {
                         }
                     ?>
                 </div>
-                <!-- <div class="stat-card">
-                    <h3>Total Lessons Completed</h3>
-                    <p>15 lessons</p> 
-                </div> -->
             </div>
         </div>
     </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiDOquqH11fiP_yFvh2PQFvUD76JWQh_Y&callback=myMap"></script>
+
 </body>
 
 </html>
