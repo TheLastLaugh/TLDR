@@ -56,9 +56,9 @@ require_once "../inc/dbconn.inc.php";
 
                 <button id='unit-1' class='accordion'>Unit 1 - Basic driving procedures</button>
                 <div class='panel'>
-                    <table>
+                    <table id='task-table'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(1)'>1. Cabin drills and controls</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(1)'>1. Cabin drills and controls</a></td>
                             <td id='task-1-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -142,9 +142,9 @@ require_once "../inc/dbconn.inc.php";
 
                 <button id='unit-2' class='accordion'>Unit 2 - Slow speed manoeuvres</button>
                 <div class='panel'>
-                    <table>
+                    <table style='width:100%'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(9)'>9. Moving off uphill</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(9)'>9. Moving off uphill</a></td>
                             <td id='task-9-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -209,9 +209,9 @@ require_once "../inc/dbconn.inc.php";
                 <button id='unit-3' class='accordion'>Unit 3 - Basic road skills</button>
                 <div class='panel'>
                 
-                    <table>
+                    <table style='width:100%'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(15)'>15. Vehicle road positioning</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(15)'>15. Vehicle road positioning</a></td>
                             <td id='task-15-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -296,9 +296,9 @@ require_once "../inc/dbconn.inc.php";
 
                 <button id='unit-4' class='accordion'>Unit 4 - Traffic Management Skills</button>
                 <div class='panel'>
-                    <table>
+                    <table style='width:100%'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(23)'>23. Safe driving strategies</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(23)'>23. Safe driving strategies</a></td>
                             <td id='task-23-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -382,9 +382,9 @@ require_once "../inc/dbconn.inc.php";
 
                 <button id='unit-5' class='accordion'>Units 1 & 2 - Review</button>
                 <div class='panel'>
-                    <table>
+                    <table style='width:100%'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(31)'>29. Review of basic driving skills</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(31)'>29. Review of basic driving skills</a></td>
                             <td id='task-31-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
@@ -398,9 +398,9 @@ require_once "../inc/dbconn.inc.php";
 
                 <button id='unit-6' class='accordion'>Units 3 & 4 - Review</button>
                 <div class='panel'>
-                    <table>
+                    <table style='width:100%'>
                         <tr>
-                            <td><a href='#view-task' onclick='viewTask(32)'>30. Review of road skills and traffic management</a></td>
+                            <td class='task-description'><a href='#view-task' onclick='viewTask(32)'>30. Review of road skills and traffic management</a></td>
                             <td id='task-32-status' class='incomplete'>
                                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
                                 <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>

@@ -112,7 +112,7 @@ require_once "../inc/dbconn.inc.php";
                                     <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
                                     </svg> Signed</td>";
                                 } else {
-                                    echo "<td>Click here to sign</td>";
+                                    echo "<td>Not Signed</td>";
                                 }
                                 // <td>Kathryn Laneway</td>
                                 echo "<td>{$row['username']}</td>";
@@ -388,8 +388,45 @@ require_once "../inc/dbconn.inc.php";
             </div>
 
             <div id="Summary" class="tabcontent">
-                <h3>Summary</h3>
-                <p>fgbrgbfbfdbsdfb</p>
+                <?php
+                    $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1;";
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    if ( mysqli_num_rows($result) >= 1 ) {
+                        if ($row = $result -> fetch_assoc()) {
+                            $total_hours = $row['total_minutes'] / 60;
+                            echo "<p><b>Total: </b> {$total_hours} / 75 hours</p>";
+                        }
+                    }
+                ?>
+                <?php
+                    $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    if ( mysqli_num_rows($result) >= 1 ) {
+                        if ($row = $result -> fetch_assoc()) {
+                            $total_hours = $row['total_minutes'] / 60;
+                            echo "<p><b>Daytime: </b> {$total_hours} hours</p>";
+                        }
+                    }
+                ?>
+                <?php
+                    $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Night';";
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    if ( mysqli_num_rows($result) >= 1 ) {
+                        if ($row = $result -> fetch_assoc()) {
+                            $total_hours = $row['total_minutes'] / 60;
+                            echo "<p><b>Night-time: </b> {$total_hours} / 15 hours</p>";
+                        }
+                    }
+                ?>
             </div>
 
         </div>
