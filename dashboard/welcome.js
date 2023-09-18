@@ -3,7 +3,7 @@ var map;
 
 function myMap() {
     var mapProp = {
-        center: new google.maps.LatLng(51.508742, -0.120850),
+        center: new google.maps.LatLng(-34.921230, 138.599503),
         zoom: 5,
     };
     map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
@@ -29,8 +29,6 @@ function codeAddress(drive) {
                 lat: lat,
                 lng: lng
             }
-
-            map.setCenter(results[0].geometry.location);
 
             geocoder.geocode({ 'address': address2 }, function (results, status) {
                 if (status == 'OK') {
@@ -81,11 +79,11 @@ function createMarkers(coordinates1, coordinates2, drive) {
     var markers = [];
     const marker1 = {
         position: coordinates1,
-        title: "test1"
+        title: drive['start_location']
     }
     const marker2 = {
         position: coordinates2,
-        title: "test2"
+        title: drive['end_location']
     }
     markers.push(marker1);
     markers.push(marker2);
@@ -97,13 +95,20 @@ function createMarkers(coordinates1, coordinates2, drive) {
     // Create the markers.
     markers.forEach(({ position, title }, i) => {
 
+        var dateFormatted = new Date(drive['date']);
+        var day = dateFormatted.getDate().toString().padStart(2,"0");
+        var month = (dateFormatted.getMonth() + 1).toString().padStart(2,"0");
+        var year = dateFormatted.getFullYear().toString().padStart(4,"0");
+        dateFormatted = `${day}/${month}/${year}`;
+        console.log(dateFormatted);
+
         const contentString =
         `<div id="content">
             <div id="siteNotice"></div>
             <h1 id="firstHeading" class="firstHeading">${drive['start_location']} to ${drive['end_location']}</h1>
             <div id="bodyContent">
                 <p>
-                    <b>Date: </b>${drive['date']}<br>
+                    <b>Date: </b>${dateFormatted}<br>
                     <b>Duration: </b>${drive['duration']} minutes<br>
                     <b>Road Conditions: </b>${drive['road_type']}<br>
                     <b>Weather Conditions: </b>${drive['weather']}<br>

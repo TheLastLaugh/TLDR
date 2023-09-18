@@ -83,11 +83,13 @@ else if ($_SESSION['user_type'] == 'government') {
                                     <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
                                     <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
                                     </svg> There is {$confirmation_needed} logbook entry to confirm and sign</p>";
+                                    echo "<a href='../logbooks/logbook-confirmation.php'>Confirm Logbook Entry</a><br>";
                                 } else if ($confirmation_needed > 1) {
                                     echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
                                     <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
                                     <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
                                     </svg> There are {$confirmation_needed} logbook entries to confirm and sign</p>";
+                                    echo "<a href='../logbooks/logbook-confirmation.php'>Confirm Logbook Entries</a><br>";
                                 }
                             }
                         }
@@ -197,22 +199,22 @@ else if ($_SESSION['user_type'] == 'government') {
                     <h3>My Drives</h3>
                     <div id="googleMap" style="width:100%;height:400px;"></div>
                 </div>
-                <div class="stat-card">
+                <!-- <div class="stat-card">
                     <h3>Day Time Driving</h3>
                     <?php
-                        $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
-                        $stmt = mysqli_prepare($conn, $sql);
-                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
-                        mysqli_stmt_execute($stmt);
-                        $result = mysqli_stmt_get_result($stmt);
-                        if ( mysqli_num_rows($result) >= 1 ) {
-                            if ($row = $result -> fetch_assoc()) {
-                                $total_hours = $row['total_minutes'] / 60;
-                                echo "<p>{$total_hours} hours</p>";
-                            }
-                        }
+                        // $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
+                        // $stmt = mysqli_prepare($conn, $sql);
+                        // mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                        // mysqli_stmt_execute($stmt);
+                        // $result = mysqli_stmt_get_result($stmt);
+                        // if ( mysqli_num_rows($result) >= 1 ) {
+                        //     if ($row = $result -> fetch_assoc()) {
+                        //         $total_hours = $row['total_minutes'] / 60;
+                        //         echo "<p>{$total_hours} hours</p>";
+                        //     }
+                        // }
                     ?>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
