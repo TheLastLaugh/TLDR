@@ -60,6 +60,14 @@ else if ($_SESSION['user_type'] == 'government') {
                             if ($row = $result -> fetch_assoc()) {
                                 $total_hours = $row['total_minutes'] / 60;
                                 echo "<p>{$total_hours} / 75 hours completed</p>";
+                                if ($total_hours < 75) {
+                                    $hours_left = 75 - $total_hours;
+                                    if ($hours_left == 1) {
+                                        echo "<p>You have {$hours_left} hour left</p>";
+                                    } else {
+                                        echo "<p>You have {$hours_left} hours left</p>";
+                                    }
+                                }
                                 $percentage = (int)(( 100 / 75 ) * $total_hours);
                                 if ($percentage > 100) {
                                     $percentage = 100;
@@ -108,6 +116,14 @@ else if ($_SESSION['user_type'] == 'government') {
                             if ($row = $result -> fetch_assoc()) {
                                 $total_hours = $row['total_minutes'] / 60;
                                 echo "<p>{$total_hours} / 15 hours completed</p>";
+                                if ($total_hours < 15) {
+                                    $hours_left = 15 - $total_hours;
+                                    if ($hours_left == 1) {
+                                        echo "<p>You have {$hours_left} hour left</p>";
+                                    } else {
+                                        echo "<p>You have {$hours_left} hours left</p>";
+                                    }
+                                }
 
                                 $percentage = (int)(( 100 / 15 ) * $total_hours);
 
@@ -137,6 +153,14 @@ else if ($_SESSION['user_type'] == 'government') {
                             if ($row = $result -> fetch_assoc()) {
                                 $completed_tasks = $row['task_count'];
                                 echo "<p>{$completed_tasks} / {$total_tasks} tasks completed</p>";
+                                if ($completed_tasks < 32) {
+                                    $tasks_left = 32 - $completed_tasks;
+                                    if ($tasks_left == 1) {
+                                        echo "<p>You have {$tasks_left} task left</p>";
+                                    } else {
+                                        echo "<p>You have {$tasks_left} tasks left</p>";
+                                    }
+                                } 
                                 // echo "<br>";
                                 $percentage = (int)(( 100 / $total_tasks ) * $completed_tasks);
                                 echo "<div class='w3-light-grey'>
