@@ -155,3 +155,51 @@ body {
 .w3-center {
   text-align: center !important
 }
+
+/*profile page styling*/
+#profile-content {
+  width: 200px;
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-left: 352px;
+}
+
+p.detail {
+  text-align: center;
+}
+
+input[type="submit"]  {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  width: 105px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 365px;
+  margin-top: 10px;
+}
+input[type="submit"]:hover {
+  background-color: #0056b3; 
+}
+#editButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  width: 105px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+#editButton:hover {
+  background-color: #1e8d1e; 
+}
+#container {
+  text-align: center;
+  margin: 20px auto;
+}
+/*end of profile page styles*/
