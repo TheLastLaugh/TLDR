@@ -36,6 +36,7 @@
             <li><a href='../dashboard/welcome-instructor.php'>Home</a></li>";
             if (isset($_SESSION['student'])) {
                 echo "
+                <li><a href='../calendar/calendar.php'>Calendar</a></li>
                 <li><a href='../students/logbook.php'>Logbook</a></li>
                 <li><a href='../students/cbt&a.php'>CBT&A</a></li>";
             }

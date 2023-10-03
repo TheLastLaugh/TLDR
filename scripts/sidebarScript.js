@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const content = document.getElementById("content");
     const sideBar = document.querySelector("#sidebar");
 
-    sideBar.style.width = "140px";
-    content.style.marginLeft = "140px";
+    
 
     menuIcon.addEventListener("click",function() {
             if(sideBar.style.width === "0px") {
@@ -31,5 +30,6 @@ function setMenuSelected()
         }
     }
 }
-
+document.querySelector("#sidebar").style.width = "140px";
+document.getElementById("content").style.marginLeft = "140px";
 setMenuSelected();
