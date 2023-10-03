@@ -9,7 +9,7 @@
         <img id="profileIcon" src="../images/profile.png" alt="Profile Icon" style="width:40px;height:40px;"></a>
     </div>
 </div>
-<div id="sidebar" style="width:0px;">
+<div id="sidebar">
     <?php
 
         // Users menus may need to be different based on their user_type
@@ -33,8 +33,7 @@
         } elseif ($_SESSION['user_type'] == 'instructor') {
             echo "
             <ul>
-            <li><a href='../dashboard/welcome-instructor.php'>Home</a></li>
-            <li><a href='../logbooks/logbook.php'>Logbook</a></li>";
+            <li><a href='../dashboard/welcome-instructor.php'>Home</a></li>";
             if (isset($_SESSION['student'])) {
                 echo "
                 <li><a href='../students/logbook.php'>Logbook</a></li>
