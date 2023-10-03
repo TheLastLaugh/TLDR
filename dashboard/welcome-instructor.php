@@ -27,7 +27,7 @@ else if ($_SESSION['user_type'] == 'qsd') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alistair Macvicar"; />
     <meta name="author" content="Jordan Prime"; />
-    <title>TLDR for Instructor</title>
+    <title>Home</title>
     <link rel="stylesheet" href="../styles/styles.css">
 </head>
 <body>
