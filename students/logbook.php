@@ -391,7 +391,11 @@ require_once "../inc/dbconn.inc.php";
                 <?php
                     $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1;";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    if ($_SESSION['user_type'] == 'learner') {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    } else {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION['student']["id"]);
+                    }
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
@@ -404,7 +408,11 @@ require_once "../inc/dbconn.inc.php";
                 <?php
                     $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Day';";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    if ($_SESSION['user_type'] == 'learner') {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    } else {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION['student']["id"]);
+                    }
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
@@ -417,7 +425,11 @@ require_once "../inc/dbconn.inc.php";
                 <?php
                     $sql = "SELECT sum(duration) as total_minutes FROM logbooks WHERE learner_id = ? AND confirmed = 1 AND time_of_day = 'Night';";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    if ($_SESSION['user_type'] == 'learner') {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
+                    } else {
+                        mysqli_stmt_bind_param($stmt, "i", $_SESSION['student']["id"]);
+                    }
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
