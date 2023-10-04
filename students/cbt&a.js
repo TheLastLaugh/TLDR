@@ -113,6 +113,8 @@ class Tasks {
                 if ('instructor_notes' in result['task'] && result['task']['instructor_notes'] != null) {
                     console.log("notes existtttt");
                     document.getElementById("notes").value = result['task']['instructor_notes'];
+                } else if (result['usertype'] == "learner") {
+                    document.getElementById("notes").placeholder = "No Notes"
                 }
                 if('completed' in result['task'] && result['task']['completed'] == 1){
                     disableFormInput();
@@ -137,6 +139,9 @@ class Tasks {
                 }
                 if (result['usertype'] == "learner") {
                     document.getElementById("follow-up-actions").style.display = "none";
+                    document.getElementById("notes-submit").style.display = "none";
+                    document.getElementById("mark-task-completed").style.display = "none";
+                    document.getElementById("notes").readOnly = true;
                 } else {
                     document.getElementById("follow-up-actions").style.display = "block";
                 }
@@ -164,7 +169,7 @@ class Tasks {
                     const myArray = taskDescription.split(" (");
                     taskDescription = myArray[0];
 
-                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete})`;
+                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete} )`;
                     for (let j = 0; j < result[i].tasks.length; j++) {
                         if (result[i].tasks[j]['user-type'] == 'learner') {
                             if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].student_followup == 0) {
@@ -534,7 +539,7 @@ class Tasks {
                     <textarea id="notes" rows="4" cols="50" placeholder="Enter notes here..."></textarea><br>
                     <input type="hidden" value="${unitNumber}">
                     <input type="hidden" value="${taskNumber}">
-                    <input type="submit" value="Update">
+                    <input type="submit" value="Update" id="notes-submit">
                 </form>
             </div>
 
@@ -678,7 +683,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -749,7 +754,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -804,7 +809,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -870,7 +875,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -924,7 +929,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1010,7 +1015,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='12'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='12'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1112,7 +1117,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='7'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='7'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1192,7 +1197,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1264,7 +1269,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1327,7 +1332,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1408,7 +1413,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1474,7 +1479,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1539,7 +1544,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1607,7 +1612,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1670,7 +1675,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1730,7 +1735,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1792,7 +1797,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1852,7 +1857,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1915,7 +1920,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1977,7 +1982,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2040,7 +2045,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2102,7 +2107,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2166,7 +2171,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2224,7 +2229,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2287,7 +2292,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2344,7 +2349,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2405,7 +2410,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2468,7 +2473,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2525,7 +2530,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2586,7 +2591,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2699,7 +2704,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2746,7 +2751,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='3'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='3'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
