@@ -29,6 +29,11 @@ else if ($_SESSION['user_type'] == 'learner') {
 
 // }
 
+else if ($_SESSION['user_type'] == 'qsd') {
+    $selectedUserType = "learner";
+    $selectedUsername = $_POST['username'];
+}
+
 else if ($_SESSION['user_type'] == 'instructor') {
     $selectedUserType = "learner";
     $selectedUsername = $_POST['username'];

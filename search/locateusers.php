@@ -19,8 +19,10 @@ else if ($_SESSION['user_type'] == 'learner') {
 
 // If the user is a qsd, don't give them access to this page
 else if ($_SESSION['user_type'] == 'qsd') {
-    header("Location: ../dashboard/welcome-qsd.php");
-    exit;
+    // header("Location: ../dashboard/welcome-qsd.php");
+    // exit;
+    $searchType = 'student';
+    $searchBy = $_POST['search'];
 }
 
 else if ($_SESSION['user_type'] == 'instructor') {
@@ -37,7 +39,7 @@ else if ($_SESSION['user_type'] == 'government') {
 $data = array();
 
 // Get the matching students for the search
-if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
+if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd')) {
     $student_fullname = $_POST['fname'];
     $sql = "SELECT id, username, license, dob, address, user_type, contact_number FROM users WHERE user_type = 'learner' AND username = ?";
     $stmt = mysqli_prepare($conn, $sql);
@@ -63,7 +65,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
         }
     }
     mysqli_free_result($result);
-} elseif ($searchBy == 'dl' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
+} elseif ($searchBy == 'dl' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd')) {
     $student_dl = $_POST['license'];
     $sql = "SELECT id, username, license, dob, address, user_type, contact_number FROM users WHERE user_type = 'learner' AND license = ?";
     $stmt = mysqli_prepare($conn, $sql);
