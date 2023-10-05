@@ -63,7 +63,7 @@ $qsd_license = $row['qsd_license'];
         <form action="process-logbook-confirmation.php" method="POST">
             <h2>Logbook Details:</h2>
             <!-- FORMAT FOR ALL ENTRIES: <attribute>: <value> -->
-            <p><strong>QSD:</strong> <?php echo htmlspecialchars($name); ?></p>
+            <p><strong>QSD:</strong> <?php echo htmlspecialchars($qsd_name); ?></p>
             <p><strong>QSD License:</strong> <?php echo htmlspecialchars($qsd_license); ?></p>
             <p><strong>Date:</strong> <?php echo htmlspecialchars($date); ?></p>
             <p><strong>Start Time:</strong> <?php echo htmlspecialchars($start_time); ?></p>
