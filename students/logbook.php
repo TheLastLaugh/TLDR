@@ -38,8 +38,8 @@ require_once "../inc/dbconn.inc.php";
             ?>
 
             <div class="logbook-tabs">
-                <button class="tablinks" onclick="openTab(event, 'Pending')" id="pending-button">Pending</button>
-                <button class="tablinks" onclick="openTab(event, 'Detailed')" id="detailed-button">Detailed</button>
+                <button class="tablinks" onclick="openTab(event, 'Pending')" id="pending-button">Unsigned</button>
+                <button class="tablinks" onclick="openTab(event, 'Detailed')" id="detailed-button">All</button>
                 <button class="tablinks" onclick="openTab(event, 'Day')" id="day-button">Day</button>
                 <button class="tablinks" onclick="openTab(event, 'Night')" id="night-button">Night</button>
                 <button class="tablinks" onclick="openTab(event, 'Summary')">Summary</button>
