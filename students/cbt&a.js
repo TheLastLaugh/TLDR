@@ -81,6 +81,17 @@ function viewTask (task) {
 
 }
 
+function YYYY_MM_DD_2_DD_MM_YYYY (date) {
+
+    var dateFormatted = new Date(date);
+    var day = dateFormatted.getDate().toString().padStart(2,"0");
+    var month = (dateFormatted.getMonth() + 1).toString().padStart(2,"0");
+    var year = dateFormatted.getFullYear().toString().padStart(4,"0");
+    dateFormatted = `${day}/${month}/${year}`;
+    return dateFormatted;
+
+}
+
 class Tasks {
 
     static successAlert(message) {
@@ -118,9 +129,19 @@ class Tasks {
                 }
                 if('completed' in result['task'] && result['task']['completed'] == 1){
                     disableFormInput();
-                    document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${result['task']['completed_date']}`;
+                    document.getElementById("mark-task-completed").style.display = "none";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "none";
+                    const formattedDate = YYYY_MM_DD_2_DD_MM_YYYY(result['task']['completed_date']);
+                    if (result['task']['student_signature'] == 1) {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${formattedDate}`;
+                    } else if (result['usertype'] == "government" || result['usertype'] == "instructor") {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task is marked complete, but still requires a student signature`;
+                    } else if (result['usertype'] == "learner") {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task is marked complete by your instructor, but still requires your signature`;
+                    }
+                    // document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${formattedDate}`;
                     document.getElementById("drivers-name").innerHTML = result['task']['student_name'];
-                    document.getElementById("completion-date").innerHTML = result['task']['completed_date'];
+                    document.getElementById("completion-date").innerHTML = YYYY_MM_DD_2_DD_MM_YYYY(result['task']['completed_date']);
                     document.getElementById("student-license").innerHTML = result['task']['student_license'];
                     if (result['task']['student_signature'] == 1) {
                         document.getElementById("student-signature").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -136,12 +157,19 @@ class Tasks {
                     </svg> Signed`;
                     document.getElementById("instructor-name").innerHTML = result['task']['instructor_name'];
                     document.getElementById("instructor-license").innerHTML = result['task']['instructor_license'];
+                } else if (result['usertype'] == "learner") {
+                    document.getElementById("taskCompletionMessage").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg> Only an instructor may complete these items`;
                 }
                 if (result['usertype'] == "learner") {
                     document.getElementById("follow-up-actions").style.display = "none";
                     document.getElementById("notes-submit").style.display = "none";
                     document.getElementById("mark-task-completed").style.display = "none";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "none";
                     document.getElementById("notes").readOnly = true;
+                    disableFormInput2();
                 } else {
                     document.getElementById("follow-up-actions").style.display = "block";
                 }
@@ -360,6 +388,8 @@ class Tasks {
                 Tasks.snapshot();
                 if (action == 'incomplete-task') {
                     enableFormInput();
+                    document.getElementById("mark-task-completed").style.display = "block";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "table-cell";
                 }
             }
         };
@@ -1655,7 +1685,7 @@ class Tasks {
                 <br>(3) The learner will correctly position the vehicle when turning left or right.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1665,12 +1695,36 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Turns: </b>Left Turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Turns: </b>Right Turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Wide Unlaned: </b>Straight</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Stop sign with a line: </b>Straight, Left or Right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned Roads: </b>Straight</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Intersections - Obstructed View: </b>Straight, Left or Right</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -1715,7 +1769,7 @@ class Tasks {
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time
                 (see pages 10 to 17) and compliance with the law over the complete assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1725,12 +1779,32 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Wide unlaned roads: </b>Passing a parked vehicle</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Laned roads: </b>Lane changes (left)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned roads: </b>Lane changes (right)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Merge with the flow of traffic: </b>Zip merge to the right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Merge with the flow of traffic: </b>Zip merge to the left</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -1777,7 +1851,7 @@ class Tasks {
                 <br>(3) The learner will demonstrate correct compliance with ‘Stop’ and ‘Give Way’ signs.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1787,12 +1861,44 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>With a stop: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>With a stop: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>With a ‘Stop’ sign: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>With a ‘Stop’ sign: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Without a stop: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Without a stop: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>'Give way' sign: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>'Give way' sign: </b>Right turns</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -1837,7 +1943,7 @@ class Tasks {
                 The learner will be able to demonstrate turning left and right safely on to and from laned roads using the ‘System of Car Control’ while complying with the ‘Give Way’ rules and the laws relating to turning.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1847,12 +1953,36 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Onto: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Onto: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>From: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>From: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Compound turns: </b>Left turn followed by a right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Compound turns: </b>Right turn followed by a left turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -1900,7 +2030,7 @@ class Tasks {
                 The learner will be able to turn left, turn right and go straight on safely at unlaned and laned roundabouts while complying with all laws relating to giving way and positioning on roundabouts, and the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1910,12 +2040,35 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Unlaned: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Straight on</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -1962,7 +2115,7 @@ class Tasks {
                 <br>(3) The learner will safely demonstrate turning left at slip lanes.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1972,12 +2125,25 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>No arrows: </b>Left turns</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>No arrows: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>No arrows: </b>Straight on at intersections</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Slip lane (no arrows): </b>Left turns</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -2035,17 +2201,37 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>Straight driving: </b>Operating pedestrian crossing</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>Straight driving: </b>School zone</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='4'><b>Straight driving: </b>Speed limit change</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Straight driving: </b>Intersections with a good view</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>Straight driving: </b>Cross road intersections without facing any type of control (give way signs, stop signs or traffic lights)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2087,7 +2273,7 @@ class Tasks {
                 <br>(2) The learner will maintain full control of the vehicle while driving at higher speeds.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2097,17 +2283,46 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Entering a road</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Leaving a road</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='1'><b>Driving at higher speeds: </b>Bends - right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>Driving at higher speeds: </b>Bends - left</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><b>Driving at higher speeds: </b>Crests</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Overtaking</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='6'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2151,7 +2366,7 @@ class Tasks {
                 <br>(2) Demonstrate compliance with the ‘System of Car Control’ when approaching potential hazards in traffic.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2160,19 +2375,23 @@ class Tasks {
 
                     <table>
 
-                        <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
-                        </tr>
+                    <tr>
+                        <td colspan='2'><b>Wide unlaned roads: </b>Straight drive following traffic
+                        (with two stops in a line of traffic)</td>
+                        <td><input type="checkbox" required></td>
+                        <td><input type="checkbox" required></td>
+                    </tr>
 
-                        <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
-                        </tr>
+                    <tr>
+                        <td colspan='2'><b>Laned roads: </b>Straight drive following traffic
+                        (with two stops in a line of traffic)</td>
+                        <td><input type="checkbox" required></td>
+                        <td><input type="checkbox" required></td>
+                    </tr>
 
-                        <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
-                        <tr>
+                    <tr>
+                        <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                    <tr>
 
                     </table>
 
@@ -2209,7 +2428,7 @@ class Tasks {
                 <br>(2) The learner will be able to change lanes safely and competently in traffic while complying with the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2219,17 +2438,20 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Laned Roads: </b>Lane changes (left)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Laned Roads: </b>Lane changes (right)</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2272,7 +2494,7 @@ class Tasks {
                 <br>(2) The learner will competently select safe gaps when entering or crossing a flow of traffic on busy roads without unnecessary hesitation.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2282,12 +2504,44 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Unlaned roads: </b>On to - left turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Unlaned roads: </b>On to - right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Unlaned roads: </b>From - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Unlaned roads: </b>From - right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>On to - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned roads: </b>On to - right turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>From - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned roads: </b>From - right turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -2329,7 +2583,7 @@ class Tasks {
                 The learner will be able to turn right, left and travel straight-on safely and competently at laned and unlaned roundabouts in medium to heavy traffic while complying with the law and the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2339,12 +2593,35 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned roads: </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned roads: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Unlaned roads: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Straight on</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -2390,7 +2667,7 @@ class Tasks {
                 <br>(2 & 3) The learner will be able to choose a safer option to a U-turn where the turn may be obstructed due to changing traffic conditions.`,
             "assessmentStandard":`
                 The learner will accurately perform Parts (1) and (2), or (1) and (3) of this task without assistance. The assessment will be a demonstration on at least two consecutive but separate occasions.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2400,12 +2677,23 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='1'>(1) Select a safe U-turn starting position (eg. 'store' lane - clear view)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='1'>(2) Perform a safe and complete U-turn on a busy road</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'>(3) Select a safe alternative to the U-turn due to changing traffic conditions</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
@@ -2453,7 +2741,7 @@ class Tasks {
                 <br>(3) The learner will comply with the appropriate road laws when negotiating ‘slip’ lanes`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2463,17 +2751,30 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Left turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>No arrows: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='2'><b>No arrows: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><b>'Slip lane' (no arrows): </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2510,7 +2811,7 @@ class Tasks {
                 The learner will be able to negotiate bends, crests and intersections safely and competently on unsealed roads using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2520,17 +2821,42 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Left turn at intersections</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Right turn at intersections</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='1'><b>No arrows: </b>Bends - left</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>No arrows: </b>Bends - right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><b>No arrows: </b>Crests</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='6'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2571,7 +2897,7 @@ class Tasks {
                 The learner will be able to safely and competently demonstrate the maintenance of safe following distances, passing clearances and appropriate position of the vehicle for improved forward observation in relation to visual and speed adjustments using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
                 Task 28B is an optional Task. It is not compulsory for the Authorised Examiner to sign. This task has been placed in the Driving Companion primarily for the use by the Qualified Supervising Driver for guidance when recording the compulsory 15 hours of night driving.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Log Book Entry",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2581,17 +2907,20 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
+                            <td colspan='2'>Complete the log book entry. (In the case of training given by an Authorised Examiner)</td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
+                            <td colspan='2'>Complete the Form 11 and Form 12, 'Record of Night-time Driving Hours' in this book.
+                            (In the case of training given by a Qualified Supervising Driver or a Motor Driving Instructor).</td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                            <td colspan='2'>Sign only if accompanied by an Authorised Examiner.</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2783,6 +3112,22 @@ function disableFormInput () {
 
     for (let i = 0; i < allCheckboxElements.length; i++) {
         allCheckboxElements[i].checked = true;
+    }
+
+}
+
+function disableFormInput2 () {
+
+    const allInputElements = document.getElementById("taskCompletion").querySelectorAll("input");
+
+    for (let i = 0; i < allInputElements.length; i++) {
+        allInputElements[i].disabled = true;
+    }
+
+    const allSelectElements = document.getElementById("taskCompletion").querySelectorAll("select");
+
+    for (let i = 0; i < allSelectElements.length; i++) {
+        allSelectElements[i].disabled = true;
     }
 
 }
