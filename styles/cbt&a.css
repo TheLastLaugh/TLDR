@@ -1,12 +1,14 @@
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-    background-color: #eee;
-    color: #444;
+    background-color: #fff4d7;
+    color: black;
     cursor: pointer;
     padding: 18px;
     width: 100%;
     text-align: left;
-    border: none;
+    border: solid;
+    border-color:#f9c623;
+    border-width: 2px;
     outline: none;
     transition: 0.4s;
     font-size: 16px;
@@ -15,7 +17,7 @@
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active,
 .accordion:hover {
-    background-color: #ccc;
+    background-color: #f9c623;
 }
 
 /* Style the accordion panel. Note: hidden by default */
@@ -51,6 +53,9 @@
 
 table {
     font-family: arial, sans-serif;
+    border: solid;
+    border-color:#f9c623;
+    border-width: 2px;
     border-collapse: collapse;
     width: 100%;
 }
@@ -62,7 +67,7 @@ td, th {
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #fff4d7;
 }
 
 td.complete {
@@ -111,6 +116,7 @@ td.warning {
 /* Task Header */
 
 .task-header {
+    padding-top: 85px;
     text-align: center;
 }
 
@@ -123,4 +129,42 @@ html {
 
 .task-description {
     width: 65%
+}
+
+
+
+/* override statcard colors for cbt&a tasks */
+
+h3 {
+    background-color: #f9c623;
+    text-align: center;
+}
+
+.stat-card {
+    background-color: #fff4d7 !important;
+    border-color:  #f9c623 !important;
+    border-width: 2px !important;
+    color: black !important;
+}
+
+.stat-card p {
+    font-size: 15px !important;
+}
+
+.stat-card * {
+    color: black !important;
+    border-color: #f9c623 !important;
+    border-width:2px;
+}
+
+.stat-card tr:nth-child(even) {
+    background-color: white
+}
+
+.stat-card input {
+    background-color: #f9c623 !important;
+}
+
+.stat-card button {
+    background-color: #f9c623 !important;
 }
