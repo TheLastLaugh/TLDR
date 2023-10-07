@@ -56,6 +56,8 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
                             $studentnumber = $_SESSION['student']['contact_number'];
+                            echo "<a href='../search/search.php?usertype=student'>Change Student</a><br>";
+                            echo '<a href="../login/learner-login.php">Create New Student</a><br>';
                             echo "<p>Name: {$studentname}</p>
                             <ul>
                                 <li>Drivers License: {$studentlicense}</li>
@@ -63,9 +65,8 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Date of Birth: {$studentdob} ( Age: {$studentage} )</li>
                                 <li>Contact Number: {$studentnumber}</li>
                             </ul>
-                            <a href='../search/search.php?usertype=student'>Change Student</a><br>
-                            <a href='../students/cbt&a.php'>CBT&A Items</a><br>
-                            <a href='../students/logbook.php'>View Logbook</a>
+                            <a href='../students/logbook.php'>View Logbook</a><br>
+                            <a href='../students/cbt&a.php'>CBT&A Items</a>
                             ";
                         } else {
                             $studentname = "No Student Selected";

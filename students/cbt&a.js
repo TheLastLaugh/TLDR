@@ -95,20 +95,20 @@ function YYYY_MM_DD_2_DD_MM_YYYY (date) {
 class Tasks {
 
     static successAlert(message) {
+
         document.getElementById(`taskAlert`).innerHTML = `<div class="alert success">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <strong>Success!</strong> Indicates a successful or positive action.
+            <strong>Success!</strong> ${message}
             </div>`;
         document.getElementById(`taskAlert`).style.display = "block";
 
-        // Scroll to anchor position. Remove any achor first and then scroll.
-        location.hash = "";
-        location.hash = "#view-task";
+        const element = document.getElementById("view-task");
+        element.scrollIntoView();
 
         // document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
 
         // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
-        setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
+        // setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
     }
 
     static getTaskData(task) {
@@ -319,9 +319,10 @@ class Tasks {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
                 // const result = JSON.parse(xhttp.responseText);
-                Tasks.successAlert("message");
+                // Tasks.successAlert("message");
                 Tasks.snapshot();
                 Tasks.getTaskData(task);
+                Tasks.successAlert(`Task completed.`);
             }
         };
     
@@ -344,7 +345,7 @@ class Tasks {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
-                Tasks.successAlert();
+                Tasks.successAlert("Comment Updated.");
                 // Tasks.getTaskData(task);
             }
         };
@@ -384,12 +385,17 @@ class Tasks {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
-                Tasks.successAlert();
+                // Tasks.successAlert();
                 Tasks.snapshot();
                 if (action == 'incomplete-task') {
                     enableFormInput();
                     document.getElementById("mark-task-completed").style.display = "block";
                     document.getElementById("mark-task-completed").parentElement.style.display = "table-cell";
+                    Tasks.successAlert("Task has been marked incomplete.");
+                } else if (action == 'instructor_followup') {
+                    Tasks.successAlert("Task has been flagged for instructor followup.");
+                } else if (action == 'student_followup') {
+                    Tasks.successAlert("Task has been flagged for student followup.");
                 }
             }
         };

@@ -15,9 +15,9 @@ function codeAddress(drive) {
 
     const suburb_start = drive['start_location'];
     const suburb_end = drive['end_location'];
-    var address1 = `${suburb_start}, SA`;
+    var address1 = `${suburb_start} SA, Australia`;
     var coordinates1;
-    var address2 = `${suburb_end}, SA`;
+    var address2 = `${suburb_end} SA, Australia`;
     var coordinates2;
 
     geocoder.geocode({ 'address': address1 }, function (results, status) {
@@ -44,12 +44,12 @@ function codeAddress(drive) {
                     drawLine(coordinates1, coordinates2);
                     createMarkers(coordinates1, coordinates2, drive);
                 } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    console.log('Geocode was not successful for the following reason: ' + status);
                 }
             });
 
         } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            console.log('Geocode was not successful for the following reason: ' + status);
         }
     });
 

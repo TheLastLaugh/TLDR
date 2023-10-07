@@ -54,10 +54,10 @@ else if ($_SESSION['user_type'] == 'qsd') {
                                 <li>Age: {$studentage}</li>
                                 <li>Contact Number: {$studentnumber}</li>
                             </ul>";
-                            echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo "<a href='../students/logbook.php'>View Logbook</a><br>";
+                            echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br>';
-                            echo '<a href="#">Issue Bill</a>';
+                            // echo '<a href="#">Issue Bill</a>';
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
@@ -70,14 +70,14 @@ else if ($_SESSION['user_type'] == 'qsd') {
                     <h3>Qualified Supervising Drivers</h3>
                     <a href="../login/qsd-login.php">Create New QSD</a><br>
                 </div>
-                <div class="stat-card">
+                <!-- <div class="stat-card">
                     <h3>Billing</h3>
                     <a href="#">View Issued Bills</a><br>
-                </div>
-                <div class="stat-card">
+                </div> -->
+                <!-- <div class="stat-card">
                     <h3>Some stuff relating to instructors</h3>
                     <p>bookings or something</p>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

@@ -33,7 +33,8 @@ require_once "../inc/dbconn.inc.php";
             <?php 
                 if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd') && isset($_SESSION['student']['username'])) {
                     echo "<p>Student Name: {$_SESSION['student']['username']}</p>";
-                    echo "<a href='../search/search.php?usertype=student'>Change Student</a><br><br>";
+                    echo "<a href='../search/search.php?usertype=student'>Change Student</a><br>";
+                    echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br><br>';
                 } 
             ?>
 
@@ -71,7 +72,7 @@ require_once "../inc/dbconn.inc.php";
                     </tr>
                     <?php
 
-                        $sql = "SELECT * FROM logbooks LEFT JOIN users ON logbooks.qsd_id = users.id WHERE learner_id = ? AND confirmed = 0 ORDER BY date DESC, start_time DESC;";
+                        $sql = "SELECT logbooks.id, `learner_id`, `qsd_id`, `date`, `start_time`, `end_time`, `duration`, `start_location`, `end_location`, `road_type`, `weather`, `traffic`, `qsd_name`, `qsd_license`, `confirmed`, `time_of_day`, users.id as userid, users.username, users.license FROM `logbooks` LEFT JOIN users ON logbooks.qsd_id = users.id WHERE learner_id = ? AND confirmed = 0 ORDER BY date DESC, start_time DESC;";
                         $stmt = mysqli_prepare($conn, $sql);
                         if ($_SESSION['user_type'] == 'learner') {
                             mysqli_stmt_bind_param($stmt, "i", $_SESSION["userid"]);
@@ -107,10 +108,14 @@ require_once "../inc/dbconn.inc.php";
                                 // <td>***</td>
                                 echo "<td>{$row['traffic']}</td>";
                                 // <td>Signed</td>
-                                if ($row['confirmed'] == 1) {
+                                if ($_SESSION['user_type'] == 'learner') {
+                                    // echo "<td><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                                    // <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
+                                    // </svg> Signed</td>";
+                                    // $id = $row['id'];
                                     echo "<td><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
                                     <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
-                                    </svg> Signed</td>";
+                                    </svg> Signature Required: <a href='#' onclick='signTask({$row['id']})'>Click here to sign</a></td>";
                                 } else {
                                     echo "<td>Not Signed</td>";
                                 }
@@ -400,7 +405,7 @@ require_once "../inc/dbconn.inc.php";
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
                         if ($row = $result -> fetch_assoc()) {
-                            $total_hours = $row['total_minutes'] / 60;
+                            $total_hours = intval($row['total_minutes'] / 60);
                             echo "<p><b>Total: </b> {$total_hours} / 75 hours</p>";
                         }
                     }
@@ -417,7 +422,7 @@ require_once "../inc/dbconn.inc.php";
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
                         if ($row = $result -> fetch_assoc()) {
-                            $total_hours = $row['total_minutes'] / 60;
+                            $total_hours = intval($row['total_minutes'] / 60);
                             echo "<p><b>Daytime: </b> {$total_hours} hours</p>";
                         }
                     }
@@ -434,7 +439,7 @@ require_once "../inc/dbconn.inc.php";
                     $result = mysqli_stmt_get_result($stmt);
                     if ( mysqli_num_rows($result) >= 1 ) {
                         if ($row = $result -> fetch_assoc()) {
-                            $total_hours = $row['total_minutes'] / 60;
+                            $total_hours = intval($row['total_minutes'] / 60);
                             echo "<p><b>Night-time: </b> {$total_hours} / 15 hours</p>";
                         }
                     }

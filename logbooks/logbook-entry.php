@@ -37,91 +37,148 @@ if ($_SESSION['user_type'] == 'qsd') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alistair Macvicar" />
+    <meta name="author" content="Jordan Prime" />
     <title>Logbook Entry</title>
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/logbook-entry.css"/>
     <script src="./suburb-validation.js" defer></script>
 </head>
 <body>
     <!-- Include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
-    <div class="content">
-        <h1>Enter a drive for the learner</h1>
-        <form action="process-logbook.php" method="POST">
-            <ul>
-                <li>
-                    <label for="license">Learner's License</label>
-                    <select name="license" required>
-                        <?php
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                // Get all the learners from the database associated with the qsd/instructor and display them in a drop-down menu
-                                $learner_id = $row['learner_id'];
+    <div id="content">
+        <div id="dashboard">
+            <div id="form-container">
 
-                                $sql = "SELECT license, username FROM users WHERE id = ?";
-                                $stmt = mysqli_prepare($conn, $sql);
-                                mysqli_stmt_bind_param($stmt, "i", $learner_id);
-                                mysqli_stmt_execute($stmt);
-                                $result = mysqli_stmt_get_result($stmt);
-                                
-                                // FORMT: <license> - <username>
-                                echo '<option value="' . $row['license'] . '">' . $row['license'] . '-' .$row['username'] . '</option>';
-                            }
+                <h1>Create Log Book Entry</h1>
+
+                <?php 
+                    if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd') && isset($_SESSION['student']['username'])) {
+                        echo "<p>Student Name: {$_SESSION['student']['username']}</p>";
+                        echo "<a href='../search/search.php?usertype=student'>Change Student</a><br><br>";
+                    } 
+                ?>
+
+                <div class="row">
+                    <div class="col-50">
+                        <div id="taskAlert"></div>
+                    </div>
+                </div>  
+
+                <form id="logbook-entry">
+                    <!-- <div class="row">
+                        <div class="col-25">
+                            <label for="license">Learner's License</label>
+                        </div>
+                        <div class="col-25">
+                        <?php
+                            // echo "<input type='text' name='license' value='{$_SESSION['student']['license']}' required readonly disabled>";
                         ?>
-                    </select>
-                </li>
-                
-                <!-- Other static fields to fill in the drive details -->
-                <li>
-                    <label for="date">Date</label>
-                    <input type="date" name="date" required>
-                </li>
-                <li>
-                    <label for="start_time">Start Time</label>
-                    <input type="time" name="start_time" required>
-                </li>
-                <li>
-                    <label for="end_time">End Time</label>
-                    <input type="time" name="end_time" required>
-                </li>
-                <li>
-                    <label for="start_location">Starting Address (Suburb)</label>
-                    <input type="text" name="start_location" id="start-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
-                </li>
-                <li>
-                    <label for="end_location">Ending Address (Suburb)</label>
-                    <input type="text" name="end_location" id="end-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
-                </li>
-                <li>
-                    <label for="road_type">Road Type</label>
-                    <select name="road_type" required>
-                        <option value="Sealed">Sealed</option>
-                        <option value="Unsealed">Unsealed</option>
-                        <option value="Quit Street">Quiet Street</option>
-                        <option value="Busy Road">Busy Road</option>
-                        <option value="Multi-lanes Road">Multi-lanes Road</option>
-                    </select>
-                </li>
-                <li>
-                    <label for="weather">Weather</label>
-                    <select name="weather">
-                        <option value="Dry">Dry</option>
-                        <option value="Wet">Wet</option>
-                    </select>
-                </li> 
-                <li>
-                    <label for="traffic">Traffic</label>
-                    <select name="traffic">
-                        <option value="Light">Light</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Heavy">Heavy</option>
-                    </select>
-                </li>
-                <li>
-                    <input type="submit" value="Submit" class="submit-button">
-                </li>
-            </ul>
-            <datalist id="suburbsList"></datalist>
-        </form>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="date">Date</label>
+                        </div>
+                        <div class="col-25">
+                            <input type="date" name="date" id="date" required>
+                        </div>
+                    </div>
+
+                    <div class="row" id="start_time_row">
+
+                        <div class="col-25">
+                            <label for="start_time">Start Time</label>
+                        </div>
+                        <div class="col-25">
+                            <input type="time" name="start_time" id="start_time" required>
+                        </div>
+
+                    </div>
+                    <div class="row" id="end_time_row">
+
+                        <div class="col-25">
+                            <label for="end_time">End Time</label>
+                        </div>
+                        <div class="col-25">
+                            <input type="time" name="end_time" id="end_time" required>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="start_location">Starting Suburb</label>
+                        </div>
+                        <div class="col-25">
+                            <input type="text" name="start_location" id="start-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="end_location">Ending Suburb</label>
+                        </div>
+                        <div class="col-25">
+                            <input type="text" name="end_location" id="end-suburb" list="suburbsList" placeholder="Type Suburb..." spellcheck="false" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="road_type">Road Type</label>
+                        </div> 
+                        <div class="col-25">
+                            <select name="road_type" required>
+                                <option value="" selected disabled>Please Select</option>
+                                <option value="Sealed">Sealed</option>
+                                <option value="Unsealed">Unsealed</option>
+                                <option value="Quiet Street">Quiet Street</option>
+                                <option value="Busy Road">Busy Road</option>
+                                <option value="Multi-lanes Road">Multi-lanes Road</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="weather">Weather</label>
+                        </div>
+                        <div class="col-25">
+                            <select name="weather" required>
+                                <option value="" selected disabled>Please Select</option>
+                                <option value="Dry">Dry</option>
+                                <option value="Wet">Wet</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="traffic">Traffic</label>
+                        </div>
+                        <div class="col-25">
+                            <select name="traffic" required>
+                                <option value="" selected disabled>Please Select</option>
+                                <option value="Light">Light</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Heavy">Heavy</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-25">
+                            <input type="reset" value="Clear">
+                        </div>
+                        <div class="col-25">
+                            <input type="submit" value="Submit">
+                        </div>
+                    </div>
+
+                    <datalist id="suburbsList"></datalist>
+                </form>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>
