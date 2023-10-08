@@ -57,6 +57,7 @@ else if ($_SESSION['user_type'] == 'qsd') {
                             echo "<a href='../students/logbook.php'>View Logbook</a><br>";
                             echo '<a href="../students/cbt&a.php">CBT&A Items</a><br>';
                             echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br>';
+                            echo "<a href='../instructors/issue-bill.php'>Issue Bill</a><br>";
                             // echo '<a href="#">Issue Bill</a>';
                         } else {
                             $studentname = "No Student Selected";
