@@ -134,9 +134,6 @@ else if ($_SESSION['user_type'] != 'government') {
                         }
                     ?>
                 </div>
-                <div class="stat-card">
-                    <h3>Other</h3>
-                </div>
             </div>
         </div>
     </div>

@@ -223,7 +223,8 @@ INSERT INTO lessons (unit_number, unit_name) VALUES
 
 -- I just set the default price of each lesson (for the only default instructor) to be $50, but we can allow them to set their own prices when we make the page
 INSERT INTO instructors (user_id, username, company, company_address, phone, price) VALUES
-(2, 'Brett Wilkinson', 'Flinders', 'Tonsley', 0404040404, 50.00);
+(2, 'Brett Wilkinson', 'Flinders', 'Tonsley', 0404040404, 50.00),
+(7, 'Kathryn Laneway', 'Flinders', 'Tonsley', 0404040404, 100.00);
 
 -- These are all of the modulees, split up by units. I've tried to keep them with the same number they have in the real logbook but there are some differences (outlined next to them)
 INSERT INTO cbta_modules (unit_number, unit_name, module_number, module_name) VALUES
