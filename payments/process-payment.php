@@ -67,6 +67,7 @@ if (str_starts_with($bookingId, 'bookings-')) {
     mysqli_stmt_execute($stmt);
 
 } elseif (str_starts_with($bookingId, 'bills-')) {
+
     $table = "bills";
     $bookingId = substr($bookingId,6);
 
@@ -79,7 +80,8 @@ if (str_starts_with($bookingId, 'bookings-')) {
 }
 
 // Redirect to confirmation screen
-header("Location: confirm-payment.php?booking_id=$bookingId");
+$query_string = urlencode($table . "-" . $bookingId);
+header("Location: confirm-payment.php?booking_id=$query_string");
 
 // Close the connection and terminate the script
 mysqli_close($conn);
