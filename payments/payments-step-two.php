@@ -124,12 +124,13 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
                     }
                     ?>
                 </select>
-
-                <label for="cvv">CVV:</label>
-                <input type="text" name="cvv" minlength="3" maxlength="3" pattern="\d{3}" required> 
                 
                 <!-- Hidden fields for data -->
                 <input type="hidden" name="booking_id" value="<?php echo $table . '-' . $bookingId; ?>">
+            </div>
+            <div id="cvvBox" style="display: none">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" name="cvv" minlength="3" maxlength="3" pattern="\d{3}" required> 
             </div>
             
             <input type="submit" value="Confirm Payment">
