@@ -204,8 +204,8 @@ input[type="submit"]:hover {
 }
 /*end of profile page styles*/
 
-#register-details{
-  text-align: right; /* Align text inside the list item to the right */
-  clear: both; /* Clear the float so that subsequent elements don't wrap around */
+/* #register-details{
+  text-align: right; 
+  clear: both; 
   margin-bottom: 10px;
-}
+} */
