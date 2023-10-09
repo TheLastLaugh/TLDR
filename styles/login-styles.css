@@ -56,3 +56,9 @@ li {
 #mySAGOV_link {
     width: 50%;
 }
+
+#register-details{
+    text-align: right; /* Align text inside the list item to the right */
+    clear: both; /* Clear the float so that subsequent elements don't wrap around */
+    margin-bottom: 10px;
+}

@@ -17,7 +17,7 @@
         <!-- Directs to the same registration page as all new accounts -->
         <!-- Fields to enter user information -->
         <form action="register.php" method="POST">
-            <ul>
+            <ul id="register-details">
                 <li>
                     <label for="name">Name</label>
                     <input type="text" name="username" required>
