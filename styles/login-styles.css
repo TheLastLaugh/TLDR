@@ -56,3 +56,9 @@ li {
 #mySAGOV_link {
     width: 50%;
 }
+
+#register-details{
+    text-align: right; 
+    clear: both; 
+    margin-bottom: 10px;
+}
