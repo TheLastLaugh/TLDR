@@ -167,7 +167,7 @@ function deleteAllRowsInTable () {
     var table = document.getElementById("studentsTable");
     console.log(table.rows.length);
 
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
     }
 
@@ -233,11 +233,21 @@ if (searchParams.has('usertype')) {
 
     const usertype = searchParams.get('usertype'); 
 
-    if (usertype == 'instructor' || usertype == 'student' || usertype == 'qsd') {
+    if (usertype == 'instructor') {
         console.log(usertype + ' query string');
-        document.getElementById(usertype).checked = true;
+        document.getElementById("instructor").checked = true;
         document.getElementById("usertype1").value = usertype;
         document.getElementById("usertype2").value = usertype;
+    } else if (usertype == 'student') {
+        console.log(usertype + ' query string');
+        document.getElementById("student").checked = true;
+        document.getElementById("usertype1").value = usertype;
+        document.getElementById("usertype2").value = usertype;
+    } else if (usertype == 'qsd') {
+        console.log(usertype + ' query string');
+        document.getElementById("qsd").checked = true;
+        document.getElementById("usertype1").value = usertype;
+        document.getElementById("usertype2").value = usertype; 
     }
 
 }
