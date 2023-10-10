@@ -165,7 +165,7 @@ if ($user_type == 'instructor') {
         
         <?php endif; ?>
         
-        <input type="submit" value="Update">
+        <input id = "updateProfile" type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
     </div>
