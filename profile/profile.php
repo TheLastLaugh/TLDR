@@ -68,6 +68,8 @@ if ($user_type == 'instructor') {
 <body>
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
+    <div id="content">
+    <div id="dashboard">
     <div id = "profile-content">
         <form id="editForm" action="update-profile.php" method="post">
             <!-- Name (can't edit) -->
@@ -124,14 +126,7 @@ if ($user_type == 'instructor') {
                 <label for="price">Price:</label>
                 <input type="text" name="price" id="price" value="<?php echo htmlspecialchars($price); ?>" required>
             </div>
-            
-            
-            
-            <input type="submit" value="Update">
-            </form>
-            <button id="editButton">Edit Profile</button>
             <?php endif; ?>
-        </div>
 
         <!-- QSD Details -->
         <?php if ($user_type == 'qsd'): ?>
@@ -168,6 +163,8 @@ if ($user_type == 'instructor') {
         <input type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
+    </div>
+    </div>
     </div>
 </body>
 </html>
