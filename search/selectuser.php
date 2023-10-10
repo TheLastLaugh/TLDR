@@ -2,8 +2,16 @@
 // Initialise session
 session_start();
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Add the database connection
 require_once "../inc/dbconn.inc.php";
+
+if(isset($_GET["id"])){
+    $_POST["username"] = $_GET["id"];
+}
 
 // Check if the user is logged in, if not, send them back to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -32,14 +40,21 @@ else if ($_SESSION['user_type'] == 'learner') {
 else if ($_SESSION['user_type'] == 'instructor') {
     $selectedUserType = "learner";
     $selectedUsername = $_POST['username'];
+    
+    $redirect = "Location: ../dashboard/welcome-instructor.php";
 }
 
 else if ($_SESSION['user_type'] == 'government') {
     $selectedUserType = $_POST['usertype'];
     $selectedUsername = $_POST['username'];
+    
+    header("Location: ../dashboard/welcome-government.php");
 }
 
-
+if ($selectedUsername == "-1"){
+    unset($_SESSION["student"]);
+    
+}
 if ($selectedUserType == 'learner') {
 
     $sql = "SELECT id, username, license, dob, address, contact_number FROM users WHERE user_type = 'learner' AND id = ?";
@@ -76,6 +91,7 @@ if ($selectedUserType == 'learner') {
         $_SESSION["instructor"]["contact_number"] = $row["contact_number"];
     }
 
+
 } elseif ($selectedUserType == 'qsd') {
 
     $sql = "SELECT id, username, license, dob, address, contact_number FROM users WHERE user_type = 'qsd' AND id = ?";
@@ -96,8 +112,7 @@ if ($selectedUserType == 'learner') {
 
 } 
 
-
-
+header("Location: ../dashboard/welcome-instructor.php");
 
 //Close the connection and terminate the script.
 // mysqli_close($conn);

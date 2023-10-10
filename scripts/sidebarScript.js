@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const content = document.getElementById("content");
     const sideBar = document.querySelector("#sidebar");
 
-    
+    sideBar.style.width = "140px";
+    content.style.marginLeft = "140px";
 
     menuIcon.addEventListener("click",function() {
             if(sideBar.style.width === "0px") {
@@ -29,7 +30,16 @@ function setMenuSelected()
             break;
         }
     }
+    //GET PAGE NAME AND READJUST IT TO APPROPRIATE GRAMMAR
+    let page = window.location.pathname.split('/').slice(-1)[0].split('.')[0].split('-');
+    if(document.title != 'CBT&A'){
+        for(let i = 0; i < page.length; i++){
+            page[i] = page[i][0].toUpperCase()+ page[i].substring(1);
+        }
+        page = page.join(' ')
+    }else page = "CBT&A";
+    
+    document.getElementById("title").innerText = page;
 }
-document.querySelector("#sidebar").style.width = "140px";
-document.getElementById("content").style.marginLeft = "140px";
+
 setMenuSelected();

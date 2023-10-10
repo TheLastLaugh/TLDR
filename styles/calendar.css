@@ -1,0 +1,72 @@
+table{
+    margin: auto;
+    width: 1300px;
+    
+}
+
+td{
+    height: 60px;
+}
+
+table,td,th{
+    padding: 10px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+tr:nth-child(even){
+    background-color: #cccccc80;
+}
+th{
+    width: 225px;
+    height: 18px;
+    font-weight: bolder;
+    font-size: large;
+}
+#time-header{
+    width:150px;
+}
+
+
+#calendar-menu{
+    height: 50px;
+    width:1250px;
+    margin:auto;
+}
+
+#leftIcon{
+    float: left;
+    position: relative;
+    left: 10px;
+}
+
+form{
+    padding: none;
+}
+
+#leftIcon > button, #rightIcon > button{
+    border-style: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.time{
+    margin: auto;
+    padding: 6px;
+    font-weight: bold;
+    vertical-align: top;
+}
+#rightIcon{
+    float: right;
+    position: relative;
+    right: 10px;
+    cursor: pointer;
+}
+#gearIcon{
+    float: right;
+    position: relative;
+    right: 20px;
+    cursor: pointer;
+}
