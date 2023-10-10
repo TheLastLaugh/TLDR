@@ -61,6 +61,63 @@ body > #content {
   z-index: 10;
 }
 
+
+.dropbtn {
+  background-color: #f1f1f1;
+
+  border-style: solid;
+  border-width: 1px;
+  
+  border-color: black;
+  border-radius: 0;
+  width:182px;
+  font-size: 16px;
+
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+}
+.dropbtn:hover{
+  background-color: #808181;
+}
+
+.dropbtn.show{
+  border-bottom-width: 3px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: 180px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content > a:hover{
+  background-color: #808181;
+}
+
+.show {
+  display:block;
+}
+
+.dropdown-content > a{
+  width:100%;
+  height: 25px;
+  position: relative;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  display: block;
+  padding-top: 5px;
+
+  border-width: 1px;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-right-style: solid;
+}
+
 /* SIDEBAR STYLING */
 #sidebar {
   position: fixed;
@@ -92,11 +149,11 @@ body > #content {
   background-color:#777;
 }
 
-.selected{
+#sidebar > ul > .selected{
   background-color: #999;
 }
 
-li > a {
+#sidebar > ul > li > a {
   width:100%;
   height:100%;
   line-height: 300%;
@@ -107,51 +164,6 @@ li > a {
   margin: auto;
   display: block;
 }
-
-.dropbtn {
-  background-color: rgb(189, 185, 185);
-
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-
-  padding: 16px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  cursor: pointer;
-}
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #808181;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.show {
-  display:block;
-}
-
-/* 
-#sidebar li {
-  position: absolute;
-  left: 0;
-  top:0;
-  width: 100%;
-  height: 30px;
-  background-color: #ff6633;
-  transform-origin: right;
-  transition: transform 0.5s;
-}
-
-#sidebar li:hover {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-*/
 
 /* SIDEBAR STYLING */
 

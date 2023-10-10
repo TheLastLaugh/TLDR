@@ -167,6 +167,7 @@ function getDrives () {
 
 function dropdown() {
     document.getElementById("myDropdown").classList.toggle("show");
+    document.getElementById("studentBtn").classList.toggle("show");
     console.log("dropdown()");
 }
 

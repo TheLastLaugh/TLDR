@@ -10,10 +10,14 @@ function getStudentDetails($learner_id, $conn){
     mysqli_stmt_bind_param($studentSTATE, "i", $learner_id);
     mysqli_stmt_execute($studentSTATE);
     $result = mysqli_fetch_assoc(mysqli_stmt_get_result($studentSTATE));
-
-    echo('<a href = ../search/selectuser.php?id=' . $learner_id . ' >' . $result["username"] . ' </a>');
-    echo("<br>");
-
+    if(isset($_SESSION['student']['username'])){
+        $placeholder = $_SESSION['student']['username'];
+    } else {
+        $placeholder = null;
+    }
+    if($result["username"] != $placeholder){
+        echo('<a href = ../search/selectuser.php?id=' . $learner_id . ' >' . $result["username"] . ' </a>');
+    }
 }
 
 // Check if the user is logged in, if not, send them back to the login page
@@ -87,12 +91,11 @@ $result = mysqli_stmt_get_result($statement);
                         }
                     ?>
                         <div class = "dropdown">
-                            <button class = "dropbtn" onclick="dropdown()">Select Current Student</button>
+                            <button id = "studentBtn" class = "dropbtn" onclick="dropdown()"><?php echo($studentname) ?></button>
                             <div class = "dropdown-content" id = "myDropdown">
                             <?php while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);} ?>
-                            <br>
-                            <a href = "../search/selectuser.php?id=-1">Deselect</a><br>
-                            <a href="../search/search.php?usertype=student">Change Student</a><br>
+                            <a href = "../search/selectuser.php?id=-1">Deselect</a>
+                            <a href="../search/search.php?usertype=student">Change Student</a>
                             </div>
                         </div>
                 </div>
