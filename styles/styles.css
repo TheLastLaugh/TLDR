@@ -189,20 +189,20 @@ li > a {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
 }
 
 p.detail {
   text-align: center;
 }
 
+
 #button-container{
   text-align: center;
   margin-left: 50%; /*why no centre????*/
 }
 
-#updateProfile {
+#updateProfile{
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
@@ -213,9 +213,11 @@ p.detail {
    margin-left: 630px; /*only temporary till i figure out how to centre with screen */
   margin-top: 10px;
 }
+
 #updateProfile:hover {
   background-color: #0056b3; 
 }
+
 #editButton {
   background-color: #28a745;
   color: white;
