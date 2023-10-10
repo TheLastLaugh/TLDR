@@ -53,6 +53,7 @@ $result = mysqli_stmt_get_result($statement);
     <meta name="author" content="Alistair Macvicar"; />
     <meta name="author" content="Jordan Prime"; />
     <link rel="stylesheet" href="../styles/styles.css">
+    <script src="./welcome.js"></script>
     
     <title>Home</title>
 </head>
@@ -86,9 +87,10 @@ $result = mysqli_stmt_get_result($statement);
                         }
                     ?>
                         <div class = "dropdown">
-                            <button class = "dropbtn">Select Current Student</button>
-                            <div id = "dropdown">
+                            <button class = "dropbtn" onclick="dropdown()">Select Current Student</button>
+                            <div class = "dropdown-content" id = "myDropdown">
                             <?php while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);} ?>
+                            <br>
                             <a href = "../search/selectuser.php?id=-1">Deselect</a><br>
                             <a href="../search/search.php?usertype=student">Change Student</a><br>
                             </div>

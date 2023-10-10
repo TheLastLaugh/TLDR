@@ -48,12 +48,12 @@ else if ($_SESSION['user_type'] == 'government') {
     $selectedUserType = $_POST['usertype'];
     $selectedUsername = $_POST['username'];
     
-    header("Location: ../dashboard/welcome-government.php");
+    $redirect = "Location: ../dashboard/welcome-government.php";
 }
 
 if ($selectedUsername == "-1"){
     unset($_SESSION["student"]);
-    
+
 }
 if ($selectedUserType == 'learner') {
 
