@@ -69,7 +69,6 @@ if ($user_type == 'instructor') {
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <div id="content">
-    <div id="dashboard">
     <div id = "profile-content">
         <form id="editForm" action="update-profile.php" method="post">
             <!-- Name (can't edit) -->
@@ -163,7 +162,6 @@ if ($user_type == 'instructor') {
         <input type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
-    </div>
     </div>
     </div>
 </body>
