@@ -149,7 +149,7 @@ function addStudentsToTable (searchResults) {
             var row = table.insertRow();
             row.insertCell(0).innerHTML = `<button onclick="selectUser('${searchResults[i].user_type}', '${searchResults[i].id}')">${searchResults[i].username}</button>`;
             row.insertCell(1).innerHTML = searchResults[i].license;
-            row.insertCell(2).innerHTML = searchResults[i].dob;
+            row.insertCell(2).innerHTML = YYYY_MM_DD_2_DD_MM_YYYY (searchResults[i].dob);
             row.insertCell(3).innerHTML = searchResults[i].address;
             row.insertCell(4).innerHTML = searchResults[i].contact_number;
         }
@@ -249,5 +249,16 @@ if (searchParams.has('usertype')) {
         document.getElementById("usertype1").value = usertype;
         document.getElementById("usertype2").value = usertype; 
     }
+
+}
+
+function YYYY_MM_DD_2_DD_MM_YYYY (date) {
+
+    var dateFormatted = new Date(date);
+    var day = dateFormatted.getDate().toString().padStart(2,"0");
+    var month = (dateFormatted.getMonth() + 1).toString().padStart(2,"0");
+    var year = dateFormatted.getFullYear().toString().padStart(4,"0");
+    dateFormatted = `${day}/${month}/${year}`;
+    return dateFormatted;
 
 }
