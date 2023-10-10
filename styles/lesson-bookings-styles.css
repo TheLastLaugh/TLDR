@@ -14,7 +14,7 @@ h1 {
 }
 
 a {
-    color: #007bff;
+    color: white;
     text-decoration: none;
     display: block;
     align-items: center;
@@ -35,11 +35,39 @@ select {
     background-color: #fff;
     color: #333;
     font-size: 16px;
+} 
+
+.lesson-progress{
+    background-color: #4CAF50;
+    font-weight: bold;
+    color: white;
+    align-self: auto;
+    margin-top: 5px;
+    margin-left: 400px;/*auto margin not working also -TEMPORARY*/
+    padding: 15px 20px;
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.lesson-bookings{
+    background-color: #4CAF50;
+    font-weight: bold;
+    color: white;
+    margin: auto;
+    padding: 15px 20px;
+    width: 15%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
 }
 
 input[type="submit"] {
     display: block;
-    width: 100%;
+    width: 40%;
+    margin: auto;
     padding: 10px;
     border: none;
     border-radius: 5px;

@@ -182,9 +182,10 @@ li > a {
 
 /*profile page styling*/
 #profile-content {
-  width: 200px; /*make width relative to screen size?*/
+  width: 20%; /*make width relative to screen size?*/
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 6%;
+  text-align: center;
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -195,7 +196,13 @@ p.detail {
   text-align: center;
 }
 
-/* input[type="submit"]  {
+
+#button-container{
+  text-align: center;
+  margin-left: 50%; /*why no centre????*/
+}
+
+#updateProfile{
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
@@ -203,13 +210,13 @@ p.detail {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 365px;
+   margin-left: 630px; /*only temporary till i figure out how to centre with screen */
   margin-top: 10px;
-} */
+}
 
-/* input[type="submit"]:hover {
+#updateProfile:hover {
   background-color: #0056b3; 
-} */
+}
 
 #editButton {
   background-color: #28a745;
@@ -229,9 +236,3 @@ p.detail {
   margin: 20px auto;
 }
 /*end of profile page styles*/
-
-/* #register-details{
-  text-align: right; 
-  clear: both; 
-  margin-bottom: 10px;
-} */

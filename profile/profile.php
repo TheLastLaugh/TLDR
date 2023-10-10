@@ -125,6 +125,13 @@ if ($user_type == 'instructor') {
                 <label for="price">Price:</label>
                 <input type="text" name="price" id="price" value="<?php echo htmlspecialchars($price); ?>" required>
             </div>
+            
+            
+            <div id="button-container">
+                <input type="submit" value="Update">
+                </form>
+                <button id="editButton">Edit Profile</button>
+            </div>
             <?php endif; ?>
 
         <!-- QSD Details -->
@@ -159,7 +166,7 @@ if ($user_type == 'instructor') {
         
         <?php endif; ?>
         
-        <input type="submit" value="Update">
+        <input id = "updateProfile" type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
     </div>
