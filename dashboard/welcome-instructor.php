@@ -78,33 +78,24 @@ $result = mysqli_stmt_get_result($statement);
                             $studentdob = $_SESSION['student']['dob'];
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
-                            echo "<p>Student Name: {$studentname}</p>
-                            <ul>
+                            echo "<a href='../search/selectuser.php?username=-1&usertype=learner'>Clear Student</a> ";
+                            echo "<a href='../search/search.php?usertype=student'>Change Student</a> ";
+                            echo "<a href='../login/learner-login.php'>Create New Student</a>";
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo "<ul>
                                 <li>Address: {$studentaddress}</li>
                                 <li>Age: {$studentage}</li>
                                 <li>Contact Number: {$studentnumber}</li>
                             </ul>";
-                            echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br><br>';
+                            echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br>';
+                            echo('<a href="../instructors/issue-bill.php">Issue Bill</a><br><br>');
                         } else {
                             $studentname = "No Student Selected";
                             echo "<p>Student Name: {$studentname}</p>";
+                            echo "<a href='../search/search.php?usertype=student'>Search Student</a> ";
+                            echo "<a href='../login/learner-login.php'>Create New Student</a>";
                         }
                     ?>
-                        <div class = "dropdown">
-                            <button id = "studentBtn" class = "dropbtn" onclick="dropdown()"><?php echo($studentname) ?></button>
-                            <div class = "dropdown-content" id = "myDropdown">
-                            <?php while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);} ?>
-                            <a href = "../search/selectuser.php?id=-1">Deselect</a>
-                            <a href="../search/search.php?usertype=student">Change Student</a>
-                            </div>
-                        </div>
-                </div>
-                <div class="stat-card">
-                    <h3>Billing</h3>
-                    <a href="#">View Issued Bills</a><br>
-                    <?php if(isset($_SESSION['student'])) {
-                        echo('<a href="#">Issue Bill</a>');
-                    }?>
                 </div>
                 </div>
             </div>

@@ -46,6 +46,7 @@ else if ($_SESSION['user_type'] == 'instructor') {
                             $studentdob = $_SESSION['student']['dob'];
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
+                            echo "<a href='../search/selectuser.php?username=-1&usertype=learner'>Clear Student</a> ";
                             echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
                             echo "<p>Student Name: {$studentname}</p>
                             <ul>

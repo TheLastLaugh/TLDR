@@ -52,11 +52,12 @@ else if ($_SESSION['user_type'] != 'government') {
                             $studentname = $_SESSION['student']['username'];
                             $studentlicense = $_SESSION['student']['license'];
                             $studentaddress = $_SESSION['student']['address'];
-                            $studentdob = $_SESSION['student']['dob'];
-                            $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
+                            $studentdob = date("d/m/Y", strtotime($_SESSION['student']['dob']));
+                            $studentage = date_diff(date_create(date("Y-m-d")), date_create($_SESSION['student']['dob']));
                             $studentage = $studentage->format('%y');
                             $studentnumber = $_SESSION['student']['contact_number'];
-                            echo "<a href='../search/search.php?usertype=student'>Change Student</a><br>";
+                            echo "<a href='../search/selectuser.php?username=-1&usertype=learner'>Clear Student</a> ";
+                            echo "<a href='../search/search.php?usertype=student'>Change Student</a> ";
                             echo '<a href="../login/learner-login.php">Create New Student</a><br>';
                             echo "<p>Name: {$studentname}</p>
                             <ul>
@@ -83,10 +84,12 @@ else if ($_SESSION['user_type'] != 'government') {
                             $instructorname = $_SESSION['instructor']['username'];
                             $instructorlicense = $_SESSION["instructor"]["license"];
                             $instructoraddress = $_SESSION["instructor"]["address"];
-                            $instructordob = $_SESSION["instructor"]["dob"];
-                            $instructorage = date_diff(date_create(date("Y-m-d")), date_create($instructordob));
+                            $instructordob = date("d/m/Y", strtotime($_SESSION["instructor"]["dob"]));
+                            $instructorage = date_diff(date_create(date("Y-m-d")), date_create($_SESSION["instructor"]["dob"]));
                             $instructorage = $instructorage->format('%y');
                             $instructornumber = $_SESSION["instructor"]["contact_number"];
+                            echo "<a href='../search/selectuser.php?username=-1&usertype=instructor'>Clear Instructor</a> ";
+                            echo '<a href="../search/search.php?usertype=instructor">Change Instructor</a><br>';
                             echo "<p>Name: {$instructorname}</p>
                             <ul>
                                 <li>Drivers License: {$instructorlicense}</li>
@@ -106,16 +109,18 @@ else if ($_SESSION['user_type'] != 'government') {
                     ?>
                 </div>
                 <div class="stat-card">
-                    <h3>Qualified Supervising Drivers</h3>
+                    <h3>Qualified Supervising Drivers (QSD)</h3>
                     <?php
                         if (isset($_SESSION['qsd'])) {
                             $qsdname = $_SESSION['qsd']['username'];
                             $qsdlicense = $_SESSION["qsd"]["license"];
                             $qsdaddress = $_SESSION["qsd"]["address"];
-                            $qsddob = $_SESSION["qsd"]["dob"];
-                            $qsdage = date_diff(date_create(date("Y-m-d")), date_create($qsddob));
+                            $qsddob = date("d/m/Y", strtotime($_SESSION["qsd"]["dob"]));
+                            $qsdage = date_diff(date_create(date("Y-m-d")), date_create($_SESSION["qsd"]["dob"]));
                             $qsdage = $qsdage->format('%y');
                             $qsdnumber = $_SESSION["qsd"]["contact_number"];
+                            echo "<a href='../search/selectuser.php?username=-1&usertype=qsd'>Clear QSD</a> ";
+                            echo "<a href='../search/search.php?usertype=qsd'>Change QSD</a> ";
                             echo "<p>Name: {$qsdname}</p>
                             <ul>
                                 <li>Drivers License: {$qsdlicense}</li>
@@ -124,7 +129,6 @@ else if ($_SESSION['user_type'] != 'government') {
                                 <li>Contact Number: {$qsdnumber}</li>
                             </ul>
                             <a href='../login/qsd-login.php'>Create New QSD</a><br>
-                            <a href='../search/search.php?usertype=qsd'>Change Qualified Supervising Driver</a><br>
                             ";
                         } else {
                             $qsdname = "No QSD Selected";

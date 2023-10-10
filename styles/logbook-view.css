@@ -137,3 +137,8 @@ tr:nth-child(n+3):nth-child(odd) {
     border-color: #0ab04b;
 }
 
+/* Night button */
+#night-button.active, #night-button:hover {
+    background-color: black;
+    color:white;
+}

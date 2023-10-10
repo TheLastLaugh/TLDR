@@ -27,8 +27,8 @@ require_once "../inc/dbconn.inc.php";
     
     <?php include_once "../inc/sidebar.inc.php"; ?>
 
-    <div id='dashboard'>
-        <div id='content'>
+    <div id='content'>
+        <div id='dashboard'>
 
             <?php 
                 if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd') && isset($_SESSION['student']['username'])) {
