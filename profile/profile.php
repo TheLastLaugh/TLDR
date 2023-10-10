@@ -126,10 +126,11 @@ if ($user_type == 'instructor') {
             </div>
             
             
-            
-            <input type="submit" value="Update">
-            </form>
-            <button id="editButton">Edit Profile</button>
+            <div id="button-container">
+                <input type="submit" value="Update">
+                </form>
+                <button id="editButton">Edit Profile</button>
+            </div>
             <?php endif; ?>
         </div>
 

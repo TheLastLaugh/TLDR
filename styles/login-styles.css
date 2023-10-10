@@ -25,6 +25,41 @@ ul{
     margin-left:0px;
 }
 
+#learnerContainer{
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+#learner-input{
+    text-align: center;
+    margin-left: -80px; /* when "adding another licenses" the next one adds in off centre*/
+    /*found in inspect element that when a new input box is made, it doesnt have the ID i gave the first one??*/
+}
+
+#addLearnerButton{
+    background-color: #4CAF50;
+    color: white;
+    margin-top: 5px;
+    padding: 10px 15px;
+    width: 45%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; 
+}
+#removeLearnerButton{
+    background-color: #e03e3e;
+    color: white;
+    margin-top: 5px;
+    padding: 10px 15px;
+    width: 45%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center; 
+}
+
 input[type=submit] {
     background-color: #4CAF50;
     font-weight: bold;
@@ -38,7 +73,7 @@ input[type=submit] {
     text-align: center;
 }
 
-.centered{ /*to allign submit button to centre*/
+.centered{ /*to align submit button to centre*/
     text-align: center;
     margin-left: 90px;
 }
@@ -52,6 +87,7 @@ input{
 h1 {
     color: #333;
     font-weight: normal;
+    margin-top: 0px;
     margin-bottom: 30px;
 }
 

@@ -47,10 +47,10 @@
                     <label for="dob">Date of Birth</label>
                     <input type="date" name="dob" required>
                 </li>
-                <li>
-                    <label for="learners">License(s) of who you are supervising</label>
+                <li class="centered">
+                    <label for="learners"><br>License(s) of who you are supervising</label>
                     <div id="learnerContainer">
-                        <input type="text" name="learners[]" required>
+                        <input id="learner-input" type="text" name="learners[]" required>
                     </div>
                     <button type="button" id="addLearnerButton">Add more licenses</button>
                     <!-- this is hidden by default, it will show when there is more than 1 learner box -->
