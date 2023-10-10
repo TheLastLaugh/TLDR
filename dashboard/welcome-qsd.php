@@ -36,9 +36,31 @@ else if ($_SESSION['user_type'] == 'instructor') {
     <div id="content">
         <div id="dashboard">
             <div class="stats-container">
-                <div class="stat-card">
-                    <h3>Some stuff relating to qsds</h3>
-                    <p>stats on their learner maybe</p> 
+            <div class="stat-card">
+                    <h3>Students</h3>
+                    <?php
+                        if (isset($_SESSION['student'])) {
+                            $studentname = $_SESSION['student']['username'];
+                            $studentnumber = $_SESSION['student']['contact_number'];
+                            $studentaddress = $_SESSION['student']['address'];
+                            $studentdob = $_SESSION['student']['dob'];
+                            $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
+                            $studentage = $studentage->format('%y');
+                            echo '<a href="../search/search.php?usertype=student">Change Student</a><br>';
+                            echo "<p>Student Name: {$studentname}</p>
+                            <ul>
+                                <li>Address: {$studentaddress}</li>
+                                <li>Age: {$studentage}</li>
+                                <li>Contact Number: {$studentnumber}</li>
+                            </ul>";
+                            echo "<a href='../students/logbook.php'>View Logbook</a><br>";
+                            echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br>';
+                        } else {
+                            $studentname = "No Student Selected";
+                            echo "<p>Student Name: {$studentname}</p>";
+                            echo '<a href="../search/search.php?usertype=student">Search Student</a><br>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

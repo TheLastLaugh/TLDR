@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const menuIcon = document.getElementById("menuIcon");
     const content = document.getElementById("content");
-    const sideBar = document.querySelector("#sidebar")
+    const sideBar = document.querySelector("#sidebar");
+
+    
 
     menuIcon.addEventListener("click",function() {
             if(sideBar.style.width === "0px") {
@@ -13,6 +15,21 @@ document.addEventListener("DOMContentLoaded", function() {
                 content.style.marginLeft = "0px";
             }
     })
-    document.getElementById("title").innerText = document.title;
 
 });
+
+function setMenuSelected()
+{
+    const menu = document.querySelectorAll("#sidebar ul li");
+    const title = document.getElementsByTagName("title")[0].innerText;
+    
+    for (let opt of menu) {
+        if (title === opt.innerText) {
+            opt.classList.add("selected");
+            break;
+        }
+    }
+}
+document.querySelector("#sidebar").style.width = "140px";
+document.getElementById("content").style.marginLeft = "140px";
+setMenuSelected();

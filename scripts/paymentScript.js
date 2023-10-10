@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Add listener for the payment method selection
     const paymentMethodsDropdown = document.getElementById('paymentMethodsDropdown');
+    // Store the CVV box div
+    const cvvBox = document.getElementById('cvvBox');
     if (paymentMethodsDropdown) {
 
         paymentMethodsDropdown.addEventListener('change', function() {
@@ -23,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function() {
             document.querySelector('input[name=address]').value = address;
             document.querySelector('select[name=card_type]').value = card_type;
             document.querySelector('input[name=card_number]').value = card_number;
+
+            cvvBox.style.display = 'block';
         });
     }
 });

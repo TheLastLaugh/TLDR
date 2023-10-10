@@ -14,23 +14,23 @@ else if ($_SESSION['user_type'] == 'learner') {
 }
 
 // If the user is a qsd, don't give them access to this page
-else if ($_SESSION['user_type'] == 'qsd') {
-    header("Location: ../dashboard/welcome-qsd.php");
-    exit;
-}
+// else if ($_SESSION['user_type'] == 'qsd') {
+//     header("Location: ../dashboard/welcome-qsd.php");
+//     exit;
+// }
 
-$qs = $_SERVER['QUERY_STRING'];
-parse_str($qs, $qs_arr);
+// $qs = $_SERVER['QUERY_STRING'];
+// parse_str($qs, $qs_arr);
 
-if ($qs_arr['usertype'] == 'student') {
+// if ($qs_arr['usertype'] == 'student') {
 
-} elseif ($qs_arr['usertype'] == 'instructor') {
+// } elseif ($qs_arr['usertype'] == 'instructor') {
     
-} else if ($qs_arr['usertype'] == 'qsd') {
+// } else if ($qs_arr['usertype'] == 'qsd') {
     
-} else {
-    exit;
-}
+// } else {
+//     exit;
+// }
 
 // Add the database connection
 require_once "../inc/dbconn.inc.php"; 
@@ -60,7 +60,46 @@ require_once "../inc/dbconn.inc.php";
 
             <?php
 
-                if ($_SESSION['user_type'] == 'instructor') {
+                if ($_SESSION['user_type'] == 'qsd') {
+
+                    echo '<form>
+                        <label for="searchby">Search By:</label><br>
+                        <input type="radio" id="existing" name="searchby" value="existing" checked>
+                        <label for="html">Existing Students</label><br>
+                        <input type="radio" id="name-dob" name="searchby" value="name-dob">
+                        <label for="html">Name</label><br>
+                        <input type="radio" id="dl" name="searchby" value="dl">
+                        <label for="css">Drivers License</label><br>
+                    </form>
+                
+                    <br>
+                
+                    <form id="search-name">
+                        <input type="text" id="fname" name="fname" placeholder="Enter name here" required><br><br>
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
+                
+                    <form id="search-dl">
+                        <input type="text" id="dlnumber" name="dlnumber" placeholder="Enter drivers license here" required><br><br>
+                        <input type="reset" value="Clear">
+                        <input type="submit" value="Search"><br><br>
+                    </form>
+
+                    <table id="studentsTable">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Drivers License</th>
+                            <th>Date of Birth</th>
+                            <th>Address</th>
+                            <th>Contact Number</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">Please search a student above</td>
+                        </tr>
+                    </table>';
+
+                } elseif ($_SESSION['user_type'] == 'instructor') {
 
                     echo '<form>
                         <label for="searchby">Search By:</label><br>

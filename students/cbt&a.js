@@ -81,23 +81,34 @@ function viewTask (task) {
 
 }
 
+function YYYY_MM_DD_2_DD_MM_YYYY (date) {
+
+    var dateFormatted = new Date(date);
+    var day = dateFormatted.getDate().toString().padStart(2,"0");
+    var month = (dateFormatted.getMonth() + 1).toString().padStart(2,"0");
+    var year = dateFormatted.getFullYear().toString().padStart(4,"0");
+    dateFormatted = `${day}/${month}/${year}`;
+    return dateFormatted;
+
+}
+
 class Tasks {
 
     static successAlert(message) {
+
         document.getElementById(`taskAlert`).innerHTML = `<div class="alert success">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-            <strong>Success!</strong> Indicates a successful or positive action.
+            <strong>Success!</strong> ${message}
             </div>`;
         document.getElementById(`taskAlert`).style.display = "block";
 
-        // Scroll to anchor position. Remove any achor first and then scroll.
-        location.hash = "";
-        // location.hash = "#view-task";
+        const element = document.getElementById("view-task");
+        element.scrollIntoView();
 
-        document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
+        // document.getElementById('view-task').scrollIntoView({ behavior: 'smooth' });
 
         // Hide the div after 5000ms (the same amount of milliseconds it takes to fade out)
-        setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
+        // setTimeout(function(){ document.getElementById(`taskAlert`).style.display = "none"; }, 5000);
     }
 
     static getTaskData(task) {
@@ -113,17 +124,54 @@ class Tasks {
                 if ('instructor_notes' in result['task'] && result['task']['instructor_notes'] != null) {
                     console.log("notes existtttt");
                     document.getElementById("notes").value = result['task']['instructor_notes'];
+                } else if (result['usertype'] == "learner") {
+                    document.getElementById("notes").placeholder = "No Notes"
                 }
                 if('completed' in result['task'] && result['task']['completed'] == 1){
                     disableFormInput();
-                    document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${result['task']['completed_date']}`;
+                    document.getElementById("mark-task-completed").style.display = "none";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "none";
+                    const formattedDate = YYYY_MM_DD_2_DD_MM_YYYY(result['task']['completed_date']);
+                    if (result['task']['student_signature'] == 1) {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${formattedDate}`;
+                    } else if (result['usertype'] == "government" || result['usertype'] == "instructor") {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task is marked complete, but still requires a student signature`;
+                    } else if (result['usertype'] == "learner") {
+                        document.getElementById("taskCompletionMessage").innerHTML = `Task is marked complete by your instructor, but still requires your signature`;
+                    }
+                    // document.getElementById("taskCompletionMessage").innerHTML = `Task Completed on ${formattedDate}`;
                     document.getElementById("drivers-name").innerHTML = result['task']['student_name'];
-                    document.getElementById("completion-date").innerHTML = result['task']['completed_date'];
+                    document.getElementById("completion-date").innerHTML = YYYY_MM_DD_2_DD_MM_YYYY(result['task']['completed_date']);
                     document.getElementById("student-license").innerHTML = result['task']['student_license'];
-                    document.getElementById("student-signature").innerHTML = "***";
-                    document.getElementById("instructor-signature").innerHTML = "***";
+                    if (result['task']['student_signature'] == 1) {
+                        document.getElementById("student-signature").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg> Signed`;
+                    } else {
+                        document.getElementById("student-signature").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg> Student Signature Required`; 
+                    }
+                    document.getElementById("instructor-signature").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                    </svg> Signed`;
                     document.getElementById("instructor-name").innerHTML = result['task']['instructor_name'];
                     document.getElementById("instructor-license").innerHTML = result['task']['instructor_license'];
+                } else if (result['usertype'] == "learner") {
+                    document.getElementById("taskCompletionMessage").innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg> Only an instructor may complete these items`;
+                }
+                if (result['usertype'] == "learner") {
+                    document.getElementById("follow-up-actions").style.display = "none";
+                    document.getElementById("notes-submit").style.display = "none";
+                    document.getElementById("mark-task-completed").style.display = "none";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "none";
+                    document.getElementById("notes").readOnly = true;
+                    disableFormInput2();
+                } else {
+                    document.getElementById("follow-up-actions").style.display = "block";
                 }
             }
         };
@@ -149,23 +197,105 @@ class Tasks {
                     const myArray = taskDescription.split(" (");
                     taskDescription = myArray[0];
 
-                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete})`;
+                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete} )`;
                     for (let j = 0; j < result[i].tasks.length; j++) {
-                        if (result[i].tasks[j].completed == 1) {
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("complete");
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                          </svg> Task Completed`;
-                        } else {
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("incomplete");
-                            document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
-                            <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
-                            <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
-                            </svg>
-                            Incomplete`;
+                        if (result[i].tasks[j]['user-type'] == 'learner') {
+                            if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].student_followup == 0) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("warning"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
+                                <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
+                                </svg>
+                                Incomplete`;
+                            } else if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].student_followup == 1) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("warning");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                                Practise Required`;
+                            } else if (result[i].tasks[j].completed == 1 && (result[i].tasks[j].student_signature == 0 || result[i].tasks[j].student_signature == null)) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("warning");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg> Signature Required: <a href="#" onclick='Tasks.signTask("sign", ${result[i].tasks[j].task})'>Click here to sign</a>`;
+                            } else if (result[i].tasks[j].completed == 1 && result[i].tasks[j].student_signature == 1) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("warning"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("complete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg> Task Completed`;
+                            }
+
+                        } else if (result[i].tasks[j]['user-type'] == 'instructor') {
+                            if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].instructor_followup == 0) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("warning"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
+                                <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
+                                </svg>
+                                Incomplete`;
+                            } else if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].instructor_followup == 1) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("warning");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                </svg>
+                                Follow-Up Required`;
+                            } else if (result[i].tasks[j].completed == 1 && (result[i].tasks[j].student_signature == 0 || result[i].tasks[j].student_signature == null)) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("warning");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                                Student Signature Required`;
+                            } else if (result[i].tasks[j].completed == 1 && result[i].tasks[j].student_signature == 1) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("warning"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("complete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg> Task Completed`;
+                            } 
+                        } else if (result[i].tasks[j]['user-type'] == 'government') {
+                            if (result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("incomplete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-circle' viewBox='0 0 16 16'>
+                                <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
+                                <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
+                                </svg>
+                                Incomplete`;
+                            } else if (result[i].tasks[j].completed == 1 && (result[i].tasks[j].student_signature == 0 || result[i].tasks[j].student_signature == null)) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("complete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("warning");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                                Student Signature Required`;
+                            } else if (result[i].tasks[j].completed == 1 && result[i].tasks[j].student_signature == 1) {
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.remove("incomplete"); 
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).classList.add("complete");
+                                document.getElementById(`task-${result[i].tasks[j].task}-status`).innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                                </svg> Task Completed`;
+                            }
                         }
                     }
                 }
@@ -189,9 +319,10 @@ class Tasks {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
                 // const result = JSON.parse(xhttp.responseText);
-                Tasks.successAlert("message");
+                // Tasks.successAlert("message");
                 Tasks.snapshot();
                 Tasks.getTaskData(task);
+                Tasks.successAlert(`Task completed.`);
             }
         };
     
@@ -214,7 +345,7 @@ class Tasks {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
-                Tasks.successAlert();
+                Tasks.successAlert("Comment Updated.");
                 // Tasks.getTaskData(task);
             }
         };
@@ -225,6 +356,26 @@ class Tasks {
 
     }
 
+    static signTask (action, task) {
+
+        var params= `action=${action}&task=${task}`;
+    
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(xhttp.responseText);
+                // Tasks.successAlert();
+                Tasks.snapshot();
+            }
+        };
+    
+        xhttp.open("POST", "./task-action.php", true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhttp.send(params);
+    }
+
+
     static taskAction (action, unit, task) {
 
         var params= `action=${action}&unit=${unit}&task=${task}`;
@@ -234,8 +385,18 @@ class Tasks {
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(xhttp.responseText);
-                Tasks.successAlert();
+                // Tasks.successAlert();
                 Tasks.snapshot();
+                if (action == 'incomplete-task') {
+                    enableFormInput();
+                    document.getElementById("mark-task-completed").style.display = "block";
+                    document.getElementById("mark-task-completed").parentElement.style.display = "table-cell";
+                    Tasks.successAlert("Task has been marked incomplete.");
+                } else if (action == 'instructor_followup') {
+                    Tasks.successAlert("Task has been flagged for instructor followup.");
+                } else if (action == 'student_followup') {
+                    Tasks.successAlert("Task has been flagged for student followup.");
+                }
             }
         };
     
@@ -401,7 +562,7 @@ class Tasks {
                 <p id="taskCompletionMessage"></>
             </div>
 
-            <div class="stat-card">
+            <div id="follow-up-actions" class="stat-card">
                 <h3>Actions</h3>
                 <button type="button" onclick="Tasks.taskAction('student_followup', ${unitNumber}, ${taskNumber})">Flag for student practice</button>
                 <button type="button" onclick="Tasks.taskAction('instructor_followup', ${unitNumber}, ${taskNumber})">Flag for instructor follow-up</button>
@@ -414,7 +575,7 @@ class Tasks {
                     <textarea id="notes" rows="4" cols="50" placeholder="Enter notes here..."></textarea><br>
                     <input type="hidden" value="${unitNumber}">
                     <input type="hidden" value="${taskNumber}">
-                    <input type="submit" value="Update">
+                    <input type="submit" value="Update" id="notes-submit">
                 </form>
             </div>
 
@@ -558,7 +719,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -629,7 +790,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -684,7 +845,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -750,7 +911,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -804,7 +965,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -890,7 +1051,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='12'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='12'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -992,7 +1153,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='7'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='7'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1072,7 +1233,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1144,7 +1305,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1207,7 +1368,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1288,7 +1449,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1354,7 +1515,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1419,7 +1580,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1487,7 +1648,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1530,7 +1691,7 @@ class Tasks {
                 <br>(3) The learner will correctly position the vehicle when turning left or right.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1540,17 +1701,41 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Turns: </b>Left Turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Turns: </b>Right Turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>Wide Unlaned: </b>Straight</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Stop sign with a line: </b>Straight, Left or Right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned Roads: </b>Straight</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Intersections - Obstructed View: </b>Straight, Left or Right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1590,7 +1775,7 @@ class Tasks {
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time
                 (see pages 10 to 17) and compliance with the law over the complete assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1600,17 +1785,37 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Wide unlaned roads: </b>Passing a parked vehicle</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Laned roads: </b>Lane changes (left)</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>Laned roads: </b>Lane changes (right)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Merge with the flow of traffic: </b>Zip merge to the right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Merge with the flow of traffic: </b>Zip merge to the left</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1652,7 +1857,7 @@ class Tasks {
                 <br>(3) The learner will demonstrate correct compliance with ‘Stop’ and ‘Give Way’ signs.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1662,17 +1867,49 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>With a stop: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>With a stop: </b>Right turns</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='3'><b>With a ‘Stop’ sign: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>With a ‘Stop’ sign: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Without a stop: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Without a stop: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>'Give way' sign: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>'Give way' sign: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1712,7 +1949,7 @@ class Tasks {
                 The learner will be able to demonstrate turning left and right safely on to and from laned roads using the ‘System of Car Control’ while complying with the ‘Give Way’ rules and the laws relating to turning.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1722,17 +1959,41 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Onto: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Onto: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>From: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>From: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Compound turns: </b>Left turn followed by a right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Compound turns: </b>Right turn followed by a left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1775,7 +2036,7 @@ class Tasks {
                 The learner will be able to turn left, turn right and go straight on safely at unlaned and laned roundabouts while complying with all laws relating to giving way and positioning on roundabouts, and the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1785,17 +2046,40 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>Unlaned: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1837,7 +2121,7 @@ class Tasks {
                 <br>(3) The learner will safely demonstrate turning left at slip lanes.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1847,17 +2131,30 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>No arrows: </b>Left turns</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>No arrows: </b>Right turns</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='1'><b>No arrows: </b>Straight on at intersections</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Slip lane (no arrows): </b>Left turns</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1910,17 +2207,37 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>Straight driving: </b>Operating pedestrian crossing</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>Straight driving: </b>School zone</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><b>Straight driving: </b>Speed limit change</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Straight driving: </b>Intersections with a good view</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>Straight driving: </b>Cross road intersections without facing any type of control (give way signs, stop signs or traffic lights)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -1962,7 +2279,7 @@ class Tasks {
                 <br>(2) The learner will maintain full control of the vehicle while driving at higher speeds.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -1972,17 +2289,46 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Entering a road</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Leaving a road</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='1'><b>Driving at higher speeds: </b>Bends - right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>Driving at higher speeds: </b>Bends - left</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><b>Driving at higher speeds: </b>Crests</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><b>Driving at higher speeds: </b>Overtaking</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='6'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2026,7 +2372,7 @@ class Tasks {
                 <br>(2) Demonstrate compliance with the ‘System of Car Control’ when approaching potential hazards in traffic.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2035,19 +2381,23 @@ class Tasks {
 
                     <table>
 
-                        <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
-                        </tr>
+                    <tr>
+                        <td colspan='2'><b>Wide unlaned roads: </b>Straight drive following traffic
+                        (with two stops in a line of traffic)</td>
+                        <td><input type="checkbox" required></td>
+                        <td><input type="checkbox" required></td>
+                    </tr>
 
-                        <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
-                        </tr>
+                    <tr>
+                        <td colspan='2'><b>Laned roads: </b>Straight drive following traffic
+                        (with two stops in a line of traffic)</td>
+                        <td><input type="checkbox" required></td>
+                        <td><input type="checkbox" required></td>
+                    </tr>
 
-                        <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
-                        <tr>
+                    <tr>
+                        <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
+                    <tr>
 
                     </table>
 
@@ -2084,7 +2434,7 @@ class Tasks {
                 <br>(2) The learner will be able to change lanes safely and competently in traffic while complying with the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2094,17 +2444,20 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Laned Roads: </b>Lane changes (left)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Laned Roads: </b>Lane changes (right)</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2147,7 +2500,7 @@ class Tasks {
                 <br>(2) The learner will competently select safe gaps when entering or crossing a flow of traffic on busy roads without unnecessary hesitation.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2157,17 +2510,49 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Unlaned roads: </b>On to - left turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>Unlaned roads: </b>On to - right turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='3'><b>Unlaned roads: </b>From - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Unlaned roads: </b>From - right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>On to - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned roads: </b>On to - right turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>From - left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><b>Laned roads: </b>From - right turn</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2204,7 +2589,7 @@ class Tasks {
                 The learner will be able to turn right, left and travel straight-on safely and competently at laned and unlaned roundabouts in medium to heavy traffic while complying with the law and the ‘System of Car Control’.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2214,17 +2599,40 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned roads: </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='2'><b>Unlaned roads: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>Unlaned roads: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='3'><b>Laned roads: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2265,7 +2673,7 @@ class Tasks {
                 <br>(2 & 3) The learner will be able to choose a safer option to a U-turn where the turn may be obstructed due to changing traffic conditions.`,
             "assessmentStandard":`
                 The learner will accurately perform Parts (1) and (2), or (1) and (3) of this task without assistance. The assessment will be a demonstration on at least two consecutive but separate occasions.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2275,17 +2683,28 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='1'>(1) Select a safe U-turn starting position (eg. 'store' lane - clear view)</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='1'>(2) Perform a safe and complete U-turn on a busy road</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='1'>(3) Select a safe alternative to the U-turn due to changing traffic conditions</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2328,7 +2747,7 @@ class Tasks {
                 <br>(3) The learner will comply with the appropriate road laws when negotiating ‘slip’ lanes`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2338,17 +2757,30 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Left turn</td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='3'><b>No arrows: </b>Right turn</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'><b>No arrows: </b>Straight on</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='4'><b>'Slip lane' (no arrows): </b>Left turn</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2385,7 +2817,7 @@ class Tasks {
                 The learner will be able to negotiate bends, crests and intersections safely and competently on unsealed roads using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
                 The learner will demonstrate compliance with road craft concepts at least 80% of the time (see pages 10 to 17) and compliance with the law during the assessment without assistance.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Range Statement",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2395,17 +2827,42 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Left turn at intersections</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
+                            <td colspan='4'><b>No arrows: </b>Right turn at intersections</td>
+                            <td><input type="checkbox" required></td>
                             <td><input type="checkbox" required></td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='1'><b>No arrows: </b>Bends - left</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='1'><b>No arrows: </b>Bends - right</td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='5'><b>No arrows: </b>Crests</td>
+                            <td><input type="checkbox" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='6'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2446,7 +2903,7 @@ class Tasks {
                 The learner will be able to safely and competently demonstrate the maintenance of safe following distances, passing clearances and appropriate position of the vehicle for improved forward observation in relation to visual and speed adjustments using the ‘System of Car Control’, Rules of Braking, Steering and Observation while complying with the law.`,
             "assessmentStandard":`
                 Task 28B is an optional Task. It is not compulsory for the Authorised Examiner to sign. This task has been placed in the Driving Companion primarily for the use by the Qualified Supervising Driver for guidance when recording the compulsory 15 hours of night driving.`,
-            "taskCompletionTitle":"Task Assessment Records",
+            "taskCompletionTitle":"Log Book Entry",
             "taskCompletionForm":`
                 <form id="taskCompletion">
 
@@ -2456,17 +2913,20 @@ class Tasks {
                     <table>
 
                         <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
+                            <td colspan='2'>Complete the log book entry. (In the case of training given by an Authorised Examiner)</td>
                         </tr>
 
                         <tr>
-                            <td colspan='2'>***</td>
-                            <td><input type="checkbox" required></td>
+                            <td colspan='2'>Complete the Form 11 and Form 12, 'Record of Night-time Driving Hours' in this book.
+                            (In the case of training given by a Qualified Supervising Driver or a Motor Driving Instructor).</td>
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='2'>Sign only if accompanied by an Authorised Examiner.</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan='2'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2579,7 +3039,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='4'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='4'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2626,7 +3086,7 @@ class Tasks {
                         </tr>
 
                         <tr>
-                            <td colspan='3'><input type="submit" value="Mark task completed"></td>
+                            <td colspan='3'><input type="submit" value="Mark task completed" id="mark-task-completed"></td>
                         <tr>
 
                     </table>
@@ -2659,6 +3119,46 @@ function disableFormInput () {
     for (let i = 0; i < allCheckboxElements.length; i++) {
         allCheckboxElements[i].checked = true;
     }
+
+}
+
+function disableFormInput2 () {
+
+    const allInputElements = document.getElementById("taskCompletion").querySelectorAll("input");
+
+    for (let i = 0; i < allInputElements.length; i++) {
+        allInputElements[i].disabled = true;
+    }
+
+    const allSelectElements = document.getElementById("taskCompletion").querySelectorAll("select");
+
+    for (let i = 0; i < allSelectElements.length; i++) {
+        allSelectElements[i].disabled = true;
+    }
+
+}
+
+function enableFormInput () {
+
+    const allInputElements = document.getElementById("taskCompletion").querySelectorAll("input");
+
+    for (let i = 0; i < allInputElements.length; i++) {
+        allInputElements[i].disabled = false;
+    }
+
+    const allSelectElements = document.getElementById("taskCompletion").querySelectorAll("select");
+
+    for (let i = 0; i < allSelectElements.length; i++) {
+        allSelectElements[i].disabled = false;
+    }
+
+    const allCheckboxElements = document.getElementById("taskCompletion").querySelectorAll("input[type=checkbox]");
+
+    for (let i = 0; i < allCheckboxElements.length; i++) {
+        allCheckboxElements[i].checked = false;
+    }
+
+    document.getElementById("taskCompletionMessage").innerHTML = "";
 
 }
 
