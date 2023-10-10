@@ -5,7 +5,7 @@
 <div id="banner">
     <div>
         <img id="menuIcon" src="../images/menu.png" alt="Menu Icon" style="width:40px;height:40px;">
-        <?php echo "<div id =\"title\">Welcome to TLDR</div> <a href=\"../profile/profile.php\"><div id = \"banner-username\">".htmlspecialchars($_SESSION['username'])."</div>"; ?>
+        <?php echo "<div id =\"title\"></div> <a href=\"../profile/profile.php\"><div id = \"banner-username\">".htmlspecialchars($_SESSION['username'])."</div>"; ?>
         <img id="profileIcon" src="../images/profile.png" alt="Profile Icon" style="width:40px;height:40px;"></a>
     </div>
 </div>
@@ -35,10 +35,10 @@
         } elseif ($_SESSION['user_type'] == 'instructor') {
             echo "
             <ul>
-            <li><a href='../dashboard/welcome-instructor.php'>Home</a></li>";
+            <li><a href='../dashboard/welcome-instructor.php'>Home</a></li>
+            <li><a href='../calendar/calendar.php'>Calendar</a></li>";
             if (isset($_SESSION['student'])) {
                 echo "
-                <li><a href='../calendar/calendar.php'>Calendar</a></li>
                 <li><a href='../students/logbook.php'>Logbook</a></li>
                 <li><a href='../students/cbt&a.php'>CBT&A</a></li>";
             }
