@@ -12,23 +12,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // If the user is a learner, don't give them access to this page
-else if ($_SESSION['user_type'] == 'learner') {
+elseif ($_SESSION['user_type'] == 'learner') {
     header("Location: ../dashboard/welcome.php");
     exit;
 }
 
-// If the user is a qsd, don't give them access to this page
-else if ($_SESSION['user_type'] == 'qsd') {
-    header("Location: ../dashboard/welcome-qsd.php");
-    exit;
-}
-
-else if ($_SESSION['user_type'] == 'instructor') {
+elseif ($_SESSION['user_type'] == 'qsd') {
     $searchType = 'student';
     $searchBy = $_POST['search'];
 }
 
-else if ($_SESSION['user_type'] == 'government') {
+elseif ($_SESSION['user_type'] == 'instructor') {
+    $searchType = 'student';
+    $searchBy = $_POST['search'];
+}
+
+elseif ($_SESSION['user_type'] == 'government') {
     $searchType = $_POST['type'];
     $searchBy = $_POST['search'];
 }
@@ -37,7 +36,7 @@ else if ($_SESSION['user_type'] == 'government') {
 $data = array();
 
 // Get the matching students for the search
-if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
+if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd')) {
     $student_fullname = $_POST['fname'];
     $sql = "SELECT id, username, license, dob, address, user_type, contact_number FROM users WHERE user_type = 'learner' AND username = ?";
     $stmt = mysqli_prepare($conn, $sql);
@@ -63,7 +62,7 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
         }
     }
     mysqli_free_result($result);
-} elseif ($searchBy == 'dl' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government')) {
+} elseif ($searchBy == 'dl' && $searchType == 'student' && ($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd')) {
     $student_dl = $_POST['license'];
     $sql = "SELECT id, username, license, dob, address, user_type, contact_number FROM users WHERE user_type = 'learner' AND license = ?";
     $stmt = mysqli_prepare($conn, $sql);
@@ -108,6 +107,22 @@ if ($searchBy == 'name' && $searchType == 'student' && ($_SESSION['user_type'] =
     WHERE users.user_type = 'learner' AND student_tasks.completed_instructor_id = ?;";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "iii", $_SESSION['userid'], $_SESSION['userid'], $_SESSION['userid']);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ( mysqli_num_rows($result) >= 1 ) {
+        while ( $row = mysqli_fetch_assoc($result) ) {
+            array_push($data, $row);
+        }
+    }
+    mysqli_free_result($result);
+} elseif ($searchBy == 'existing' && $searchType == 'student' && $_SESSION['user_type'] == 'qsd') {
+    $sql = "SELECT users.id, users.username, users.license, users.dob, users.address, users.user_type, users.contact_number
+    FROM logbooks
+    LEFT JOIN users ON logbooks.learner_id = users.id
+    WHERE users.user_type = 'learner' AND logbooks.qsd_id = ?
+    GROUP BY users.id;";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $_SESSION['userid']);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if ( mysqli_num_rows($result) >= 1 ) {

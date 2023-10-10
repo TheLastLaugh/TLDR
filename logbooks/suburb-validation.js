@@ -29,3 +29,101 @@ function logMapElements(value, key, map) {
 }
 
 document.getElementById("suburbsList").innerHTML = suburbsDatalist;
+
+
+// Start and end times
+document.getElementById("date").addEventListener('change', function (event) {
+
+    console.log(event);
+
+    if (event.target.value != "") {
+        document.getElementById("start_time_row").style.display = "block";
+    } 
+
+    // event.target.readOnly = true;
+
+});
+
+document.getElementById("start_time").addEventListener('change', function (event) {
+
+    console.log(event);
+    console.log(document.getElementById("start_time").value);
+
+    if (event.target.value != "") {
+
+        document.getElementById("end_time").value = "";
+        document.getElementById("end_time").min = event.target.value;
+        document.getElementById("end_time_row").style.display = "block";
+        
+
+    } else {
+
+        document.getElementById("end_time").value = "";
+        document.getElementById("end_time_row").style.display = "none";
+
+    }
+
+});
+
+document.getElementById("logbook-entry").addEventListener("reset", function (event) {
+
+    document.getElementById("date").readOnly = false;
+    document.getElementById("start_time").readOnly = false;
+    document.getElementById("end_time").readOnly = false;
+
+});
+
+document.getElementById("logbook-entry").addEventListener("submit", function (event) {
+
+    event.preventDefault();
+    console.log(event);
+
+    const date = encodeURIComponent(event.target[0].value);
+    console.log(`Date: ${date}`);
+    const start_time = encodeURIComponent(event.target[1].value);
+    console.log(`Start Time: ${start_time}`);
+    const end_time = encodeURIComponent(event.target[2].value);
+    console.log(`End Time: ${end_time}`);
+    const start_location = encodeURIComponent(event.target[3].value);
+    console.log(`Start Location: ${start_location}`);
+    const end_location = encodeURIComponent(event.target[4].value);
+    console.log(`End Location: ${end_location}`);
+    const road_type = encodeURIComponent(event.target[5].value);
+    console.log(`Road Type: ${road_type}`);
+    const weather = encodeURIComponent(event.target[6].value);
+    console.log(`Weather: ${weather}`);
+    const traffic = encodeURIComponent(event.target[7].value);
+    console.log(`Traffic: ${traffic}`);
+
+    var params= `date=${date}&start_time=${start_time}&end_time=${end_time}&start_location=${start_location}&end_location=${end_location}&road_type=${road_type}&weather=${weather}&traffic=${traffic}`;
+
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(xhttp.responseText);
+            successAlert("Logbook entry created.");
+            document.getElementById("logbook-entry").reset();
+            document.getElementById("end_time_row").style.display = "none";
+        } else {
+            console.log(xhttp.responseText);
+        }
+    };
+
+    xhttp.open("POST", "./process-logbook.php", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(params);
+
+
+});
+
+function successAlert(message) {
+
+    document.getElementById(`taskAlert`).innerHTML = `<div class="alert success">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>Success!</strong> ${message}
+        </div>`;
+    document.getElementById(`taskAlert`).style.display = "block";
+
+
+}

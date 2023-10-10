@@ -17,7 +17,7 @@
         <!-- Directs to the same registration page as all new accounts -->
         <!-- Fields to enter user information -->
         <form action="register.php" method="POST">
-            <ul>
+            <ul id="register-details">
                 <li>
                     <label for="name">Name</label>
                     <input type="text" name="username" required>
@@ -46,7 +46,7 @@
                     <label for="dob">Date of Birth</label>
                     <input type="date" name="dob" required>
                 </li>
-                <li>
+                <li class="centered">
                     <input type="submit" value="Submit" class="submit-button">
                 </li>
 

@@ -18,18 +18,20 @@
             echo 
             "<ul>
                 <li><a href='../dashboard/welcome.php'>Home</a></li>
+                <li><a href='../students/logbook.php'>Logbook</a></li>
                 <li><a href='../students/cbt&a.php'>CBT&A</a></li>
                 <li><a href='../payments/payments.php'>Payments</a></li>
                 <li><a href='../lessons/lessons.php'>Lessons</a></li>
                 <li><a href='../login/logout.php'>Logout</a></li>
             </ul>";
         } elseif ($_SESSION['user_type'] == 'qsd') {
-            echo 
-            "<ul>
-                <li><a href='../dashboard/welcome.php'>Home</a></li>
-                <li><a href='../logbooks/logbook.php'>Logbook</a></li>
-                <li><a href='../login/logout.php'>Logout</a></li>
-            </ul>";
+            echo "<ul>";
+            echo "<li><a href='../dashboard/welcome.php'>Home</a></li>";
+            if (isset($_SESSION['student'])) {
+                echo "<li><a href='../students/logbook.php'>Logbook</a></li>";
+            }
+            echo "<li><a href='../login/logout.php'>Logout</a></li>";
+            echo "</ul>";
         } elseif ($_SESSION['user_type'] == 'instructor') {
             echo "
             <ul>

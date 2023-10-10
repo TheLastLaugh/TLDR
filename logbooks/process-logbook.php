@@ -20,7 +20,8 @@ function insertLogbook($learner_id, $qsd_id, $date, $start_time, $end_time, $dur
 }
 
 // Get the id of the learner from the entered license number 
-$learner_license = $_POST['license'];
+// $learner_license = $_POST['license'];
+$learner_license = $_SESSION['student']['license'];
 $sql = "SELECT id FROM users WHERE license = ?";
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, "s", $learner_license);

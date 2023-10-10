@@ -149,7 +149,7 @@ function addStudentsToTable (searchResults) {
             var row = table.insertRow();
             row.insertCell(0).innerHTML = `<button onclick="selectUser('${searchResults[i].user_type}', '${searchResults[i].id}')">${searchResults[i].username}</button>`;
             row.insertCell(1).innerHTML = searchResults[i].license;
-            row.insertCell(2).innerHTML = searchResults[i].dob;
+            row.insertCell(2).innerHTML = YYYY_MM_DD_2_DD_MM_YYYY (searchResults[i].dob);
             row.insertCell(3).innerHTML = searchResults[i].address;
             row.insertCell(4).innerHTML = searchResults[i].contact_number;
         }
@@ -167,7 +167,7 @@ function deleteAllRowsInTable () {
     var table = document.getElementById("studentsTable");
     console.log(table.rows.length);
 
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = table.rows.length - 1; i > 0; i--) {
         table.deleteRow(i);
     }
 
@@ -233,11 +233,32 @@ if (searchParams.has('usertype')) {
 
     const usertype = searchParams.get('usertype'); 
 
-    if (usertype == 'instructor' || usertype == 'student' || usertype == 'qsd') {
+    if (usertype == 'instructor') {
         console.log(usertype + ' query string');
-        document.getElementById(usertype).checked = true;
+        document.getElementById("instructor").checked = true;
         document.getElementById("usertype1").value = usertype;
         document.getElementById("usertype2").value = usertype;
+    } else if (usertype == 'student') {
+        console.log(usertype + ' query string');
+        document.getElementById("student").checked = true;
+        document.getElementById("usertype1").value = usertype;
+        document.getElementById("usertype2").value = usertype;
+    } else if (usertype == 'qsd') {
+        console.log(usertype + ' query string');
+        document.getElementById("qsd").checked = true;
+        document.getElementById("usertype1").value = usertype;
+        document.getElementById("usertype2").value = usertype; 
     }
+
+}
+
+function YYYY_MM_DD_2_DD_MM_YYYY (date) {
+
+    var dateFormatted = new Date(date);
+    var day = dateFormatted.getDate().toString().padStart(2,"0");
+    var month = (dateFormatted.getMonth() + 1).toString().padStart(2,"0");
+    var year = dateFormatted.getFullYear().toString().padStart(4,"0");
+    dateFormatted = `${day}/${month}/${year}`;
+    return dateFormatted;
 
 }

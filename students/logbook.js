@@ -43,3 +43,26 @@ if (searchParams.has('view')) {
     } 
 
 }
+
+
+function signTask (id) {
+
+    id = encodeURIComponent(id);
+    console.log(`ID: ${id}`);
+
+    var params= `logbook_id=${id}`;
+
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && (this.status == 200 || this.status == 302)) {
+            console.log(xhttp.responseText);
+            window.location.href = "./logbook.php?view=pending";
+        } 
+    };
+
+    xhttp.open("POST", "../logbooks/process-logbook-confirmation.php", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(params);
+
+}

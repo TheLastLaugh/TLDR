@@ -14,22 +14,35 @@ $bookingId = $_POST['unit'];
 $learnerId = $_SESSION['userid'];
 
 // Get details of the selected lesson
-$sql = "SELECT 
-    b.id AS booking_id, 
-    b.booking_date,
-    i.username AS instructor_name,
-    i.price AS lesson_price
-FROM 
-    bookings AS b
-JOIN 
-    availability AS a ON b.availability_id = a.id
-JOIN 
-    instructors AS i ON a.instructor_id = i.user_id
-WHERE 
-    b.id = $bookingId;";
+if (str_starts_with($bookingId, 'bookings-')) {
+    $table = "bookings";
+    $bookingId = substr($bookingId,9);
+    $sql = "SELECT 
+        b.id AS booking_id, 
+        b.booking_date,
+        i.username AS instructor_name,
+        i.price AS lesson_price
+    FROM 
+        bookings AS b
+    JOIN 
+        availability AS a ON b.availability_id = a.id
+    JOIN 
+        instructors AS i ON a.instructor_id = i.user_id
+    WHERE 
+        b.id = $bookingId;";
 
-$lessonResult = mysqli_query($conn, $sql);
-$lessonDetails = mysqli_fetch_assoc($lessonResult);
+    $lessonResult = mysqli_query($conn, $sql);
+    $lessonDetails = mysqli_fetch_assoc($lessonResult);
+} elseif (str_starts_with($bookingId, 'bills-')) {
+    $table = "bills";
+    $bookingId = substr($bookingId,6);
+    $sql = "SELECT bills.id AS booking_id, bills.issue_date as booking_date, users.username AS instructor_name, ((bills.hourly_rate / 60) * bills.billed_minutes) AS lesson_price
+    FROM bills
+    LEFT JOIN users ON bills.instructor_id = users.id
+    WHERE bills.id = $bookingId;";
+    $lessonResult = mysqli_query($conn, $sql);
+    $lessonDetails = mysqli_fetch_assoc($lessonResult);
+}
 
 // Get existing payment methods for this user
 $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learner_id = $learnerId");
@@ -49,8 +62,8 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
 <body>
     <?php include_once "../inc/sidebar.inc.php"; ?>
     <div id = "content">
-        <h1>Payment for <?php echo $lessonDetails['instructor_name'] . ' on ' . $lessonDetails['booking_date']; ?></h1>
-        <h1>Lesson Price: $<?php echo $lessonDetails['lesson_price']; ?></h1>
+        <h1>Payment for <?php echo $lessonDetails['instructor_name'] . ' on ' . date("d/m/Y", strtotime($lessonDetails['booking_date'])); ?></h1>
+        <h1>Lesson Price: $<?php echo number_format($lessonDetails['lesson_price'], 2); ?></h1>
         
         <!-- Display existing payment methods -->
         <form action="process-payment.php" method="POST">
@@ -111,12 +124,13 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
                     }
                     ?>
                 </select>
-
-                <label for="cvv">CVV:</label>
-                <input type="text" name="cvv" minlength="3" maxlength="3" pattern="\d{3}" required> 
                 
                 <!-- Hidden fields for data -->
-                <input type="hidden" name="booking_id" value="<?php echo $bookingId; ?>">
+                <input type="hidden" name="booking_id" value="<?php echo $table . '-' . $bookingId; ?>">
+            </div>
+            <div id="cvvBox" style="display: none">
+                    <label for="cvv">CVV:</label>
+                    <input type="text" name="cvv" minlength="3" maxlength="3" pattern="\d{3}" required> 
             </div>
             
             <input type="submit" value="Confirm Payment">

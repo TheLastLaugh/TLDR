@@ -36,6 +36,7 @@ else if ($_SESSION['user_type'] == 'government') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Alistair Macvicar"; />
+    <meta name="author" content="Jordan Prime"; />
     <title>TLDR For Learner Driver</title>
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="./welcome.js"></script>
@@ -58,7 +59,7 @@ else if ($_SESSION['user_type'] == 'government') {
                         $result = mysqli_stmt_get_result($stmt);
                         if ( mysqli_num_rows($result) >= 1 ) {
                             if ($row = $result -> fetch_assoc()) {
-                                $total_hours = $row['total_minutes'] / 60;
+                                $total_hours = intval($row['total_minutes'] / 60);
                                 echo "<p>{$total_hours} / 75 hours completed</p>";
                                 if ($total_hours < 75) {
                                     $hours_left = 75 - $total_hours;
@@ -91,13 +92,13 @@ else if ($_SESSION['user_type'] == 'government') {
                                     <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
                                     <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
                                     </svg> There is {$confirmation_needed} logbook entry to confirm and sign</p>";
-                                    echo "<a href='../logbooks/logbook-confirmation.php'>Confirm Logbook Entry</a><br>";
+                                    echo "<a href='../students/logbook.php?view=pending'>Confirm Logbook Entry</a><br>";
                                 } else if ($confirmation_needed > 1) {
                                     echo "<p><svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-info-circle' viewBox='0 0 16 16'>
                                     <path d='M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z'/>
                                     <path d='m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z'/>
                                     </svg> There are {$confirmation_needed} logbook entries to confirm and sign</p>";
-                                    echo "<a href='../logbooks/logbook-confirmation.php'>Confirm Logbook Entries</a><br>";
+                                    echo "<a href='../students/logbook.php?view=pending'>Confirm Logbook Entries</a><br>";
                                 }
                             }
                         }
@@ -114,7 +115,7 @@ else if ($_SESSION['user_type'] == 'government') {
                         $result = mysqli_stmt_get_result($stmt);
                         if ( mysqli_num_rows($result) >= 1 ) {
                             if ($row = $result -> fetch_assoc()) {
-                                $total_hours = $row['total_minutes'] / 60;
+                                $total_hours = intval($row['total_minutes'] / 60);
                                 echo "<p>{$total_hours} / 15 hours completed</p>";
                                 if ($total_hours < 15) {
                                     $hours_left = 15 - $total_hours;
