@@ -21,34 +21,6 @@ USE `tldr`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `availability`
---
-
-CREATE TABLE `availability` (
-  `id` int(11) NOT NULL,
-  `instructor_id` int(11) NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
-  `is_booked` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `availability`
---
-
-INSERT INTO `availability` (`id`, `instructor_id`, `start_time`, `end_time`, `is_booked`) VALUES
-(1, 2, '2023-08-24 09:00:00', '2023-08-24 10:00:00', 1),
-(2, 2, '2023-08-24 10:00:00', '2023-08-24 11:00:00', 0),
-(3, 2, '2023-08-24 11:00:00', '2023-08-24 12:00:00', 0),
-(4, 2, '2023-08-24 12:00:00', '2023-08-24 13:00:00', 0),
-(5, 2, '2023-08-24 13:00:00', '2023-08-24 14:00:00', 0),
-(6, 2, '2023-08-24 14:00:00', '2023-08-24 15:00:00', 0),
-(7, 2, '2023-08-24 15:00:00', '2023-08-24 16:00:00', 0),
-(8, 2, '2023-08-24 16:00:00', '2023-08-24 17:00:00', 0);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `bills`
 --
 
@@ -799,13 +771,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `address`, `license`
 --
 
 --
--- Indexes for table `availability`
---
-ALTER TABLE `availability`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `instructor_id` (`instructor_id`);
-
---
 -- Indexes for table `bills`
 --
 ALTER TABLE `bills`
@@ -907,12 +872,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `availability`
---
-ALTER TABLE `availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
@@ -975,12 +934,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `availability`
---
-ALTER TABLE `availability`
-  ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `bills`

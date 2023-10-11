@@ -69,7 +69,7 @@ $result = mysqli_stmt_get_result($statement);
         <div id="dashboard">
             <div class="stats-container">
                 <div class="stat-card">
-                    <h3>Students</h3>
+                    <h3>Student</h3>
                     <?php
                         if (isset($_SESSION['student'])) {
                             $studentname = $_SESSION['student']['username'];
@@ -78,26 +78,37 @@ $result = mysqli_stmt_get_result($statement);
                             $studentdob = $_SESSION['student']['dob'];
                             $studentage = date_diff(date_create(date("Y-m-d")), date_create($studentdob));
                             $studentage = $studentage->format('%y');
-                            echo "<p>Student Name: {$studentname}</p>
+                            echo (
+                                    "<p>Student Name: <div class = \"dropdown\">
+                                    <button id = \"studentBtn\" class = \"dropbtn\" onclick=\"dropdown()\">" .$studentname . "<img src = \"../images/dropdown-Icon.png\" /></button>
+                                    <div class = \"dropdown-content\" id = \"myDropdown\">");
+                            while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);}
+                            
+                            echo("<a href = \"../search/selectuser.php?id=-1\">Deselect</a>
+                            <a href=\"../search/search.php?usertype=student\">Change Student</a>
+                            </div>
+                        </div></p>
                             <ul>
                                 <li>Address: {$studentaddress}</li>
                                 <li>Age: {$studentage}</li>
                                 <li>Contact Number: {$studentnumber}</li>
-                            </ul>";
+                            </ul>");
                             echo '<a href="../logbooks/logbook-entry.php">Add a new logbook entry</a><br><br>';
                         } else {
                             $studentname = "No Student Selected";
-                            echo "<p>Student Name: {$studentname}</p>";
+                            echo (
+                                "<p>Student Name: <div class = \"dropdown\">
+                                <button id = \"studentBtn\" class = \"dropbtn\" onclick=\"dropdown()\">" .$studentname . "<img src = \"../images/dropdown-Icon.png\" /></button>
+                                <div class = \"dropdown-content\" id = \"myDropdown\">");
+                            while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);}
+                            echo("<a href = \"../search/selectuser.php?id=-1\">Deselect</a>
+                            <a href=\"../search/search.php?usertype=student\">Change Student</a>
+                            </div> 
+                            </div>
+                            </p>");
                         }
                     ?>
-                        <div class = "dropdown">
-                            <button id = "studentBtn" class = "dropbtn" onclick="dropdown()"><?php echo($studentname) ?></button>
-                            <div class = "dropdown-content" id = "myDropdown">
-                            <?php while($row = mysqli_fetch_assoc($result)){ getStudentDetails($row["learner_id"], $conn);} ?>
-                            <a href = "../search/selectuser.php?id=-1">Deselect</a>
-                            <a href="../search/search.php?usertype=student">Change Student</a>
-                            </div>
-                        </div>
+                        
                 </div>
                 <div class="stat-card">
                     <h3>Billing</h3>

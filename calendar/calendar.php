@@ -18,7 +18,7 @@ require_once "../inc/dbconn.inc.php";
 include_once "../inc/sidebar.inc.php";
 
 function fill_cell($conn, $date = "2023-10-11", $time = "12:00:00"){
-    $sql = "SELECT learner_id, pickup_location FROM bookings WHERE instructor_id = ? AND date = ? AND time = ?";
+    $sql = "SELECT learner_id, pickup_location FROM bookings WHERE instructor_id = ? AND booking_date = ? AND booking_time = ?";
 
     $statement = mysqli_stmt_init($conn);
     mysqli_stmt_prepare($statement, $sql);

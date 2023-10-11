@@ -22,6 +22,10 @@ body > #content {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.dropdown{
+  display: inline;
+}
+
 .dropbtn {
   background-color: #f1f1f1;
 
@@ -30,13 +34,15 @@ body > #content {
   
   border-color: black;
   border-radius: 0;
-  width:182px;
+  width: 222px;
   font-size: 16px;
 
   
   padding-top: 5px;
   padding-bottom: 5px;
   cursor: pointer;
+  font-size: 20px;
+  margin: 0px;
 }
 .dropbtn:hover{
   background-color: #808181;
@@ -50,7 +56,7 @@ body > #content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  width: 180px;
+  width: 220px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
@@ -100,7 +106,12 @@ body > #content {
 
 .stat-card p {
   font-size: 20px;
+  margin-bottom: 5px;
   color: #777;
+}
+
+.stat-card ul {
+  margin-top: 0px;
 }
 
 /* Progress Bars */

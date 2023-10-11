@@ -66,6 +66,7 @@
     border-bottom-style:solid;
     border-width: 3px 0px;
     border-image:   linear-gradient(to right, #004b88 33.33%, #fbae1d 33.33%, #fbae1d 66.66%,#ec164b 66.66%) 3; 
+    display: inline;
   }
 
   #menuIcon {
@@ -77,16 +78,16 @@
   
   #profileIcon {
     float: right;
-    position: relative;
-    right: 30px;
-    bottom: 30px;
+    position: absolute;
+    right: 200px;
+    top: 15px;
   }
   
   #banner-username {
     color: #363636;
     font-weight: bold;
-    position: relative;
+    position: absolute;
     float: right;
-    right: 20px;
-    bottom: 25px;
+    right: 40px;
+    top: 20px;
   }
