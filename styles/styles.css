@@ -100,12 +100,14 @@ body > #content {
 
 .stat-card h3 {
   margin-top: 0;
+  margin-bottom:10px;
   font-size: 24px;
   color: #333;
 }
 
 .stat-card p {
   font-size: 20px;
+  margin-top:10px;
   margin-bottom: 5px;
   color: #777;
 }
@@ -164,11 +166,12 @@ p.detail {
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
-  width: 105px;
+  width: 130px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #updateProfile:hover {
@@ -177,9 +180,10 @@ p.detail {
 
 #editButton {
   background-color: #28a745;
+  line-height: 1.5;
   color: white;
   padding: 10px 20px;
-  width: 105px;
+  width: 130px;
   border: none;
   border-radius: 5px;
   cursor: pointer;

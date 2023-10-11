@@ -24,12 +24,8 @@ require_once "../inc/dbconn.inc.php";
     <script type="text/javascript" src="./logbook.js" defer></script>
 </head>
 <body>
-    
     <?php include_once "../inc/sidebar.inc.php"; ?>
-
-    <div id='dashboard'>
         <div id='content'>
-
             <?php 
                 if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government' || $_SESSION['user_type'] == 'qsd') && isset($_SESSION['student']['username'])) {
                     echo "<p>Student Name: {$_SESSION['student']['username']}</p>";
@@ -445,9 +441,6 @@ require_once "../inc/dbconn.inc.php";
                     }
                 ?>
             </div>
-
         </div>
-    </div>
-
 </body>
 </html>

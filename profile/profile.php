@@ -127,11 +127,11 @@ if ($user_type == 'instructor') {
             </div>
             
             
-            <div id="button-container">
-                <input type="submit" value="Update">
+            <!-- <div id="button-container">
+                <input id = "updateProfile" type="submit" value="Update">
                 </form>
                 <button id="editButton">Edit Profile</button>
-            </div>
+            </div> -->
             <?php endif; ?>
 
         <!-- QSD Details -->
@@ -164,11 +164,13 @@ if ($user_type == 'instructor') {
             </div>
         </div>
         
-        <?php endif; ?>
         
+        <?php endif; ?>
         <input id = "updateProfile" type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
+        
+        
     </div>
     </div>
 </body>

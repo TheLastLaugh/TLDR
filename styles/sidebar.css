@@ -52,6 +52,7 @@
     background-color: white;
     height: 30px;
     padding: 20px 0;
+    line-height: 35px;
   
     color: #363636;
     text-align: center;
@@ -78,16 +79,16 @@
   
   #profileIcon {
     float: right;
-    position: absolute;
-    right: 200px;
-    top: 15px;
+    position: relative;
+    right: 50px;
+    bottom: 40px;
   }
   
   #banner-username {
     color: #363636;
     font-weight: bold;
-    position: absolute;
+    position: relative;
     float: right;
     right: 40px;
-    top: 20px;
+    bottom: 35px;
   }
