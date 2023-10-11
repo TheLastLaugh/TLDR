@@ -1,4 +1,5 @@
 <head>
+    <link rel="stylesheet" href="../styles/sidebar.css">
     <link rel="stylesheet" href="../styles/styles.css">
     <script src="../scripts/sidebarScript.js" defer></script>
 </head>
