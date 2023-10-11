@@ -52,6 +52,7 @@
     background-color: white;
     height: 30px;
     padding: 20px 0;
+    line-height: 35px;
   
     color: #363636;
     text-align: center;
@@ -66,6 +67,7 @@
     border-bottom-style:solid;
     border-width: 3px 0px;
     border-image:   linear-gradient(to right, #004b88 33.33%, #fbae1d 33.33%, #fbae1d 66.66%,#ec164b 66.66%) 3; 
+    display: inline;
   }
 
   #menuIcon {
@@ -78,8 +80,8 @@
   #profileIcon {
     float: right;
     position: relative;
-    right: 30px;
-    bottom: 30px;
+    right: 50px;
+    bottom: 40px;
   }
   
   #banner-username {
@@ -87,6 +89,6 @@
     font-weight: bold;
     position: relative;
     float: right;
-    right: 20px;
-    bottom: 25px;
+    right: 40px;
+    bottom: 35px;
   }

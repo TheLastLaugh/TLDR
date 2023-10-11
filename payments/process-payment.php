@@ -46,24 +46,9 @@ if (str_starts_with($bookingId, 'bookings-')) {
     $bookingId = substr($bookingId,9);
 
     // Update the booking to paid
-    $sql = "UPDATE bookings SET paid = 1 WHERE id = ?";
+    $sql = "UPDATE bookings SET paid = 1 WHERE booking_id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $bookingId);
-    mysqli_stmt_execute($stmt);
-
-    // Get the lesson id from the booking
-    $sql = "SELECT lesson_id FROM bookings WHERE id = ?";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $bookingId);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $row = mysqli_fetch_assoc($result);
-    $lessonId = $row['lesson_id'];
-
-    // Make the lesson completed
-    $sql = "INSERT INTO completed_lessons (learner_id, lesson_id, completion_date) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt, "iis", $learnerId, $lessonId, date("Y-m-d"));
     mysqli_stmt_execute($stmt);
 
 } elseif (str_starts_with($bookingId, 'bills-')) {

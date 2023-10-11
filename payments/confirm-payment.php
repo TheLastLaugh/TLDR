@@ -20,18 +20,16 @@ if (str_starts_with($bookingId, 'bookings-')) {
 
     // Fetch booking details to display on the confirmation page
     $sql = "SELECT 
-        b.id AS booking_id, 
+        b.booking_id AS booking_id, 
         b.booking_date,
         i.username AS instructor_name,
         i.price AS lesson_price
     FROM 
         bookings AS b
     JOIN 
-        availability AS a ON b.availability_id = a.id
-    JOIN 
-        instructors AS i ON a.instructor_id = i.user_id
+        instructors AS i ON i.user_id = i.user_id
     WHERE 
-        b.id = ?";
+        b.booking_id = ?";
 
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "i", $bookingId);

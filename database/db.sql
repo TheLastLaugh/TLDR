@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2023 at 01:51 AM
+-- Generation Time: Oct 11, 2023 at 06:14 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -14,37 +14,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `tldr`
 --
-DROP DATABASE IF EXISTS `tldr`;
-CREATE DATABASE IF NOT EXISTS `tldr` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `tldr`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `availability`
---
-
-CREATE TABLE `availability` (
-  `id` int(11) NOT NULL,
-  `instructor_id` int(11) NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
-  `is_booked` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `availability`
---
-
-INSERT INTO `availability` (`id`, `instructor_id`, `start_time`, `end_time`, `is_booked`) VALUES
-(1, 2, '2023-08-24 09:00:00', '2023-08-24 10:00:00', 1),
-(2, 2, '2023-08-24 10:00:00', '2023-08-24 11:00:00', 0),
-(3, 2, '2023-08-24 11:00:00', '2023-08-24 12:00:00', 0),
-(4, 2, '2023-08-24 12:00:00', '2023-08-24 13:00:00', 0),
-(5, 2, '2023-08-24 13:00:00', '2023-08-24 14:00:00', 0),
-(6, 2, '2023-08-24 14:00:00', '2023-08-24 15:00:00', 0),
-(7, 2, '2023-08-24 15:00:00', '2023-08-24 16:00:00', 0),
-(8, 2, '2023-08-24 16:00:00', '2023-08-24 17:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -52,6 +21,7 @@ INSERT INTO `availability` (`id`, `instructor_id`, `start_time`, `end_time`, `is
 -- Table structure for table `bills`
 --
 
+DROP TABLE IF EXISTS `bills`;
 CREATE TABLE `bills` (
   `id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
@@ -80,23 +50,25 @@ INSERT INTO `bills` (`id`, `learner_id`, `instructor_id`, `issue_date`, `due_dat
 -- Table structure for table `bookings`
 --
 
+DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
   `booking_id` int(11) NOT NULL,
   `instructor_id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `time` time NOT NULL,
-  `pickup_location` char(100) NOT NULL
+  `booking_date` date NOT NULL,
+  `booking_time` time NOT NULL,
+  `pickup_location` char(100) NOT NULL,
+  `paid` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`booking_id`, `instructor_id`, `learner_id`, `date`, `time`, `pickup_location`) VALUES
-(1, 2, 1, '2023-10-11', '10:00:00', 'Tonsley Campus'),
-(2, 7, 1, '2023-10-11', '11:00:00', 'Tonsley Campus'),
-(3, 7, 5, '2023-10-11', '12:00:00', 'Yes');
+INSERT INTO `bookings` (`booking_id`, `instructor_id`, `learner_id`, `booking_date`, `booking_time`, `pickup_location`, `paid`) VALUES
+(1, 2, 1, '2023-10-11', '10:00:00', 'Tonsley Campus', 1),
+(2, 7, 1, '2023-10-11', '11:00:00', 'Tonsley Campus', 0),
+(3, 7, 5, '2023-10-11', '12:00:00', 'Yes', 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +76,7 @@ INSERT INTO `bookings` (`booking_id`, `instructor_id`, `learner_id`, `date`, `ti
 -- Table structure for table `cbta_modules`
 --
 
+DROP TABLE IF EXISTS `cbta_modules`;
 CREATE TABLE `cbta_modules` (
   `id` int(11) NOT NULL,
   `unit_number` int(11) NOT NULL,
@@ -156,6 +129,7 @@ INSERT INTO `cbta_modules` (`id`, `unit_number`, `unit_name`, `module_number`, `
 -- Table structure for table `cbta_module_tasks`
 --
 
+DROP TABLE IF EXISTS `cbta_module_tasks`;
 CREATE TABLE `cbta_module_tasks` (
   `id` int(11) NOT NULL,
   `module_number` int(11) NOT NULL,
@@ -240,6 +214,7 @@ INSERT INTO `cbta_module_tasks` (`id`, `module_number`, `task_name`, `task_numbe
 -- Table structure for table `cbta_module_task_description`
 --
 
+DROP TABLE IF EXISTS `cbta_module_task_description`;
 CREATE TABLE `cbta_module_task_description` (
   `id` int(11) NOT NULL,
   `module_number` int(11) NOT NULL,
@@ -587,6 +562,7 @@ INSERT INTO `cbta_module_task_description` (`id`, `module_number`, `task_number`
 -- Table structure for table `completed_lessons`
 --
 
+DROP TABLE IF EXISTS `completed_lessons`;
 CREATE TABLE `completed_lessons` (
   `id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
@@ -600,6 +576,7 @@ CREATE TABLE `completed_lessons` (
 -- Table structure for table `instructors`
 --
 
+DROP TABLE IF EXISTS `instructors`;
 CREATE TABLE `instructors` (
   `user_id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -623,6 +600,7 @@ INSERT INTO `instructors` (`user_id`, `username`, `company`, `company_address`, 
 -- Table structure for table `instructor_learners`
 --
 
+DROP TABLE IF EXISTS `instructor_learners`;
 CREATE TABLE `instructor_learners` (
   `instructor_id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL
@@ -644,6 +622,7 @@ INSERT INTO `instructor_learners` (`instructor_id`, `learner_id`) VALUES
 -- Table structure for table `lessons`
 --
 
+DROP TABLE IF EXISTS `lessons`;
 CREATE TABLE `lessons` (
   `id` int(11) NOT NULL,
   `unit_number` int(11) NOT NULL,
@@ -668,6 +647,7 @@ INSERT INTO `lessons` (`id`, `unit_number`, `unit_name`) VALUES
 -- Table structure for table `logbooks`
 --
 
+DROP TABLE IF EXISTS `logbooks`;
 CREATE TABLE `logbooks` (
   `id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
@@ -704,6 +684,7 @@ INSERT INTO `logbooks` (`id`, `learner_id`, `qsd_id`, `date`, `start_time`, `end
 -- Table structure for table `payment_methods`
 --
 
+DROP TABLE IF EXISTS `payment_methods`;
 CREATE TABLE `payment_methods` (
   `id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
@@ -717,12 +698,20 @@ CREATE TABLE `payment_methods` (
   `expiry_year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`id`, `learner_id`, `method_name`, `address`, `card_type`, `card_number`, `cvv`, `last_four_digits`, `expiry_month`, `expiry_year`) VALUES
+(1, 1, 'YA BOI', '1 Hall Terrace', 'visa', '1111111111111111', '111', '1111', 1, 2023);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `qsd_learners`
 --
 
+DROP TABLE IF EXISTS `qsd_learners`;
 CREATE TABLE `qsd_learners` (
   `qsd_id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL
@@ -734,6 +723,7 @@ CREATE TABLE `qsd_learners` (
 -- Table structure for table `student_tasks`
 --
 
+DROP TABLE IF EXISTS `student_tasks`;
 CREATE TABLE `student_tasks` (
   `student_id` int(11) NOT NULL,
   `unit` int(11) NOT NULL,
@@ -769,6 +759,7 @@ INSERT INTO `student_tasks` (`student_id`, `unit`, `task`, `completed`, `complet
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
@@ -797,13 +788,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `address`, `license`
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `availability`
---
-ALTER TABLE `availability`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `instructor_id` (`instructor_id`);
 
 --
 -- Indexes for table `bills`
@@ -907,12 +891,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `availability`
---
-ALTER TABLE `availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
@@ -964,7 +942,7 @@ ALTER TABLE `logbooks`
 -- AUTO_INCREMENT for table `payment_methods`
 --
 ALTER TABLE `payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -975,12 +953,6 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `availability`
---
-ALTER TABLE `availability`
-  ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `bills`

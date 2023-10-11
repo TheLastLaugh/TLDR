@@ -69,7 +69,7 @@ $result = mysqli_stmt_get_result($statement);
         <div id="dashboard">
             <div class="stats-container">
                 <div class="stat-card">
-                    <h3>Students</h3>
+                    <h3>Student</h3>
                     <?php
                         if (isset($_SESSION['student'])) {
                             $studentname = $_SESSION['student']['username'];

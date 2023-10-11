@@ -174,11 +174,13 @@ function dropdown() {
 window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
+        var button = document.getElementById("studentBtn");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
         var openDropdown = dropdowns[i];
         if (openDropdown.classList.contains('show')) {
             openDropdown.classList.remove('show');
+            button.classList.remove('show');
         }
         }
     }
