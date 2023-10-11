@@ -29,4 +29,38 @@ document.addEventListener("DOMContentLoaded", function() {
             cvvBox.style.display = 'block';
         });
     }
+
+    const creditCardInput = document.getElementById('creditCardInput');
+
+    if (creditCardInput) {
+        creditCardInput.addEventListener('change', function() {
+            if(!checkCardValidity(creditCardInput.value)) {
+                creditCardInput.setCustomValidity('This is not a valid card number');
+            } else {
+                creditCardInput.setCustomValidity('');
+            }
+        })
+    }
+     
+    // Checks the validity of a credit card number based on Luhns (mod10) algorithm
+    function checkCardValidity(cardNumber) {
+        let numDigits = cardNumber.length;
+ 
+        let sum = 0;
+        let isSecond = false;
+        for (let i = numDigits - 1; i >= 0; i--) {
+ 
+            let digit = cardNumber[i].charCodeAt() - '0'.charCodeAt();
+ 
+            if (isSecond) {
+                digit = digit * 2;
+            }
+                
+            sum += parseInt(digit / 10, 10);
+            sum += digit % 10;
+ 
+            isSecond = !isSecond;
+        }
+        return (sum % 10 == 0);
+    }
 });

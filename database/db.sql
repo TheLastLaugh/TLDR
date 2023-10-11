@@ -139,7 +139,7 @@ CREATE TABLE payment_methods (
     address varchar(255) NOT NULL,
     card_type enum('visa', 'mastercard') NOT NULL,
     card_number char(16) NOT NULL,
-    cvv char(3) NOT NULL,
+    cvv char(3) NOT NULL, -- This obviously wouldn't be stored in the real world, just validated
     last_four_digits char(4) NOT NULL,
     expiry_month int NOT NULL,
     expiry_year int NOT NULL,
