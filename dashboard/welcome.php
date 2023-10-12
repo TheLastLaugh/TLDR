@@ -244,6 +244,9 @@ else if ($_SESSION['user_type'] == 'government') {
         </div>
     </div>
 
+    <!-- Include the Google Maps API -->
+    <!-- Information is https://www.w3schools.com/graphics/google_maps_intro.asp -->
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiDOquqH11fiP_yFvh2PQFvUD76JWQh_Y&callback=myMap"></script>
 
 </body>

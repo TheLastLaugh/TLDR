@@ -43,7 +43,7 @@ require_once "../inc/dbconn.inc.php";
 
                 if (($_SESSION['user_type'] == 'instructor' || $_SESSION['user_type'] == 'government') && isset($_SESSION['student']['username'])) {
                     //$studentname = $_SESSION['student']['username'];
-                    $studentname = "<p>Student Name: {$_SESSION['student']['username']}</p>
+                    echo "<p>Student Name: {$_SESSION['student']['username']}</p>
                     <a href='../search/search.php?usertype=student'>Change Student</a><br>";
                 } 
 
