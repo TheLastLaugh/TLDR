@@ -66,3 +66,36 @@ function signTask (id) {
     xhttp.send(params);
 
 }
+
+
+document.getElementById("night-button").addEventListener("click", function() {
+
+    // document.getElementById("logbook-tabs").classList.remove("logbook-tabs");
+    document.getElementById("logbook-tabs").classList.add("logbook-tabs-black");
+    // document.getElementById("Night").classList.add("tabcontent-black");
+
+});
+
+document.getElementById("day-button").addEventListener("click", function() {
+
+    document.getElementById("logbook-tabs").classList.remove("logbook-tabs-black");
+
+});
+
+document.getElementById("summary-button").addEventListener("click", function() {
+
+    document.getElementById("logbook-tabs").classList.remove("logbook-tabs-black");
+
+});
+
+document.getElementById("pending-button").addEventListener("click", function() {
+
+    document.getElementById("logbook-tabs").classList.remove("logbook-tabs-black");
+
+});
+
+document.getElementById("detailed-button").addEventListener("click", function() {
+
+    document.getElementById("logbook-tabs").classList.remove("logbook-tabs-black");
+
+});
