@@ -17,7 +17,25 @@ div {
     text-align: center;
     max-width: 400px;
     width: 100%;
+
 }
+
+.sagov-underline { /*SAgov colour underlining*/
+    position: relative;
+    color: black; 
+}
+
+.sagov-underline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 7%; 
+    background: linear-gradient(to right, #004b88 33.33%, #fbae1d 33.33%, #fbae1d 66.66%, #ec164b 66.66%);
+}
+
+
 ul{
     padding: 0px;
     width: 80%;
