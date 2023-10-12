@@ -45,12 +45,9 @@ require_once "../inc/dbconn.inc.php";
                     //$studentname = $_SESSION['student']['username'];
                     $studentname = "<p>Student Name: {$_SESSION['student']['username']}</p>
                     <a href='../search/search.php?usertype=student'>Change Student</a><br>";
-                } else {
-                    $studentname = $_SESSION["username"];
-                }
+                } 
 
                 echo "
-                        {$studentname}
                         <p>Please select a unit and task below.</p>
 
                         <button id='unit-1' class='accordion'>Unit 1 - Basic driving procedures</button>
