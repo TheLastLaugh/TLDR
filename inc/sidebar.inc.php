@@ -22,7 +22,7 @@
                 <li><a href='../students/logbook.php'>Logbook</a></li>
                 <li><a href='../students/cbt&a.php'>CBT&A</a></li>
                 <li><a href='../payments/payments.php'>Payments</a></li>
-                <li><a href='../lessons/lessons.php'>Lessons</a></li>
+                <li><a href='../lessons/learner-calendar.php'>Lessons</a></li>
                 <li><a href='../login/logout.php'>Logout</a></li>
             </ul>";
         } elseif ($_SESSION['user_type'] == 'qsd') {
