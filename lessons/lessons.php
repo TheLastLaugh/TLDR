@@ -26,7 +26,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         <?php include_once "../inc/sidebar.inc.php"; ?>
         <div id ="content">
             <div id="tab">
-            <button class="lesson-buttons"><a href="lesson-progress.php">Lesson Progress</a></button>
+            <button class="lesson-buttons"><a href="../students/cbt&a.php">Lesson Progress</a></button>
             <button class="lesson-buttons"><a href="lesson-bookings.php">Book a lesson</a></button>
                 
             </div>
