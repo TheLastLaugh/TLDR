@@ -79,7 +79,6 @@ function fill_cell($conn, $date, $time){
                     return;
                 }
 
-                
                 echo("  
                         <td class = \"used\">
                             <form action=\"lessons.php?date=".$date.'&time='.$time."\">

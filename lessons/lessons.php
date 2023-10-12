@@ -55,10 +55,11 @@
                 <ul id = "booking-details">
                 </ul>
                 <form action = "booking-confirmation.php" method = "POST">
-                    <input type="text" disabled name = "instructor" value="<?php echo($enquiryInstructorName);?>">
-                    <input type="text" disabled name = "date" value="<?php echo($enquiryDate);?>">
-                    <input type="text" disabled name = "time" value="<?php echo($enquiryTime);?>">
-                    <input type="text" name = "pickup_location">
+                    <input type="text" readonly name = "instructor" value="<?php echo($enquiryInstructorName);?>">
+                    <input type="text" readonly name = "date" value="<?php echo($enquiryDate);?>">
+                    <input type="text" readonly name = "time" value="<?php echo($enquiryTime);?>">
+                    <input type="text" required name = "pickup_location">
+                    <input type="hidden" name = "instructorID" value = "<?php echo($enquiryInstructorID);?>">
                     <input type="submit" class="lesson-buttons" value = "Finalise Booking">
                 </form>
             </div>

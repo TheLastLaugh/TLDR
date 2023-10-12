@@ -21,47 +21,32 @@ $result = mysqli_query($conn, "SELECT username FROM users WHERE id = $learnerId"
 $row = mysqli_fetch_assoc($result);
 $learnerName = $row['username'];
 
-// Get the unit id from the form submission
-$selectedUnit = isset($_POST['unit'])  ? $_POST['unit'] : null;
-$result = mysqli_query($conn, "SELECT unit_name FROM lessons WHERE id = $selectedUnit");
-$row = mysqli_fetch_assoc($result);
-$unitName = $row['unit_name'];
-
 // Get the instructor id from the form submission
-$selectedInstructor = isset($_POST['instructor']) ? $_POST['instructor'] : null;
-$result = mysqli_query($conn, "SELECT username FROM users WHERE id = $selectedInstructor");
-$row = mysqli_fetch_assoc($result);
-$instructorName = $row['username'];
+$selectedInstructor = isset($_POST['instructorID']) ? $_POST['instructorID'] : null;
+$instructorName = isset($_POST['instructorName']) ? $_POST['instructorName'] : null;
 
-// Get the availability id from the form submission
-$selectedAvailability = isset($_POST['availability']) ? $_POST['availability'] : null;
-$result = mysqli_query($conn, "SELECT start_time FROM availability WHERE id = $selectedAvailability");
-$row = mysqli_fetch_assoc($result);
-$bookingTime = $row['start_time'];
+// Get Date and time
+$date = isset($_POST['date']) ? $_POST['date'] : null;
+$time = isset($_POST['time']) ? $_POST['time'] : null;
+
+// Get Pickup Location
+$pickupLocation = isset($_POST['pickup_location']) ? $_POST['pickup_location'] : null;
+
 
 //This happens after the user clicks the confirm button after selecting all values. Relevant code for this is at the bottom of the page
-if (isset($_POST['confirm'])) {
-    // Insert the booking into the database
-    $sql = "INSERT INTO bookings (learner_id, availability_id, booking_date, lesson_id) VALUES (?, ?, NOW(), ?)";
-    $statement = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($statement, $sql);
-    mysqli_stmt_bind_param($statement, "iii", $learnerId, $selectedAvailability, $selectedUnit); // 2 integers
-    mysqli_stmt_execute($statement);
-    
-    // Sets the availability of the instructor to booked so it doesn't show up in the list of available times. This is unique for each Instructor.
-    $sqlUpdate = "UPDATE availability SET is_booked = 1 WHERE id = ?";
-    $statementUpdate = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($statementUpdate, $sqlUpdate);
-    mysqli_stmt_bind_param($statementUpdate, "i", $selectedAvailability); // 1 integer
-    mysqli_stmt_execute($statementUpdate);
+// Insert the booking into the database
+$sql = "INSERT INTO bookings (instructor_id, learner_id, booking_date, booking_time, pickup_location) VALUES (?, ?, ?, ?, ?)";
+$statement = mysqli_stmt_init($conn);
+mysqli_stmt_prepare($statement, $sql);
+mysqli_stmt_bind_param($statement, "iisss", $selectedInstructor, $learnerId, $date, $time, $pickupLocation);
+mysqli_stmt_execute($statement);
 
-    // Adds the learner as a student of the instructor so that they can enter the logbook easier later
-    $sql = "INSERT INTO instructor_learners (instructor_id, learner_id) VALUES (?, ?)";
-    $statementUpdate = mysqli_stmt_init($conn);
-    mysqli_stmt_prepare($statementUpdate, $sql);
-    mysqli_stmt_bind_param($statementUpdate, "ii", $selectedInstructor, $learnerId); // 2 integers
-    mysqli_stmt_execute($statementUpdate);
-}
+// Adds the learner as a student of the instructor so that they can enter the logbook easier later
+$sql = "INSERT INTO instructor_learners (instructor_id, learner_id) VALUES (?, ?)";
+$statementUpdate = mysqli_stmt_init($conn);
+mysqli_stmt_prepare($statementUpdate, $sql);
+mysqli_stmt_bind_param($statementUpdate, "ii", $selectedInstructor, $learnerId); // 2 integers
+mysqli_stmt_execute($statementUpdate);
 ?>
 
 <!-- Simple confirmation page to let the user know that the booking bas gone through -->
@@ -83,7 +68,7 @@ if (isset($_POST['confirm'])) {
         <?php
             echo '<h1>
                     Lesson booked successfully! <br>
-                    ' . $unitName . ' lesson with ' . $instructorName . ' on ' . $bookingTime . '
+                    Lesson with ' . $instructorName . ' on ' . $date . ' at ' . $time . '
                 </h1>';
         ?>
     </div>
