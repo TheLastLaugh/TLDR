@@ -31,10 +31,10 @@ ul{
     box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
 }
 
-#learner-input{
-    text-align: center;
-    margin-left: -80px; /* when "adding another licenses" the next one adds in off centre*/
-    /*found in inspect element that when a new input box is made, it doesnt have the ID i gave the first one??*/
+
+#learnerContainer{
+    margin-left: -40px;
+    
 }
 
 #addLearnerButton{
