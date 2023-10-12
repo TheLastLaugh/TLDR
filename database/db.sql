@@ -1013,3 +1013,4 @@ ALTER TABLE `qsd_learners`
 ALTER TABLE `student_tasks`
   ADD CONSTRAINT `student_tasks_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `student_tasks_ibfk_2` FOREIGN KEY (`completed_instructor_id`) REFERENCES `users` (`id`);
+COMMIT;
