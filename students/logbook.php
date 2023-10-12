@@ -34,12 +34,12 @@ require_once "../inc/dbconn.inc.php";
                 } 
             ?>
 
-            <div class="logbook-tabs">
+            <div class="logbook-tabs" id="logbook-tabs">
                 <button class="tablinks" onclick="openTab(event, 'Pending')" id="pending-button">Unsigned</button>
                 <button class="tablinks" onclick="openTab(event, 'Detailed')" id="detailed-button">All</button>
                 <button class="tablinks" onclick="openTab(event, 'Day')" id="day-button">Day</button>
                 <button class="tablinks" onclick="openTab(event, 'Night')" id="night-button">Night</button>
-                <button class="tablinks" onclick="openTab(event, 'Summary')">Summary</button>
+                <button class="tablinks" onclick="openTab(event, 'Summary')" id="summary-button">Summary</button>
             </div>
 
             <div id="Pending" class="tabcontent">
@@ -302,7 +302,7 @@ require_once "../inc/dbconn.inc.php";
 
             </div>
 
-            <div id="Night" class="tabcontent">
+            <div id="Night" class="tabcontent tabcontent-black">
 
                 <table>
                     <tr>

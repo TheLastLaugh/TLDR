@@ -14,7 +14,7 @@
 </head>
 <body>
     <div>
-        <h1>Register</h1>
+        <h1 class="sagov-underline">Register</h1>
         <!-- Directs to the same registration page as all new accounts -->
         <!-- Fields to enter user information -->
         <form action="register.php" method="POST">
@@ -50,7 +50,7 @@
                 <li class="centered">
                     <label for="learners"><br>License(s) of who you are supervising</label>
                     <div id="learnerContainer">
-                        <input id="learner-input" type="text" name="learners[]" required>
+                        <input type="text" name="learners[]" required>
                     </div>
                     <button type="button" id="addLearnerButton">Add more licenses</button>
                     <!-- this is hidden by default, it will show when there is more than 1 learner box -->

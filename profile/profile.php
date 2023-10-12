@@ -77,14 +77,14 @@ if ($user_type == 'instructor') {
             <!-- Email -->
             <p class="detail"><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="email">Email:</label>
+                <label for="email">Email:</label><br/>
                 <input type="email" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
             </div>
 
             <!-- Address -->
             <p class="detail"><strong>Address:</strong> <?php echo htmlspecialchars($address); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="address">Address:</label>
+                <label for="address">Address:</label><br/>
                 <input type="text" name="address" id="address" value="<?php echo htmlspecialchars($address); ?>" required>
             </div>
 
@@ -101,28 +101,28 @@ if ($user_type == 'instructor') {
             <!-- Company -->
             <p class="detail"><strong>Company:</strong> <?php echo htmlspecialchars($company); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="company">Company:</label>
+                <label for="company">Company:</label><br/>
                 <input type="text" name="company" id="company" value="<?php echo htmlspecialchars($company); ?>" required>
             </div>
             
             <!-- Company Address -->
             <p class="detail"><strong>Company Address:</strong> <?php echo htmlspecialchars($company_address); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="company_address">Company Address:</label>
+                <label for="company_address">Company Address:</label><br/>
                 <input type="text" name="company_address" id="company_address" value="<?php echo htmlspecialchars($company_address); ?>" required>
             </div>
             
             <!-- Phone -->
             <p class="detail"><strong>Phone:</strong> <?php echo htmlspecialchars($phone); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="phone">Phone:</label>
+                <label for="phone">Phone:</label><br/>
                 <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($phone); ?>" required>
             </div>
             
             <!-- Price -->
             <p class="detail"><strong>Price:</strong> <?php echo htmlspecialchars($price); ?></p>
             <div class="edit-field" style="display: none;">
-                <label for="price">Price:</label>
+                <label for="price">Price:</label><br/>
                 <input type="text" name="price" id="price" value="<?php echo htmlspecialchars($price); ?>" required>
             </div>
             
