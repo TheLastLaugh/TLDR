@@ -68,10 +68,11 @@ if ($user_type == 'instructor') {
 <body>
     <!-- include the menu bar -->
     <?php include_once "../inc/sidebar.inc.php"; ?>
-    <div id = "content">
+    <div id="content">
+    <div id = "profile-content">
         <form id="editForm" action="update-profile.php" method="post">
             <!-- Name (can't edit) -->
-            <p><strong>Name:</strong> <?php echo htmlspecialchars($name); ?></p>
+            <p class="detail"><strong>Name:</strong> <?php echo htmlspecialchars($name); ?></p>
 
             <!-- Email -->
             <p class="detail"><strong>Email:</strong> <?php echo htmlspecialchars($email); ?></p>
@@ -88,10 +89,10 @@ if ($user_type == 'instructor') {
             </div>
 
             <!-- License (can't edit) -->
-            <p><strong>License:</strong> <?php echo htmlspecialchars($license); ?></p>
+            <p class="detail"><strong>License:</strong> <?php echo htmlspecialchars($license); ?></p>
 
             <!-- Date of Birth (can't edit) -->
-            <p><strong>Date of Birth:</strong> <?php echo htmlspecialchars($dob); ?></p>
+            <p class="detail"><strong>Date of Birth:</strong> <?php echo htmlspecialchars($dob); ?></p>
 
             <!-- Instructor Details -->
             <?php if ($user_type == 'instructor'): ?>
@@ -126,12 +127,12 @@ if ($user_type == 'instructor') {
             </div>
             
             
-            
-            <input type="submit" value="Update">
-            </form>
-            <button id="editButton">Edit Profile</button>
+            <!-- <div id="button-container">
+                <input id = "updateProfile" type="submit" value="Update">
+                </form>
+                <button id="editButton">Edit Profile</button>
+            </div> -->
             <?php endif; ?>
-        </div>
 
         <!-- QSD Details -->
         <?php if ($user_type == 'qsd'): ?>
@@ -163,11 +164,14 @@ if ($user_type == 'instructor') {
             </div>
         </div>
         
-        <?php endif; ?>
         
-        <input type="submit" value="Update">
+        <?php endif; ?>
+        <input id = "updateProfile" type="submit" value="Update">
         </form>
         <button id="editButton">Edit Profile</button>
+        
+        
+    </div>
     </div>
 </body>
 </html>

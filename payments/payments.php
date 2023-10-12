@@ -25,25 +25,55 @@ $learnerId = $_SESSION['userid'];
 $learnerName = $_SESSION['username'];
 
 // Get all the lessons from the booking table and display them in a drop-down menu
-$result = mysqli_query($conn, "SELECT
+// THIS IS THE OLD ONE, REFER BACK AND CHANGE DB to DB.SQL.OLD IF NEEDED
+// $result = mysqli_query($conn, "SELECT
+//     'bookings' AS tablename,
+//     b.id AS booking_id, 
+//     b.booking_date,
+//     i.username AS instructor_name,
+//     i.price AS lesson_price
+// FROM 
+//     bookings AS b
+// JOIN 
+//     availability AS a ON b.availability_id = a.id
+// JOIN 
+//     instructors AS i ON a.instructor_id = i.user_id
+// WHERE 
+//     b.paid = 0 AND b.learner_id = $learnerId
+// UNION
+// SELECT 'bills' AS tablename, bills.id AS booking_id, bills.issue_date as booking_date, users.username AS instructor_name, ((bills.hourly_rate / 60) * bills.billed_minutes) AS lesson_price
+// FROM bills
+// LEFT JOIN users ON bills.instructor_id = users.id
+// WHERE bills.paid = 0 AND bills.learner_id = $learnerId;");
+
+    $result = mysqli_query($conn, 
+    "SELECT 
     'bookings' AS tablename,
-    b.id AS booking_id, 
+    b.booking_id AS booking_id,
     b.booking_date,
-    i.username AS instructor_name,
+    u.username AS instructor_name,
     i.price AS lesson_price
-FROM 
-    bookings AS b
-JOIN 
-    availability AS a ON b.availability_id = a.id
-JOIN 
-    instructors AS i ON a.instructor_id = i.user_id
-WHERE 
-    b.paid = 0 AND b.learner_id = $learnerId
-UNION
-SELECT 'bills' AS tablename, bills.id AS booking_id, bills.issue_date as booking_date, users.username AS instructor_name, ((bills.hourly_rate / 60) * bills.billed_minutes) AS lesson_price
-FROM bills
-LEFT JOIN users ON bills.instructor_id = users.id
-WHERE bills.paid = 0 AND bills.learner_id = $learnerId;");
+    FROM
+        bookings AS b
+    JOIN
+        users AS u ON b.instructor_id = u.id
+    JOIN 
+        instructors AS i ON b.instructor_id = i.user_id
+    WHERE
+        b.paid = 0 AND b.learner_id = $learnerId
+    UNION SELECT 
+    'bills' AS tablename, 
+    bills.id AS booking_id, 
+    bills.issue_date as booking_date, 
+    users.username AS 
+    instructor_name, 
+    ((bills.hourly_rate / 60) * bills.billed_minutes) AS lesson_price
+    
+    FROM bills
+    
+    LEFT JOIN users ON bills.instructor_id = users.id
+    
+    WHERE bills.paid = 0 AND bills.learner_id = $learnerId;");
 ?>
 
 <!-------------------------------------------------------------------------------------------------------------------

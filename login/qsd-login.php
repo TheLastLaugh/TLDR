@@ -18,7 +18,7 @@
         <!-- Directs to the same registration page as all new accounts -->
         <!-- Fields to enter user information -->
         <form action="register.php" method="POST">
-            <ul>
+            <ul id="register-details">
                 <li>
                     <label for="name">Name</label>
                     <input type="text" name="username" required>
@@ -47,8 +47,8 @@
                     <label for="dob">Date of Birth</label>
                     <input type="date" name="dob" required>
                 </li>
-                <li>
-                    <label for="learners">License #s of who you are supervising</label>
+                <li class="centered">
+                    <label for="learners"><br>License(s) of who you are supervising</label>
                     <div id="learnerContainer">
                         <input type="text" name="learners[]" required>
                     </div>
@@ -56,7 +56,7 @@
                     <!-- this is hidden by default, it will show when there is more than 1 learner box -->
                     <button type="button" id="removeLearnerButton" style="display:none">Remove learner</button>
                 </li>
-                <li>
+                <li class="centered">
                     <input type="submit" value="Submit" class="submit-button">
                 </li>
 

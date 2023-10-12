@@ -184,3 +184,13 @@ button {
     background-color: #FF6633;
     color: #fff;
 }
+
+#sign-up-now {
+    color: white;
+    font-weight: bold;
+}
+
+#sign-up-now:hover {
+    font-weight: bold;
+    text-decoration:solid;
+}

@@ -104,6 +104,10 @@ tr:nth-child(n+3):nth-child(odd) {
     background-color: #dbedda;
 }
 
+.logbook-tabs-black {
+    border-color: black;
+}
+
 /* Style the buttons that are used to open the tab content */
 .logbook-tabs button {
     background-color: inherit;
@@ -137,3 +141,12 @@ tr:nth-child(n+3):nth-child(odd) {
     border-color: #0ab04b;
 }
 
+.tabcontent-black {
+    border-color: black;
+}
+
+/* Night button */
+#night-button.active, #night-button:hover {
+    background-color: black;
+    color:white;
+}

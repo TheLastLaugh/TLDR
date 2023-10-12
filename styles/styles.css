@@ -4,40 +4,13 @@ body {
   padding: 0;
 }
 
-
-#menuIcon {
-  float: left;
-  position: relative;
-  left: 10px;
-  cursor: pointer;
-}
-
-#profileIcon {
-  float: right;
-  position: relative;
-  right: 30px;
-  fill: white;
-  bottom: 30px;
-}
-
-#banner-username {
-  color: #bfbfbf;
-  font-weight: bold;
-  position: relative;
-  float: right;
-  right: 20px;
-  bottom: 25px;
-}
-
-#content {
+body > #content {
   top:70px;
   position:relative;
   transition: margin-left 0.5s ease;
   padding: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin:auto;
 }
-
 
 .tab {
   width: 80%;
@@ -49,85 +22,68 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#banner {
-  background-color: #333;
-  color: #fff;
-  height: 30px;
-  padding: 20px 0;
-  text-align: center;
-  font-size: 24px;
-  position:fixed;
-  width: 100vmax;
-  top: 0px;
-  z-index: 10;
+.dropdown{
+  display: inline;
 }
 
-/* SIDEBAR STYLING */
-#sidebar {
-  position: fixed;
-  float: left;
-  width: 0px;
-  overflow: hidden;
-  transition: width 0.5s ease;
-  height: 100vmin;
-  top: 70px;
-  background-color: #f7f7f7;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+.dropbtn {
+  background-color: #f1f1f1;
+
+  border-style: solid;
+  border-width: 1px;
+  
+  border-color: black;
+  border-radius: 0;
+  width: 222px;
+  font-size: 16px;
+
+  
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  margin: 0px;
+}
+.dropbtn:hover{
+  background-color: #808181;
 }
 
-#sidebar > ul {
-  list-style-type: none;
-  padding:0px;
-  margin:0px;
-  text-align: center;
-}
-
-#sidebar > ul > li {
-  height: 50px;
-  border-bottom:#000;
+.dropbtn.show{
   border-bottom-width: 3px;
-  border-bottom-style:solid;
 }
 
-#sidebar > ul > li:hover{
-  background-color:#777;
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content > a:hover{
+  background-color: #808181;
 }
 
-.selected{
-  background-color: #999;
+.show {
+  display:block;
 }
 
-li > a {
+.dropdown-content > a{
   width:100%;
-  height:100%;
-  line-height: 300%;
+  height: 25px;
   position: relative;
   text-decoration: none;
   color: black;
   text-align: center;
-  margin: auto;
   display: block;
+  padding-top: 5px;
+
+  border-width: 1px;
+  border-bottom-style: solid;
+  border-left-style: solid;
+  border-right-style: solid;
 }
 
-/* 
-#sidebar li {
-  position: absolute;
-  left: 0;
-  top:0;
-  width: 100%;
-  height: 30px;
-  background-color: #ff6633;
-  transform-origin: right;
-  transition: transform 0.5s;
-}
-
-#sidebar li:hover {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-*/
-
-/* SIDEBAR STYLING */
 
 .stats-container {
   display: grid;
@@ -144,16 +100,48 @@ li > a {
 
 .stat-card h3 {
   margin-top: 0;
+  margin-bottom:10px;
   font-size: 24px;
   color: #333;
 }
 
 .stat-card p {
   font-size: 20px;
+  margin-top:10px;
+  margin-bottom: 5px;
   color: #777;
 }
 
+.stat-card a{
+  text-decoration: none;
+  color: #023a76;
+  position: relative;
+}
 
+.stat-card a:focus {
+  color: #3b006e;
+}
+
+.stat-card a::before { /*fancy animation bit*/
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #023a76;
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-card a:hover::before {
+  transform: scaleX(1);
+}
+
+.stat-card ul {
+  margin-top: 0px;
+}
 
 /* Progress Bars */
 
@@ -179,3 +167,74 @@ li > a {
 .w3-center {
   text-align: center !important
 }
+
+/*profile page styling*/
+#profile-content {
+  width: 20%;
+  padding: 20px;
+  margin-top: 6%;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+
+p.detail {
+  text-align: center;
+}
+#email{
+  border: solid 1px;
+  border-color: #b9b9b9;
+  background-color: rgb(232, 232, 232);
+  width: 95%;
+  margin: auto;
+}
+#address{
+  border: solid 1px;
+  border-color: #b9b9b9;
+  background-color: rgb(232, 232, 232);
+  width: 95%;
+  margin: auto;
+}
+
+#button-container{
+  text-align: center;
+  margin-left: 50%; 
+}
+
+#updateProfile{
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  width: 130px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#updateProfile:hover {
+  background-color: #0056b3; 
+}
+
+#editButton {
+  background-color: #28a745;
+  line-height: 1.5;
+  color: white;
+  padding: 10px 20px;
+  width: 130px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+#editButton:hover {
+  background-color: #1e8d1e; 
+}
+#container {
+  text-align: center;
+  margin: 20px auto;
+}
+/*end of profile page styles*/
