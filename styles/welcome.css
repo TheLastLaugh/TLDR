@@ -8,7 +8,7 @@
 
 }
 
-.header {
+.header { 
     position: fixed;
     top: 0;
     left: 0;
@@ -185,12 +185,29 @@ button {
     color: #fff;
 }
 
+
 #sign-up-now {
     color: white;
     font-weight: bold;
+    text-decoration: none;
 }
 
-#sign-up-now:hover {
-    font-weight: bold;
-    text-decoration:solid;
-}
+
+
+#sign-up-now::before { /*fancy animation bit*/
+    content: "";
+    position: absolute;
+    display: block;
+    width: 27%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #FF6633;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  
+  #sign-up-now:hover::before {
+    transform: scaleX(1);
+    font-style: italic;
+  }

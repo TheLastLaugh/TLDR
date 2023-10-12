@@ -14,7 +14,7 @@
 </head>
 <body>
     <div>
-        <h1>Register</h1>
+        <h1 class="sagov-underline">Register</h1>
         <!-- Directs to the same registration page as all new accounts -->
         <!-- Fields to enter user information -->
         <form action="register.php" method="POST">

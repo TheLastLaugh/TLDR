@@ -12,7 +12,7 @@
 </head>
 <body>
     <div>
-        <h1>Welcome to TLDR!</h1>
+        <h1 class="sagov-underline">Welcome to TLDR!</h1>
         <h3>Are you a:</h3>
         <ol>
             <li>

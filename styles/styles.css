@@ -183,24 +183,42 @@ body > #content {
 p.detail {
   text-align: center;
 }
-#email{
+/* #email{
   border: solid 1px;
   border-color: #b9b9b9;
   background-color: rgb(232, 232, 232);
+  border-radius: 4px;
   width: 95%;
   margin: auto;
-}
-#address{
+} */
+#address, #email, #company, #company_address, #phone, #price{
   border: solid 1px;
   border-color: #b9b9b9;
   background-color: rgb(232, 232, 232);
-  width: 95%;
+  border-radius: 4px;
+  width: 70%;
   margin: auto;
+  text-align: center;
 }
 
 #button-container{
   text-align: center;
   margin-left: 50%; 
+}
+
+#addLearner{
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  width: 130px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#addLearner:hover {
+  background-color: #0056b3; 
 }
 
 #updateProfile{
