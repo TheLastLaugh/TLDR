@@ -2,16 +2,35 @@ var geocoder;
 var map;
 
 function myMap() {
+
+    // Set Google Maps center to Adelaide/South Australia
+
     var mapProp = {
         center: new google.maps.LatLng(-34.921230, 138.599503),
         zoom: 5,
     };
+
+    // Create the Google Map and link to the div on HTML page
+
     map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+    // Initialise Google Maps Geocoding
+
     geocoder = new google.maps.Geocoder();
+
+    // Send a request to the server to retrieve a list of the students drives.
+    // PHP responds server side and sends the list back in JSON format.
+    // Client processes the list of drives and retries coordinates for the starting and ending suburbs of each drive
+    // Markers are placed at these coordinates
+    // A line is drawn between them
+
     getDrives();
+
 }
 
 function codeAddress(drive) {
+
+    // Retrieve the coordinates for the starting and ending suburb of a drive
 
     const suburb_start = drive['start_location'];
     const suburb_end = drive['end_location'];
@@ -57,6 +76,8 @@ function codeAddress(drive) {
 
 function drawLine(coordinates1, coordinates2) {
 
+    // Draw a line between the starting and ending suburb
+
     var flightPlanCoordinates = [];
     flightPlanCoordinates.push(coordinates1);
     flightPlanCoordinates.push(coordinates2);
@@ -75,6 +96,8 @@ function drawLine(coordinates1, coordinates2) {
 }
 
 function createMarkers(coordinates1, coordinates2, drive) {
+
+    // Create markers
 
     var markers = [];
     const marker1 = {
@@ -140,6 +163,8 @@ function createMarkers(coordinates1, coordinates2, drive) {
 }
 
 function getDrives () {
+
+    // Get list of drives from the server. Then retrieve coordinates, place markers, and draw a line.
 
     const params = `action=getdrives`;
 

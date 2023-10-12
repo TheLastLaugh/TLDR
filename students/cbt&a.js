@@ -197,7 +197,7 @@ class Tasks {
                     const myArray = taskDescription.split(" (");
                     taskDescription = myArray[0];
 
-                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete} )`;
+                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete}, Unsigned: ${result[i].unsigned} )`;
                     for (let j = 0; j < result[i].tasks.length; j++) {
                         if (result[i].tasks[j]['user-type'] == 'learner') {
                             if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].student_followup == 0) {

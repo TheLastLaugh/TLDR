@@ -122,6 +122,22 @@ function countThings ($conn, $unit, $count_type) {
                 $count = $row['COUNT(*)'];
             }
         } 
+    } elseif ($count_type == 'unsigned') {
+        $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? AND completed = 1 AND (student_signature = 0 OR student_signature IS NULL);";
+        $stmt = mysqli_prepare($conn, $sql);
+        if ($_SESSION["user_type"] == 'instructor' || $_SESSION["user_type"] == 'government') {
+            mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $unit);
+        } else {
+            // must be a student
+            mysqli_stmt_bind_param($stmt, "ii", $_SESSION["userid"], $unit);
+        }
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        if ( mysqli_num_rows($result) >= 1 ) {
+            if ($row = $result -> fetch_assoc()) {
+                $count = $row['COUNT(*)'];
+            }
+        } 
     } elseif ($count_type == 'student-followup') {
         $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? and student_followup = 1;";
         $stmt = mysqli_prepare($conn, $sql);
@@ -299,7 +315,8 @@ if ($action == 'complete-task') {
         $myObj['unit'] = $x + 1;
         $myObj['total'] = $totals[$x];
         $myObj['completed'] = countThings($conn, $x+1, 'completed');
-        $myObj['incomplete'] = $myObj['total']-$myObj['completed'];
+        $myObj['unsigned'] = countThings($conn, $x+1, 'unsigned');
+        $myObj['incomplete'] = $myObj['total']-$myObj['completed']-$myObj['unsigned'];
         // if ($_SESSION["user_type"] == 'learner' || $_SESSION["user_type"] == 'government') {
         //     $myObj['student_followup'] = countThings($conn, $x + 1, 'student-followup');
         // }
