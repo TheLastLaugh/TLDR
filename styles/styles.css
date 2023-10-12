@@ -112,6 +112,33 @@ body > #content {
   color: #777;
 }
 
+.stat-card a{
+  text-decoration: none;
+  color: #023a76;
+  position: relative;
+}
+
+.stat-card a:focus {
+  color: #3b006e;
+}
+
+.stat-card a::before { /*fancy animation bit*/
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #023a76;
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.stat-card a:hover::before {
+  transform: scaleX(1);
+}
+
 .stat-card ul {
   margin-top: 0px;
 }
