@@ -13,6 +13,11 @@ else if ($_SESSION['user_type'] != 'learner') {
     exit;
 }
 
+// Uses the database connection and sidebar file
+require_once "../inc/dbconn.inc.php"; 
+include_once "../inc/sidebar.inc.php";
+
+
 function getUpcomingLessons($user_id, $conn,$date,$time) {
     $sql = "SELECT b.*, u.username FROM bookings AS b JOIN users as u on b.instructor_id = u.id WHERE b.learner_id = ? AND b.booking_date = ? AND b.booking_time = ?";
     $statement = mysqli_stmt_init($conn);
@@ -23,12 +28,11 @@ function getUpcomingLessons($user_id, $conn,$date,$time) {
     if($row = mysqli_fetch_assoc($result)){
         echo("<td class = \"booked\"><b>".$row["username"]."</b><br>".$row["pickup_location"]."</td>");
         return true;
+    } else {
+        echo("<td></td>");
+        return true;
     }
 }
-
-// Uses the database connection and sidebar file
-require_once "../inc/dbconn.inc.php"; 
-include_once "../inc/sidebar.inc.php";
 
 function getInstructors($conn,$date){
     $instructorSQL = "SELECT username, id FROM users WHERE user_type = \"instructor\"";
@@ -59,25 +63,7 @@ function getInstructors($conn,$date){
 
 function fill_cell($conn, $date, $time){
         if($_SESSION["instructor_id"] == -1){
-            if(!getUpcomingLessons($_SESSION["userid"],$conn,$date,$time)){
-                $sql = "SELECT booking_id FROM bookings WHERE booking_date = ? AND booking_time = ? AND instructor_id = ?";
-                $statement = mysqli_stmt_init($conn);
-                mysqli_stmt_prepare($statement, $sql);
-                mysqli_stmt_bind_param($statement,'ssi',$date, $time, $_SESSION["instructor_id"]);
-                mysqli_stmt_execute($statement);
-                $result = mysqli_stmt_get_result($statement);
-                
-                
-                echo("  
-                        <td class = \"used\">
-                            <form action=\"lessons.php?date=".$date.'&time='.$time."\">
-                                <input type = \"hidden\" name= \"date\" value = \"".$date."\" ></input>
-                                <input type = \"hidden\" name= \"instructorID\" value = \"".$_SESSION["instructor_id"]."\" ></input>
-                                <input type = \"submit\" class = \"cell_button\" name = \"time\" value = \"".$time."\"></input>
-                            </form>
-                        </td>
-                    ");
-            }
+            getUpcomingLessons($_SESSION["userid"],$conn,$date,$time);
             return;
         }
 

@@ -82,6 +82,7 @@ th{
     background-color: transparent;
     color: transparent;
     border:none;
+    cursor:pointer;
 }
 .cell_button:hover{
     background-color: #93939348;
