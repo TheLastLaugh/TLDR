@@ -170,7 +170,7 @@ body > #content {
 
 /*profile page styling*/
 #profile-content {
-  width: 20%; /*make width relative to screen size?*/
+  width: 20%;
   padding: 20px;
   margin-top: 6%;
   text-align: center;
@@ -183,10 +183,24 @@ body > #content {
 p.detail {
   text-align: center;
 }
+#email{
+  border: solid 1px;
+  border-color: #b9b9b9;
+  background-color: rgb(232, 232, 232);
+  width: 95%;
+  margin: auto;
+}
+#address{
+  border: solid 1px;
+  border-color: #b9b9b9;
+  background-color: rgb(232, 232, 232);
+  width: 95%;
+  margin: auto;
+}
 
 #button-container{
   text-align: center;
-  margin-left: 50%; /*why no centre????*/
+  margin-left: 50%; 
 }
 
 #updateProfile{
