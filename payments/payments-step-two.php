@@ -101,7 +101,7 @@ $paymentMethods = mysqli_query($conn, "SELECT * FROM payment_methods WHERE learn
                 </select>
 
                 <label for="card_number">Card Number:</label>
-                <input type="text" name="card_number" minlength="16" maxlength="16" pattern="\d{16}" required>
+                <input type="text" name="card_number" minlength="16" maxlength="16" pattern="\d{16}" id="creditCardInput" required>
                 
                 <!-- Makes a drop down menu for 1-12 -->
                 <label for="expiry_month">Expiry Month:</label>
