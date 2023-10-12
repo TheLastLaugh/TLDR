@@ -62,20 +62,16 @@ if (isset($_GET['error'])) {
 
           <!-- Currently these have no implementation -->
           <div class="remember-forgot">
-            <label> <input type="checkbox" /> Remember me</label>
-            <a href="#">Forgot Password?</a>
+            <!-- <label> <input type="checkbox" /> Remember me</label>
+            <a href="#">Forgot Password?</a> -->
           </div>
           <button type="submit">Login</button>
 
           <!-- This will direct the user to a link that lets them register their account appropriately -->
           <div class="register-link">
-            <p><strong>Not a member?</strong></p>
-            <br />
+            <!-- <p><strong>Not a member?</strong></p> -->
 
-            <a
-              href="./user-choice.php"
-              >Sign up now</a
-            >
+            <a id="sign-up-now" href="./user-choice.php">Sign up now</a>
           </div>
         </form>
       </div>
