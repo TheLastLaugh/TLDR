@@ -1,16 +1,18 @@
 document.addEventListener("DOMContentLoaded", function() {
     const paymentForm = document.getElementById('paymentForm');
-
+    // Store the CVV box div
+    const cvvBox = document.getElementById('cvvBox');
+    
     // change the display of the payment form
     document.getElementById('togglePaymentForm').addEventListener('click', function() {
         paymentForm.style.display = 'block';
-        document.getElementById('togglePaymentForm').style.display = 'none';
+        cvvBox.style.display = 'block';
+;        document.getElementById('togglePaymentForm').style.display = 'none';
     });
 
     // Add listener for the payment method selection
     const paymentMethodsDropdown = document.getElementById('paymentMethodsDropdown');
-    // Store the CVV box div
-    const cvvBox = document.getElementById('cvvBox');
+    
     if (paymentMethodsDropdown) {
 
         paymentMethodsDropdown.addEventListener('change', function() {
