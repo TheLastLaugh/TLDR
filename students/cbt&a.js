@@ -196,8 +196,20 @@ class Tasks {
                     let taskDescription = document.getElementById(`unit-${i+1}`).innerHTML;
                     const myArray = taskDescription.split(" (");
                     taskDescription = myArray[0];
-
-                    document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} ( Total Tasks: ${result[i].total}, Completed: ${result[i].completed}, Incomplete: ${result[i].incomplete}, Unsigned: ${result[i].unsigned} )`;
+                    document.getElementById(`unit-${i+1}`).setAttribute("status-completed", result[i].completed);
+                    document.getElementById(`unit-${i+1}`).setAttribute("status-incomplete", result[i].incomplete);
+                    document.getElementById(`unit-${i+1}`).setAttribute("status-unsigned", result[i].unsigned);
+                    document.getElementById(`unit-${i+1}`).setAttribute("status-followup", result[i].follow_up);
+                    document.getElementById(`unit-${i+1}`).innerHTML = taskDescription;
+                //     document.getElementById(`unit-${i+1}`).innerHTML = `${taskDescription} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                //     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                //     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                //   </svg> ${result[i].completed}  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                //   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                //   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                // </svg> ${result[i].incomplete}  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                //     <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                //   </svg>  ${result[i].unsigned}`;
                     for (let j = 0; j < result[i].tasks.length; j++) {
                         if (result[i].tasks[j]['user-type'] == 'learner') {
                             if ((result[i].tasks[j].completed == 0 || result[i].tasks[j].completed == null) && result[i].tasks[j].student_followup == 0) {
@@ -676,7 +688,7 @@ class Tasks {
                             <td><label for="group1">Group 1 - control name:</label></td>
                             <td>
                                 <select name="group1" id="group1" required>
-                                    <option value="" disabled selected>Please Select</option>
+                                    <option value="" disabled selected></option>
                                     <option value="Brake">Brake</option>
                                     <option value="Accelerator">Accelerator</option>
                                     <option value="Steering wheel">Steering wheel</option>
@@ -691,7 +703,7 @@ class Tasks {
                             <td>Group 2 - control name:</td>
                             <td>
                                 <select name="group2" id="group2" required>
-                                    <option value="" disabled selected>Please Select</option>
+                                    <option value="" disabled selected></option>
                                     <option value="Clutch - (Manuals only)">Clutch - (Manuals only)</option>
                                     <option value="Park brake">Park brake</option>
                                     <option value="Warning device">Warning device</option>
@@ -706,7 +718,7 @@ class Tasks {
                             <td>Group 2 - control name:</td>
                             <td>
                                 <select name="group3" id="group3" required>
-                                    <option value="" disabled selected>Please Select</option>
+                                    <option value="" disabled selected></option>
                                     <option value="Heater/demister">Heater/demister</option>
                                     <option value="Wipers and washers">Wipers and washers</option>
                                     <option value="Warning lights (any 3)">Warning lights (any 3)</option>

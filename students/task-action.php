@@ -139,9 +139,9 @@ function countThings ($conn, $unit, $count_type) {
             }
         } 
     } elseif ($count_type == 'student-followup') {
-        $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? and student_followup = 1;";
+        $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? AND student_followup = 1 AND (completed = 0 OR completed is NULL);";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $unit);
+        mysqli_stmt_bind_param($stmt, "ii", $_SESSION["userid"], $unit);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
         if ( mysqli_num_rows($result) >= 1 ) {
@@ -150,7 +150,7 @@ function countThings ($conn, $unit, $count_type) {
             }
         } 
     } elseif ($count_type == 'instructor-followup') {
-        $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? and instructor_followup = 1;";
+        $sql = "SELECT COUNT(*) FROM student_tasks WHERE student_id = ? AND unit = ? and instructor_followup = 1 AND (completed = 0 OR completed is NULL);";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ii", $_SESSION["student"]["id"], $unit);
         mysqli_stmt_execute($stmt);
@@ -316,13 +316,16 @@ if ($action == 'complete-task') {
         $myObj['total'] = $totals[$x];
         $myObj['completed'] = countThings($conn, $x+1, 'completed');
         $myObj['unsigned'] = countThings($conn, $x+1, 'unsigned');
-        $myObj['incomplete'] = $myObj['total']-$myObj['completed']-$myObj['unsigned'];
-        // if ($_SESSION["user_type"] == 'learner' || $_SESSION["user_type"] == 'government') {
-        //     $myObj['student_followup'] = countThings($conn, $x + 1, 'student-followup');
-        // }
-        // if ($_SESSION["user_type"] == 'instructor' || $_SESSION["user_type"] == 'government') {
-        //     $myObj['instructor_folowup'] = countThings($conn, $x + 1, 'instructor-followup');
-        // }
+        if ($_SESSION["user_type"] == 'learner') {
+            $myObj['follow_up'] = countThings($conn, $x + 1, 'student-followup');
+        }
+        elseif ($_SESSION["user_type"] == 'instructor') {
+            $myObj['follow_up'] = countThings($conn, $x + 1, 'instructor-followup');
+        }
+        else {
+            $myObj['follow_up'] = 0;
+        }
+        $myObj['incomplete'] = $myObj['total']-$myObj['completed']-$myObj['unsigned']-$myObj['follow_up'];
         $myObj['tasks'] = getTaskStatuses($conn, $x+1);
         array_push($data, $myObj);
     } 

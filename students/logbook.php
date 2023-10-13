@@ -125,6 +125,11 @@ require_once "../inc/dbconn.inc.php";
                                 </svg> Signed</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr>
+                                <td colspan='13'>No entries.</td>
+                            </tr>";
+
                         }
 
                     ?>
@@ -211,6 +216,11 @@ require_once "../inc/dbconn.inc.php";
                                 </svg> Signed</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr>
+                                <td colspan='13'>No entries.</td>
+                            </tr>";
+
                         }
                     ?>
                 </table>
@@ -295,6 +305,11 @@ require_once "../inc/dbconn.inc.php";
                                 </svg> Signed</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr>
+                                <td colspan='13'>No entries.</td>
+                            </tr>";
+
                         }
 
                     ?>
@@ -381,6 +396,11 @@ require_once "../inc/dbconn.inc.php";
                                 </svg> Signed</td>";
                                 echo "</tr>";
                             }
+                        } else {
+                            echo "<tr>
+                                <td colspan='13'>No entries.</td>
+                            </tr>";
+
                         }
 
                     ?>
