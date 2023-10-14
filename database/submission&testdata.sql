@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2023 at 08:30 PM
+-- Generation Time: Oct 14, 2023 at 02:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,36 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `TLDR`
+-- Database: `tldr`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `availability`
---
-
-CREATE TABLE `availability` (
-  `id` int(11) NOT NULL,
-  `instructor_id` int(11) NOT NULL,
-  `start_time` datetime NOT NULL,
-  `end_time` datetime NOT NULL,
-  `is_booked` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `availability`
---
-
-INSERT INTO `availability` (`id`, `instructor_id`, `start_time`, `end_time`, `is_booked`) VALUES
-(1, 2, '2023-08-24 09:00:00', '2023-08-24 10:00:00', 1),
-(2, 2, '2023-08-24 10:00:00', '2023-08-24 11:00:00', 0),
-(3, 2, '2023-08-24 11:00:00', '2023-08-24 12:00:00', 0),
-(4, 2, '2023-08-24 12:00:00', '2023-08-24 13:00:00', 0),
-(5, 2, '2023-08-24 13:00:00', '2023-08-24 14:00:00', 0),
-(6, 2, '2023-08-24 14:00:00', '2023-08-24 15:00:00', 0),
-(7, 2, '2023-08-24 15:00:00', '2023-08-24 16:00:00', 0),
-(8, 2, '2023-08-24 16:00:00', '2023-08-24 17:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -73,12 +45,9 @@ CREATE TABLE `bills` (
 
 INSERT INTO `bills` (`id`, `learner_id`, `instructor_id`, `issue_date`, `due_date`, `paid`, `paid_date`, `hourly_rate`, `billed_minutes`) VALUES
 (1, 1, 2, '2023-09-14', '2023-09-28', 0, NULL, 100.00, 60),
-(2, 1, 2, '2023-09-14', '2023-09-28', 0, NULL, 100.00, 90),
+(2, 1, 2, '2023-09-14', '2023-09-28', 1, '2023-10-13', 100.00, 90),
 (3, 1, 2, '2023-09-14', '2023-09-28', 0, NULL, 100.00, 60),
-(4, 5, 2, '2023-09-14', '2023-09-28', 0, NULL, 75.00, 120),
-(5, 1, 7, '2023-10-10', '2023-10-10', 0, NULL, 100.00, 90),
-(6, 1, 7, '2023-10-10', '2023-10-10', 0, NULL, 90.00, 90),
-(7, 1, 7, '2023-10-10', '2023-10-20', 0, NULL, 100.00, 90);
+(4, 5, 2, '2023-09-14', '2023-09-28', 0, NULL, 75.00, 120);
 
 -- --------------------------------------------------------
 
@@ -87,63 +56,24 @@ INSERT INTO `bills` (`id`, `learner_id`, `instructor_id`, `issue_date`, `due_dat
 --
 
 CREATE TABLE `bookings` (
-  `id` int(11) NOT NULL,
+  `booking_id` int(11) NOT NULL,
+  `instructor_id` int(11) NOT NULL,
   `learner_id` int(11) NOT NULL,
-  `availability_id` int(11) NOT NULL,
   `booking_date` date NOT NULL,
-  `paid` tinyint(1) NOT NULL DEFAULT 0,
-  `lesson_id` int(11) NOT NULL
+  `booking_time` time NOT NULL,
+  `pickup_location` char(100) NOT NULL,
+  `paid` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `learner_id`, `availability_id`, `booking_date`, `paid`, `lesson_id`) VALUES
-(1, 1, 1, '2023-08-24', 0, 1),
-(2, 1, 2, '2023-08-24', 0, 2),
-(3, 1, 1, '2023-10-11', 0, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cbta_modules`
---
-
-CREATE TABLE `cbta_modules` (
-  `id` int(11) NOT NULL,
-  `unit_number` int(11) NOT NULL,
-  `unit_name` varchar(255) NOT NULL,
-  `module_number` int(11) NOT NULL,
-  `module_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cbta_module_tasks`
---
-
-CREATE TABLE `cbta_module_tasks` (
-  `id` int(11) NOT NULL,
-  `module_number` int(11) NOT NULL,
-  `task_name` varchar(255) NOT NULL,
-  `task_number` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cbta_module_task_description`
---
-
-CREATE TABLE `cbta_module_task_description` (
-  `id` int(11) NOT NULL,
-  `module_number` int(11) NOT NULL,
-  `task_number` int(11) NOT NULL,
-  `module_task_listing` varchar(255) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `bookings` (`booking_id`, `instructor_id`, `learner_id`, `booking_date`, `booking_time`, `pickup_location`, `paid`) VALUES
+(1, 2, 1, '2023-10-11', '10:00:00', 'Tonsley Campus', 1),
+(2, 7, 1, '2023-10-11', '11:00:00', 'Tonsley Campus', 0),
+(3, 7, 5, '2023-10-11', '12:00:00', 'Yes', 0),
+(4, 7, 5, '2023-10-16', '11:00:00', '11:00:01', 0);
 
 -- --------------------------------------------------------
 
@@ -179,7 +109,7 @@ CREATE TABLE `instructors` (
 
 INSERT INTO `instructors` (`user_id`, `username`, `company`, `company_address`, `phone`, `price`) VALUES
 (2, 'Brett Wilkinson', 'Flinders', 'Tonsley', 404040404, 50.00),
-(7, 'Kathryn Laneway', 'Flinders', 'Tonsley', 404040404, 100.00);
+(7, 'Kathryn Laneway', 'NA', 'NA', 0, 50.00);
 
 -- --------------------------------------------------------
 
@@ -198,7 +128,10 @@ CREATE TABLE `instructor_learners` (
 
 INSERT INTO `instructor_learners` (`instructor_id`, `learner_id`) VALUES
 (2, 1),
-(2, 1);
+(2, 1),
+(7, 5),
+(7, 1),
+(7, 5);
 
 -- --------------------------------------------------------
 
@@ -255,11 +188,26 @@ CREATE TABLE `logbooks` (
 
 INSERT INTO `logbooks` (`id`, `learner_id`, `qsd_id`, `date`, `start_time`, `end_time`, `duration`, `start_location`, `end_location`, `road_type`, `weather`, `traffic`, `qsd_name`, `qsd_license`, `confirmed`, `time_of_day`) VALUES
 (1, 1, 2, '2023-09-16', '12:30:00', '14:30:00', 120, 'WOODCROFT', 'HALLETT COVE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
-(3, 1, 2, '2023-09-12', '10:30:00', '11:30:00', 60, 'SEAFORD MEADOWS', 'ALDINGA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
-(4, 1, 2, '2023-09-12', '22:00:00', '23:00:00', 60, 'GLENELG', 'ADELAIDE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
-(5, 1, 2, '2023-09-10', '22:00:00', '23:00:00', 60, 'ONKAPARINGA HILLS', 'REYNELLA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
-(9, 1, 7, '2023-10-11', '10:30:00', '12:30:00', 120, 'ROBE', 'MOUNT GAMBIER', 'Sealed', 'Dry', 'Light', 'Kathryn Laneway', 'KL0987', 1, 'Day'),
-(10, 1, 7, '2023-10-06', '15:30:00', '16:30:00', 60, 'VICTOR HARBOR', 'CAPE JERVIS', 'Sealed', 'Wet', 'Light', 'Kathryn Laneway', 'KL0987', 0, 'Day');
+(2, 1, 2, '2023-09-12', '10:30:00', '11:30:00', 60, 'SEAFORD MEADOWS', 'ALDINGA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
+(3, 1, 2, '2023-09-12', '22:00:00', '23:00:00', 60, 'GLENELG', 'ADELAIDE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(4, 1, 2, '2023-09-10', '22:00:00', '23:00:00', 60, 'ONKAPARINGA HILLS', 'REYNELLA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(5, 1, 7, '2023-10-13', '21:00:00', '22:00:00', 60, 'SEAFORD HEIGHTS', 'VICTOR HARBOR', 'Sealed', 'Dry', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Night'),
+(6, 1, 7, '2023-10-14', '15:30:00', '17:30:00', 120, 'ROBE', 'MOUNT GAMBIER', 'Busy Road', 'Wet', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Day'),
+(7, 1, 7, '2023-10-04', '09:30:00', '11:00:00', 90, 'EUDUNDA', 'BLANCHETOWN', 'Sealed', 'Dry', 'Light', 'Kathryn Laneway', 'KL0987', 1, 'Day'),
+(8, 5, 2, '2023-09-16', '12:30:00', '14:30:00', 120, 'WOODCROFT', 'HALLETT COVE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
+(9, 5, 2, '2023-09-12', '10:30:00', '11:30:00', 60, 'SEAFORD MEADOWS', 'ALDINGA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
+(10, 5, 2, '2023-09-12', '22:00:00', '23:00:00', 60, 'GLENELG', 'ADELAIDE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(11, 5, 2, '2023-09-10', '22:00:00', '23:00:00', 60, 'ONKAPARINGA HILLS', 'REYNELLA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(12, 5, 7, '2023-10-13', '21:00:00', '22:00:00', 60, 'SEAFORD HEIGHTS', 'VICTOR HARBOR', 'Sealed', 'Dry', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Night'),
+(13, 5, 7, '2023-10-14', '15:30:00', '17:30:00', 120, 'ROBE', 'MOUNT GAMBIER', 'Busy Road', 'Wet', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Day'),
+(14, 5, 7, '2023-10-04', '09:30:00', '11:00:00', 90, 'EUDUNDA', 'BLANCHETOWN', 'Sealed', 'Dry', 'Light', 'Kathryn Laneway', 'KL0987', 1, 'Day'),
+(15, 6, 2, '2023-09-16', '12:30:00', '14:30:00', 120, 'WOODCROFT', 'HALLETT COVE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
+(16, 6, 2, '2023-09-12', '10:30:00', '11:30:00', 60, 'SEAFORD MEADOWS', 'ALDINGA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Day'),
+(17, 6, 2, '2023-09-12', '22:00:00', '23:00:00', 60, 'GLENELG', 'ADELAIDE', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(18, 6, 2, '2023-09-10', '22:00:00', '23:00:00', 60, 'ONKAPARINGA HILLS', 'REYNELLA', 'Sealed', 'Dry', 'Light', 'Brett Wilkinson', 'BW5467', 1, 'Night'),
+(19, 6, 7, '2023-10-13', '21:00:00', '22:00:00', 60, 'SEAFORD HEIGHTS', 'VICTOR HARBOR', 'Sealed', 'Dry', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Night'),
+(20, 6, 7, '2023-10-14', '15:30:00', '17:30:00', 120, 'ROBE', 'MOUNT GAMBIER', 'Busy Road', 'Wet', 'Medium', 'Kathryn Laneway', 'KL0987', 0, 'Day'),
+(21, 6, 7, '2023-10-04', '09:30:00', '11:00:00', 90, 'EUDUNDA', 'BLANCHETOWN', 'Sealed', 'Dry', 'Light', 'Kathryn Laneway', 'KL0987', 1, 'Day');
 
 -- --------------------------------------------------------
 
@@ -279,6 +227,13 @@ CREATE TABLE `payment_methods` (
   `expiry_month` int(11) NOT NULL,
   `expiry_year` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `payment_methods`
+--
+
+INSERT INTO `payment_methods` (`id`, `learner_id`, `method_name`, `address`, `card_type`, `card_number`, `cvv`, `last_four_digits`, `expiry_month`, `expiry_year`) VALUES
+(1, 1, 'YA BOI', '1 Hall Terrace', 'visa', '1111111111111111', '111', '1111', 1, 2023);
 
 -- --------------------------------------------------------
 
@@ -315,23 +270,60 @@ CREATE TABLE `student_tasks` (
 --
 
 INSERT INTO `student_tasks` (`student_id`, `unit`, `task`, `completed`, `completed_date`, `completed_instructor_id`, `student_followup`, `student_signature`, `instructor_followup`, `instructor_notes`) VALUES
-(1, 1, 1, 1, '2023-09-09', 2, 1, 1, 1, NULL),
+(1, 1, 1, 1, '2023-09-09', 2, 1, 1, 1, 'cvb cvb dgbdgf'),
 (1, 1, 2, 1, '2023-09-09', 2, 0, 1, 0, NULL),
 (1, 1, 3, 1, '2023-09-09', 2, 1, 1, 1, NULL),
 (1, 1, 5, 1, '2023-09-09', 2, 0, 0, 0, NULL),
 (1, 1, 8, 0, NULL, NULL, 1, 0, 0, NULL),
-(5, 1, 1, 1, '2023-09-09', 2, 1, 0, 1, NULL),
+(1, 2, 10, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(1, 2, 12, 0, NULL, NULL, 1, NULL, 0, NULL),
+(1, 2, 13, 0, NULL, NULL, 0, NULL, 1, NULL),
+(1, 2, 14, 1, '2023-10-14', 2, 0, NULL, 0, NULL),
+(1, 3, 15, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(1, 3, 17, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(1, 3, 19, 1, '2023-10-13', 2, 0, NULL, 0, NULL),
+(1, 3, 21, 0, NULL, NULL, 1, NULL, 0, NULL),
+(1, 3, 22, 0, NULL, NULL, 0, NULL, 1, NULL),
+(1, 4, 23, 0, NULL, NULL, 1, NULL, 0, NULL),
+(1, 4, 24, 1, '2023-10-13', 7, 0, 1, 0, NULL),
+(1, 4, 26, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(1, 4, 28, 0, NULL, NULL, 0, NULL, 1, NULL),
+(5, 1, 1, 1, '2023-09-09', 2, 1, 1, 1, 'cvb cvb dgbdgf'),
 (5, 1, 2, 1, '2023-09-09', 2, 0, 1, 0, NULL),
-(5, 1, 3, 0, NULL, NULL, 1, 0, 1, NULL),
-(5, 1, 8, 1, '2023-10-10', 7, 1, 0, 0, NULL),
-(5, 4, 26, 1, '2023-10-10', 2, 0, NULL, 0, NULL),
+(5, 1, 3, 1, '2023-09-09', 2, 1, 1, 1, NULL),
+(5, 1, 5, 1, '2023-09-09', 2, 0, 0, 0, NULL),
+(5, 1, 8, 0, NULL, NULL, 1, 0, 0, NULL),
+(5, 2, 10, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(5, 2, 12, 0, NULL, NULL, 1, NULL, 0, NULL),
+(5, 2, 13, 0, NULL, NULL, 0, NULL, 1, NULL),
+(5, 2, 14, 1, '2023-10-14', 2, 0, NULL, 0, NULL),
+(5, 3, 15, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(5, 3, 17, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(5, 3, 19, 1, '2023-10-13', 2, 0, NULL, 0, NULL),
+(5, 3, 21, 0, NULL, NULL, 1, NULL, 0, NULL),
+(5, 3, 22, 0, NULL, NULL, 0, NULL, 1, NULL),
+(5, 4, 23, 0, NULL, NULL, 1, NULL, 0, NULL),
+(5, 4, 24, 1, '2023-10-13', 7, 0, 1, 0, NULL),
+(5, 4, 26, 1, '2023-10-14', 2, 0, 1, 0, NULL),
 (5, 4, 28, 0, NULL, NULL, 0, NULL, 1, NULL),
-(5, 4, 29, 0, NULL, NULL, 1, NULL, 1, NULL),
-(5, 4, 30, 0, NULL, NULL, 1, NULL, 0, NULL),
-(6, 1, 2, 1, '2023-09-09', 2, 0, 0, 0, NULL),
-(6, 1, 5, 1, '2023-10-10', 2, 0, NULL, 0, NULL),
-(6, 2, 13, 1, '2023-10-10', 7, 0, NULL, 0, NULL),
-(6, 3, 20, 1, '2023-10-10', 2, 0, NULL, 0, NULL);
+(6, 1, 1, 1, '2023-09-09', 2, 1, 1, 1, 'cvb cvb dgbdgf'),
+(6, 1, 2, 1, '2023-09-09', 2, 0, 1, 0, NULL),
+(6, 1, 3, 1, '2023-09-09', 2, 1, 1, 1, NULL),
+(6, 1, 5, 1, '2023-09-09', 2, 0, 0, 0, NULL),
+(6, 1, 8, 0, NULL, NULL, 1, 0, 0, NULL),
+(6, 2, 10, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(6, 2, 12, 0, NULL, NULL, 1, NULL, 0, NULL),
+(6, 2, 13, 0, NULL, NULL, 0, NULL, 1, NULL),
+(6, 2, 14, 1, '2023-10-14', 2, 0, NULL, 0, NULL),
+(6, 3, 15, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(6, 3, 17, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(6, 3, 19, 1, '2023-10-13', 2, 0, NULL, 0, NULL),
+(6, 3, 21, 0, NULL, NULL, 1, NULL, 0, NULL),
+(6, 3, 22, 0, NULL, NULL, 0, NULL, 1, NULL),
+(6, 4, 23, 0, NULL, NULL, 1, NULL, 0, NULL),
+(6, 4, 24, 1, '2023-10-13', 7, 0, 1, 0, NULL),
+(6, 4, 26, 1, '2023-10-14', 2, 0, 1, 0, NULL),
+(6, 4, 28, 0, NULL, NULL, 0, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -369,13 +361,6 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `address`, `license`
 --
 
 --
--- Indexes for table `availability`
---
-ALTER TABLE `availability`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `instructor_id` (`instructor_id`);
-
---
 -- Indexes for table `bills`
 --
 ALTER TABLE `bills`
@@ -387,27 +372,9 @@ ALTER TABLE `bills`
 -- Indexes for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `learner_id` (`learner_id`),
-  ADD KEY `availability_id` (`availability_id`);
-
---
--- Indexes for table `cbta_modules`
---
-ALTER TABLE `cbta_modules`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `cbta_module_tasks`
---
-ALTER TABLE `cbta_module_tasks`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `cbta_module_task_description`
---
-ALTER TABLE `cbta_module_task_description`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`booking_id`),
+  ADD KEY `instructor_id` (`instructor_id`),
+  ADD KEY `learner_id` (`learner_id`);
 
 --
 -- Indexes for table `completed_lessons`
@@ -477,40 +444,16 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `availability`
---
-ALTER TABLE `availability`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT for table `bills`
 --
 ALTER TABLE `bills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `cbta_modules`
---
-ALTER TABLE `cbta_modules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cbta_module_tasks`
---
-ALTER TABLE `cbta_module_tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cbta_module_task_description`
---
-ALTER TABLE `cbta_module_task_description`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `completed_lessons`
@@ -528,13 +471,13 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `logbooks`
 --
 ALTER TABLE `logbooks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `payment_methods`
 --
 ALTER TABLE `payment_methods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -547,12 +490,6 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `availability`
---
-ALTER TABLE `availability`
-  ADD CONSTRAINT `availability_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `users` (`id`);
-
---
 -- Constraints for table `bills`
 --
 ALTER TABLE `bills`
@@ -563,8 +500,8 @@ ALTER TABLE `bills`
 -- Constraints for table `bookings`
 --
 ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`learner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`availability_id`) REFERENCES `availability` (`id`);
+  ADD CONSTRAINT `instructor_id` FOREIGN KEY (`instructor_id`) REFERENCES `instructor_learners` (`instructor_id`),
+  ADD CONSTRAINT `learner_id` FOREIGN KEY (`learner_id`) REFERENCES `instructor_learners` (`learner_id`);
 
 --
 -- Constraints for table `completed_lessons`
