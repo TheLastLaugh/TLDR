@@ -67,12 +67,12 @@ else{
 $current_day = date("l",strtotime($current_date));
 
 if($current_day == "Saturday"){
-    $current_date = date('d-m-Y', strtotime('+2 days'));
-    $current_day = date("l",$current_date);
+    $current_date = date('d-m-Y', strtotime('+2 days',strtotime($current_date)));
+    $current_day = date("l",strtotime($current_date));
 }
 else if($current_day == "Sunday"){
-    $current_date = date('d-m-Y', strtotime('+1 days'));
-    $current_day = date("l",$current_date);
+    $current_date = date('d-m-Y', strtotime('+1 days',strtotime($current_date)));
+    $current_day = date("l",strtotime($current_date));
 }
 else {
     while($current_day != "Monday"){
